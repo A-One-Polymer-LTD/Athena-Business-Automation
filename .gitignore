@@ -37,3 +37,5 @@ frontend/*.log
 .vercel
 .env*
 .claude/
+.agents/
+skills-lock.json
