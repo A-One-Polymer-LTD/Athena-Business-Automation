@@ -217,7 +217,7 @@ export default function QcSheet({ itemId, qc, onChanged }: { itemId: number; qc:
                 <td className={cx(TD, 'bg-emerald-50/50', isApm && '!p-1')}>
                   {isApm ? (
                     <input aria-label="Carpenter working side" value={side} maxLength={150} onChange={(e) => setSide(e.target.value)} placeholder="Enter…"
-                      className="h-11 w-full min-w-[130px] rounded-md border border-slate-300 bg-white px-2 text-center text-[13px] focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200" />
+                      className="h-11 w-full min-w-[130px] rounded-md border border-slate-300 bg-white px-2 text-center text-[13px] focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-200" />
                   ) : (qc.carpenter_side ?? <span className="text-slate-400">—</span>)}
                 </td>
                 {CARP.map((k) => qcCell(k, 'bg-emerald-50/50'))}
@@ -226,7 +226,7 @@ export default function QcSheet({ itemId, qc, onChanged }: { itemId: number; qc:
                 <td className={cx(TD, 'text-left', isApm && '!p-1')}>
                   {isApm ? (
                     <textarea aria-label="Remarks" rows={2} value={remarks} onChange={(e) => setRemarks(e.target.value)} placeholder="Enter…"
-                      className="block w-full min-w-[170px] rounded-md border border-slate-300 bg-white px-2 py-1.5 text-[13px] focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200" />
+                      className="block w-full min-w-[170px] rounded-md border border-slate-300 bg-white px-2 py-1.5 text-[13px] focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-200" />
                   ) : (qc.remarks ?? <span className="text-slate-400">—</span>)}
                 </td>
               </tr>
@@ -244,7 +244,7 @@ export default function QcSheet({ itemId, qc, onChanged }: { itemId: number; qc:
         {/* full history of every check: a Rework and the later Pass both stay visible */}
         {anyHistory && (
           <div className="mt-6">
-            <p className="mb-3 border-l-4 border-gold-400 pl-3 text-[13px] font-bold uppercase tracking-wider text-brand-900">QC history</p>
+            <p className="mb-3 border-l-4 border-brand-800 pl-3 text-[13px] font-bold uppercase tracking-wider text-brand-900">QC history</p>
             <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
               {keys.filter((k) => checks[k].history?.length).map((k) => (
                 <div key={k} className="print-break-avoid rounded-lg border border-slate-200 p-3">

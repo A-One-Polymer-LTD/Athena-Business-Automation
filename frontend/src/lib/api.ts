@@ -42,6 +42,8 @@ async function request<T = any>(method: string, path: string, body?: any, isForm
   if (res.ok) return res.status === 204 ? (undefined as T) : res.json()
   let detail: any = null
   try { detail = (await res.json()).detail } catch { /* not JSON */ }
+  // some hosts refuse large uploads before the request reaches the API
+  if (res.status === 413) throw new ApiError(413, 'This file is too large to upload. Use JPG or PNG up to 4 MB.')
   const message = typeof detail === 'string' ? detail
     : detail?.message ?? (Array.isArray(detail) ? 'Please check the values entered.' : `Request failed (${res.status}).`)
   if (res.status === 401 && !path.startsWith('/auth/login')) {

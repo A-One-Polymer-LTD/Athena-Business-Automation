@@ -106,6 +106,8 @@ export default function ItemDetail() {
   const isPm = role === 'Production Manager'
   const isSuper = role === 'Super Admin'
   const canOpenOrder = role === 'Sales Admin' || isPm || isSuper
+  // the Production Report screen is not open to every role that may open an item (e.g. Warehouse / Delivery)
+  const canOpenReport = isApm || canOpenOrder || !!user?.can_view_cost
   const moves: Move[] = item.moves ?? []
   const history: HistoryRow[] = item.history ?? []
   const storeReqs: StoreReq[] = item.store_requisitions ?? []
@@ -212,7 +214,7 @@ export default function ItemDetail() {
               {item.product_name && <p className="mt-1 text-[15px] font-semibold text-slate-800">{item.product_name}</p>}
             </div>
             <div className="flex flex-wrap items-center gap-2">
-              {item.report && <Link to={`/reports/${item.report.id}`}><Button variant="secondary" icon={<FileText className="h-4 w-4" />}>Production Report</Button></Link>}
+              {item.report && canOpenReport && <Link to={`/reports/${item.report.id}`}><Button variant="secondary" icon={<FileText className="h-4 w-4" />}>Production Report</Button></Link>}
               {canOpenOrder && item.order_id && <Link to={`/orders/${item.order_id}`}><Button variant="secondary">Open order {item.order_no}</Button></Link>}
             </div>
           </div>
@@ -246,7 +248,7 @@ export default function ItemDetail() {
         </Card>
 
         {/* stage tracker */}
-        <Card title="Stage tracker" subtitle={item.stage_since ? `In ${item.stage} since ${fmtDateTime(item.stage_since)}` : undefined}>
+        <Card title="Stage tracker" subtitle={item.stage_since ? `${/^In /.test(item.stage) ? '' : 'In '}${item.stage} since ${fmtDateTime(item.stage_since)}` : undefined}>
           <StageTracker item={item} />
 
           {isApm && item.stage === 'Assigned' && (
@@ -349,7 +351,7 @@ export default function ItemDetail() {
                 const live = !h.ended_at && i === 0 && item.stage !== 'Delivered'
                 return (
                   <li key={`${h.started_at}-${i}`} className="relative">
-                    <span aria-hidden className={cx('absolute -left-[27px] top-1 h-3 w-3 rounded-full border-2 border-white', h.kind === 'rework' ? 'bg-red-500' : k ? 'bg-orange-400' : live ? 'bg-blue-600' : 'bg-brand-700')} />
+                    <span aria-hidden className={cx('absolute -left-[27px] top-1 h-3 w-3 rounded-full border-2 border-white', h.kind === 'rework' ? 'bg-red-500' : k ? 'bg-orange-400' : live ? 'bg-blue-600' : 'bg-slate-400')} />
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="text-sm font-bold text-brand-950">{h.stage}</span>
                       {k && <Pill tone={k.tone}>{k.label}</Pill>}

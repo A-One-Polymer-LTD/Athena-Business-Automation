@@ -124,7 +124,7 @@ export default function WoodInbox() {
           searchPlaceholder="Search requisition, item, wood, APM…"
           emptyTitle={tab === 'new' ? 'No new requisitions' : 'No requisitions here'}
           emptyHint={tab === 'new' ? 'New wood requisitions from the APMs appear here.' : undefined}
-          rowClassName={(r) => (r.status === 'Submitted' ? 'bg-gold-50/40' : undefined)} />
+          rowClassName={(r) => (r.status === 'Submitted' ? 'bg-slate-50/80' : undefined)} />
       )}
 
       <Modal open={!!req} onClose={() => { if (!busy) setOpenId(null) }} size="lg"
@@ -139,7 +139,7 @@ export default function WoodInbox() {
         {req && (
           <div className="space-y-4">
             {req.status === 'Returned' && req.return_reason && <Notice tone="warn"><b>Returned for correction:</b> {req.return_reason}</Notice>}
-            <div className="rounded-xl border border-gold-200 bg-gold-50/60 p-4">
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
               <Facts cols={4} items={[
                 ['Wood category', req.wood_category],
                 ['Seasoning', req.seasoning],

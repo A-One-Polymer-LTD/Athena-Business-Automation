@@ -53,7 +53,7 @@ interface ItemFull extends Item {
 }
 
 const day = (i: Item) => (i.delivery_date ?? i.delivered_at ?? '').slice(0, 10)
-const DATE_INPUT = 'h-9 rounded-lg border border-slate-300 bg-white px-2.5 text-sm text-ink focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200'
+const DATE_INPUT = 'h-9 rounded-lg border border-slate-300 bg-white px-2.5 text-sm text-ink focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-200'
 
 export default function DeliveryRecords() {
   const { data, loading, error } = useLoad<Item[]>(() => api.get('/items?scope=delivered'))

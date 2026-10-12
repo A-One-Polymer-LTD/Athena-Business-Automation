@@ -39,11 +39,11 @@ function Timeline({ history }: { history: HistoryRow[] }) {
         return (
           <li key={i} className="relative pb-4 pl-5 last:pb-0">
             <span className={cx('absolute -left-[7px] top-1 h-3 w-3 rounded-full border-2 border-white ring-1',
-              bad ? 'bg-red-500 ring-red-300' : current ? 'bg-gold-400 ring-gold-300' : 'bg-brand-600 ring-brand-300')} aria-hidden />
+              bad ? 'bg-red-500 ring-red-300' : current ? 'bg-blue-600 ring-blue-200' : 'bg-slate-400 ring-slate-200')} aria-hidden />
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
               <span className="text-sm font-semibold text-brand-950">{h.stage}</span>
               {kind && <Pill tone={bad ? 'red' : 'brand'}>{kind}</Pill>}
-              {current && <Pill tone="gold">Current</Pill>}
+              {current && <Pill tone="brand">Current</Pill>}
             </div>
             <p className="mt-0.5 text-xs text-slate-500">
               {[h.started_at ? fmtDateTime(h.started_at) : '', h.hours !== undefined ? `${current ? 'so far ' : ''}${hoursLabel(h.hours)}` : '', h.user ? `by ${h.user}` : '']

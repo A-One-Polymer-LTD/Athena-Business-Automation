@@ -141,8 +141,8 @@ function SummaryView() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" horizontal={false} />
                 <XAxis type="number" tick={axisTick} tickLine={false} axisLine={false} />
                 <YAxis type="category" dataKey="category" width={120} tick={axisTick} tickLine={false} axisLine={{ stroke: '#cbd5e1' }} />
-                <Tooltip formatter={(v: any) => [days(Number(v)), 'Average lead time']} cursor={{ fill: '#f2f5fb' }} />
-                <Bar dataKey="avg_lead_days" fill="#22355c" radius={[0, 3, 3, 0]} maxBarSize={22} />
+                <Tooltip formatter={(v: any) => [days(Number(v)), 'Average lead time']} cursor={{ fill: '#faf5f5' }} />
+                <Bar dataKey="avg_lead_days" fill="#d83533" radius={[0, 3, 3, 0]} maxBarSize={22} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -154,7 +154,7 @@ function SummaryView() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" horizontal={false} />
                 <XAxis type="number" domain={[0, 100]} tick={axisTick} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} />
                 <YAxis type="category" dataKey="category" width={120} tick={axisTick} tickLine={false} axisLine={{ stroke: '#cbd5e1' }} />
-                <Tooltip formatter={(v: any) => [`${num(Number(v), 1)}%`, 'Rework rate']} cursor={{ fill: '#f2f5fb' }} />
+                <Tooltip formatter={(v: any) => [`${num(Number(v), 1)}%`, 'Rework rate']} cursor={{ fill: '#faf5f5' }} />
                 <Bar dataKey="rework_rate" fill="#dc2626" radius={[0, 3, 3, 0]} maxBarSize={22} />
               </BarChart>
             </ResponsiveContainer>
@@ -171,9 +171,9 @@ function SummaryView() {
               <XAxis dataKey="label" tick={axisTick} tickLine={false} axisLine={{ stroke: '#cbd5e1' }} />
               <YAxis yAxisId="l" tick={axisTick} tickLine={false} axisLine={false} />
               <YAxis yAxisId="r" orientation="right" tick={axisTick} tickLine={false} axisLine={false} width={showCost ? 60 : 0} hide={!showCost} tickFormatter={(v) => compact(Number(v))} />
-              <Tooltip cursor={{ fill: '#f2f5fb' }} formatter={(v: any, name: any) => (name === 'Average recorded cost' ? money(Number(v), 2) : name === 'Rework rate (%)' ? `${num(Number(v), 1)}%` : days(Number(v)))} />
+              <Tooltip cursor={{ fill: '#faf5f5' }} formatter={(v: any, name: any) => (name === 'Average recorded cost' ? money(Number(v), 2) : name === 'Rework rate (%)' ? `${num(Number(v), 1)}%` : days(Number(v)))} />
               <Legend wrapperStyle={{ fontSize: 12 }} />
-              <Bar yAxisId="l" dataKey="avg_lead_days" name="Average lead time (days)" fill="#4a6aa8" radius={[3, 3, 0, 0]} maxBarSize={40} />
+              <Bar yAxisId="l" dataKey="avg_lead_days" name="Average lead time (days)" fill="#52525b" radius={[3, 3, 0, 0]} maxBarSize={40} />
               <Line yAxisId="l" dataKey="rework_rate" name="Rework rate (%)" stroke="#dc2626" strokeWidth={2} dot={{ r: 3 }} />
               {showCost && <Line yAxisId="r" dataKey="avg_cost" name="Average recorded cost" stroke="#d4a63d" strokeWidth={2} dot={{ r: 3 }} />}
             </ComposedChart>

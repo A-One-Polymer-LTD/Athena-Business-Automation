@@ -18,6 +18,8 @@ export interface Column<T> {
   /** Leave the column out of search and Excel export (e.g. action buttons, thumbnails). */
   noExport?: boolean
   sortable?: boolean
+  /** Not shown as a table column, but still searched and exported (its value is shown inside another column). */
+  hidden?: boolean
   className?: string
 }
 
@@ -92,6 +94,7 @@ export function DataTable<T>({
     const cols = visible.filter((c) => !c.noExport)
     exportRows(exportName!, filtered.map((r) => Object.fromEntries(cols.map((c) => [c.header, raw(c, r) ?? '']))))
   }
+  const shownCols = visible.filter((c) => !c.hidden)
   const pad = dense ? 'px-3 py-2' : 'px-4 py-3'
 
   return (
@@ -102,7 +105,7 @@ export function DataTable<T>({
             <div className="relative w-full sm:w-64">
               <Search className="pointer-events-none absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
               <input value={q} onChange={(e) => { setQ(e.target.value); setPage(1) }} placeholder={searchPlaceholder} aria-label="Search"
-                className="h-9 w-full rounded-lg border border-slate-300 bg-white pl-9 pr-3 text-sm placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200" />
+                className="h-9 w-full rounded-lg border border-slate-300 bg-white pl-9 pr-3 text-sm placeholder:text-slate-400 focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-200" />
             </div>
           )}
           {filters}
@@ -119,7 +122,7 @@ export function DataTable<T>({
           <table className="w-full min-w-max border-collapse text-sm">
             <thead>
               <tr className="bg-slate-50 text-left text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                {visible.map((c) => (
+                {shownCols.map((c) => (
                   <th key={c.key} scope="col" className={cx(pad, 'whitespace-nowrap border-b border-slate-200', c.align === 'right' && 'text-right', c.align === 'center' && 'text-center')}>
                     {c.sortable === false || c.noExport ? c.header : (
                       <button type="button" onClick={() => toggleSort(c.key)} className="inline-flex items-center gap-1 uppercase tracking-wider hover:text-brand-800">
@@ -134,8 +137,8 @@ export function DataTable<T>({
             <tbody>
               {shown.map((r, i) => (
                 <tr key={rowKey ? rowKey(r) : i} onClick={onRowClick ? () => onRowClick(r) : undefined}
-                  className={cx('border-b border-slate-100 last:border-0', onRowClick && 'cursor-pointer hover:bg-brand-50/60', rowClassName?.(r))}>
-                  {visible.map((c) => {
+                  className={cx('border-b border-slate-100 last:border-0', onRowClick && 'cursor-pointer hover:bg-slate-50', rowClassName?.(r))}>
+                  {shownCols.map((c) => {
                     const content = c.render ? c.render(r) : raw(c, r)
                     return (
                       <td key={c.key} className={cx(pad, 'align-middle text-slate-800', c.align === 'right' && 'text-right tabular', c.align === 'center' && 'text-center', c.className)}>

@@ -224,7 +224,7 @@ export default function LiveMonitor() {
                     <YAxis type="category" dataKey="stage" width={150} tick={{ fontSize: 12, fill: '#334155' }} axisLine={false} tickLine={false} />
                     <Tooltip cursor={{ fill: '#f1f5f9' }} formatter={(v) => [num(Number(v)), 'Items']} />
                     <Bar dataKey="count" name="Items" radius={[0, 4, 4, 0]} barSize={16} label={{ position: 'right', fontSize: 12, fill: '#334155' }}>
-                      {perStage.map((s) => <Cell key={s.stage} fill={WAREHOUSE_STAGES.includes(s.stage) ? '#d4a63d' : /QC$/.test(s.stage) ? '#059669' : '#22355c'} />)}
+                      {perStage.map((s) => <Cell key={s.stage} fill={WAREHOUSE_STAGES.includes(s.stage) ? '#d4a63d' : /QC$/.test(s.stage) ? '#059669' : '#d83533'} />)}
                     </Bar>
                   </BarChart>
                 </ResponsiveContainer>

@@ -31,3 +31,9 @@ node_modules/
 frontend/dist/
 *.tsbuildinfo
 frontend/*.log
+.vercel
+.env*.local
+
+.vercel
+.env*
+.claude/

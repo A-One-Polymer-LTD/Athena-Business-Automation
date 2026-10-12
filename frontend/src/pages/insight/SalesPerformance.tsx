@@ -262,11 +262,11 @@ export default function SalesPerformance() {
                         <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
                         <XAxis dataKey="branch" tick={axisTick} tickLine={false} axisLine={{ stroke: '#cbd5e1' }} />
                         <YAxis tick={axisTick} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} />
-                        <Tooltip formatter={(v: any) => `${Math.round(Number(v))}%`} cursor={{ fill: '#f2f5fb' }} />
+                        <Tooltip formatter={(v: any) => `${Math.round(Number(v))}%`} cursor={{ fill: '#faf5f5' }} />
                         <Legend wrapperStyle={{ fontSize: 12 }} />
                         <ReferenceLine y={onTrack} stroke="#059669" strokeDasharray="5 4" />
-                        <Bar dataKey="Sales" fill="#22355c" radius={[3, 3, 0, 0]} maxBarSize={28} />
-                        <Bar dataKey="Collection" fill="#4a6aa8" radius={[3, 3, 0, 0]} maxBarSize={28} />
+                        <Bar dataKey="Sales" fill="#d83533" radius={[3, 3, 0, 0]} maxBarSize={28} />
+                        <Bar dataKey="Collection" fill="#52525b" radius={[3, 3, 0, 0]} maxBarSize={28} />
                         <Bar dataKey="Delivery" fill="#d4a63d" radius={[3, 3, 0, 0]} maxBarSize={28} />
                       </BarChart>
                     </ResponsiveContainer>
@@ -307,9 +307,9 @@ export default function SalesPerformance() {
                       <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
                       <XAxis dataKey="label" tick={axisTick} tickLine={false} axisLine={{ stroke: '#cbd5e1' }} />
                       <YAxis tick={axisTick} tickLine={false} axisLine={false} width={64} tickFormatter={(v) => compact(Number(v))} />
-                      <Tooltip formatter={(v: any) => compactMoney(Number(v))} cursor={{ fill: '#f2f5fb' }} />
+                      <Tooltip formatter={(v: any) => compactMoney(Number(v))} cursor={{ fill: '#faf5f5' }} />
                       <Legend wrapperStyle={{ fontSize: 12 }} />
-                      <Bar dataKey="actual" name="Sales actual" fill="#22355c" radius={[3, 3, 0, 0]} maxBarSize={40} />
+                      <Bar dataKey="actual" name="Sales actual" fill="#d83533" radius={[3, 3, 0, 0]} maxBarSize={40} />
                       <Line dataKey="target" name="Sales target" stroke="#d4a63d" strokeWidth={2.5} strokeDasharray="6 4" dot={{ r: 3, fill: '#d4a63d' }} />
                     </ComposedChart>
                   </ResponsiveContainer>
@@ -391,9 +391,9 @@ export default function SalesPerformance() {
                       <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" horizontal={false} />
                       <XAxis type="number" allowDecimals={false} tick={axisTick} tickLine={false} axisLine={false} />
                       <YAxis type="category" dataKey="stage" width={128} tick={axisTick} tickLine={false} axisLine={{ stroke: '#cbd5e1' }} />
-                      <Tooltip formatter={(v: any) => [num(Number(v)), 'Leads']} cursor={{ fill: '#f2f5fb' }} />
+                      <Tooltip formatter={(v: any) => [num(Number(v)), 'Leads']} cursor={{ fill: '#faf5f5' }} />
                       <Bar dataKey="count" name="Leads" radius={[0, 3, 3, 0]} maxBarSize={22}>
-                        {stages.map((st) => <Cell key={st.stage} fill={st.stage === 'Won' ? '#059669' : st.stage === 'Lost' ? '#dc2626' : '#4a6aa8'} />)}
+                        {stages.map((st) => <Cell key={st.stage} fill={st.stage === 'Won' ? '#059669' : st.stage === 'Lost' ? '#dc2626' : '#52525b'} />)}
                       </Bar>
                     </BarChart>
                   </ResponsiveContainer>

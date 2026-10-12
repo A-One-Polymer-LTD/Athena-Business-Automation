@@ -158,7 +158,7 @@ export default function StoreInbox() {
           searchPlaceholder="Search requisition, item, product, APM…"
           emptyTitle={tab === 'new' ? 'No new requisitions' : 'No requisitions here'}
           emptyHint={tab === 'new' ? 'New store requisitions from the APMs appear here.' : undefined}
-          rowClassName={(r) => (r.status === 'Submitted' ? 'bg-gold-50/40' : undefined)} />
+          rowClassName={(r) => (r.status === 'Submitted' ? 'bg-slate-50/80' : undefined)} />
       )}
 
       <Modal open={!!req} onClose={close} size="xl"

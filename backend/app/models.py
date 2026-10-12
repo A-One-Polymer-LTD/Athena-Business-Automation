@@ -1,7 +1,7 @@
 """Data model (BRD Section 9.1). Every top-level entity carries an organisation ID."""
 from datetime import date, datetime
 
-from sqlalchemy import (JSON, Boolean, Date, DateTime, Float, ForeignKey, Integer, String, Text,
+from sqlalchemy import (JSON, Boolean, Date, DateTime, Float, ForeignKey, Integer, LargeBinary, String, Text,
                         UniqueConstraint)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -389,6 +389,15 @@ class PeriodLock(Base):
     month: Mapped[int] = mapped_column(Integer)
     locked_by: Mapped[str] = mapped_column(String(100))
     locked_at: Mapped[datetime] = mapped_column(DateTime, default=now)
+
+
+class StoredFile(Base):
+    """Uploaded images (product photos, QC photos). Kept in the database and served only to signed-in users."""
+    __tablename__ = "stored_files"
+    name: Mapped[str] = mapped_column(String(120), primary_key=True)
+    content_type: Mapped[str] = mapped_column(String(40))
+    data: Mapped[bytes] = mapped_column(LargeBinary)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=now)
 
 
 class AuditLog(Base):

@@ -213,7 +213,7 @@ export default function SalesRecord() {
 
         <div className="min-w-0 space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 className="border-l-4 border-gold-400 pl-3 text-[13px] font-bold uppercase tracking-wider text-brand-900">
+            <h2 className="border-l-4 border-brand-800 pl-3 text-[13px] font-bold uppercase tracking-wider text-brand-900">
               My totals and targets, {periodLabel(period)}
             </h2>
             <PeriodPicker value={period} onChange={setPeriod} />

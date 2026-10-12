@@ -40,8 +40,8 @@ def _apply_user(db: DbSession, admin: m.User, u: m.User, body: dict, new: bool):
         if u.id == admin.id:
             raise HTTPException(409, "You cannot change your own role.")
     u.role = role
-    u.phone = (body.get("phone") or "").strip() or None
-    u.designation = (body.get("designation") or "").strip() or None
+    u.phone = (body.get("phone") or "").strip()[:30] or None
+    u.designation = (body.get("designation") or "").strip()[:100] or None
     if role == ROLE_SALES:
         b = db.get(m.Branch, int(body.get("branch_id") or 0))
         if not b or b.org_id != admin.org_id:

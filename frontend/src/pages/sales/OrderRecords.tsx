@@ -15,7 +15,7 @@ interface OrderRow {
 }
 
 const STATUSES = ['Draft', 'Pending', 'Returned', 'In Production', 'Completed', 'Partly Delivered', 'Delivered', 'Cancelled']
-const FILTER = 'h-9 rounded-lg border border-slate-300 bg-white px-2.5 text-sm text-slate-700 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200'
+const FILTER = 'h-9 rounded-lg border border-slate-300 bg-white px-2.5 text-sm text-slate-700 focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-200'
 
 export default function OrderRecords() {
   const { user } = useAuth()
@@ -66,7 +66,7 @@ export default function OrderRecords() {
   } else {
     columns.push({
       key: 'actions', header: '', noExport: true, align: 'right',
-      render: (r) => (r.status === 'Draft' || r.status === 'Returned' ? (
+      render: (r) => (r.editable ?? (r.status === 'Draft' || r.status === 'Returned') ? (
         <Button variant="ghost" size="sm" icon={<Pencil className="h-3.5 w-3.5" />}
           onClick={(e) => { e.stopPropagation(); nav(`/sales/orders/${r.id}/edit`) }}>Edit</Button>
       ) : null),

@@ -16,7 +16,6 @@ from . import models as m
 from . import workflow as wf
 from .core import (DEFAULT_SETTINGS, ROLE_APM, ROLE_PM, ROLE_SALES, ROLE_SAWMILL, ROLE_STORE, ROLE_SUPER,
                    ROLE_WAREHOUSE, get_settings, hash_password)
-from .database import UPLOAD_DIR
 
 DEMO_PASSWORD = "Athena@123"
 
@@ -82,8 +81,8 @@ PALETTES = [((150, 96, 52), (118, 72, 38), (72, 44, 24), (226, 212, 190)),
             ((84, 60, 50), (62, 44, 38), (38, 28, 24), (200, 190, 182))]
 
 
-def _png(path, category: str, variant: int, w: int = 480, h: int = 360):
-    """Write a small product illustration without any imaging library."""
+def _png(category: str, variant: int, w: int = 480, h: int = 360) -> bytes:
+    """Draw a small product illustration without any imaging library."""
     pal = PALETTES[variant % len(PALETTES)]
     top, bottom = (244, 240, 232), (222, 214, 202)
     floor_y = int(h * 0.84)
@@ -106,7 +105,7 @@ def _png(path, category: str, variant: int, w: int = 480, h: int = 360):
         return struct.pack(">I", len(data)) + tag + data + struct.pack(">I", zlib.crc32(tag + data) & 0xFFFFFFFF)
     png = (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", struct.pack(">IIBBBBB", w, h, 8, 2, 0, 0, 0))
            + chunk(b"IDAT", zlib.compress(bytes(rows), 9)) + chunk(b"IEND", b""))
-    path.write_bytes(png)
+    return png
 
 
 def seed(db: DbSession):
@@ -191,7 +190,7 @@ def seed(db: DbSession):
         image_files[cat] = []
         for v in range(3):
             fname = f"sample-{cat.split()[0].lower()}-{v + 1}.png"
-            _png(UPLOAD_DIR / fname, cat, v)
+            db.add(m.StoredFile(name=fname, content_type="image/png", data=_png(cat, v)))
             image_files[cat].append(fname)
 
     # ----- customers -----

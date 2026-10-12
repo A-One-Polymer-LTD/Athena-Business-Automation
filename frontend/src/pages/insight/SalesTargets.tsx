@@ -159,7 +159,7 @@ export default function SalesTargets() {
                               <td key={f} className="px-2 py-2">
                                 <input type="number" min={0} step={WHOLE.includes(f) ? 1 : 'any'} inputMode="decimal" value={v} placeholder="0" disabled={locked}
                                   aria-label={`${LABELS[f]} target for ${r.name}`} onChange={(e) => setCell(r.sales_admin_id, f, e.target.value)}
-                                  className={cx('h-9 w-full min-w-[92px] rounded-lg border bg-white px-2.5 text-right text-sm tabular focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200 disabled:bg-slate-100 disabled:text-slate-500',
+                                  className={cx('h-9 w-full min-w-[92px] rounded-lg border bg-white px-2.5 text-right text-sm tabular focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-200 disabled:bg-slate-100 disabled:text-slate-500',
                                     bad(v) ? 'border-red-400 bg-red-50/40' : 'border-slate-300')} />
                               </td>
                             )

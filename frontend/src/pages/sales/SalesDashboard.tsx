@@ -19,10 +19,10 @@ interface Dashboard {
 }
 
 const STATUS_COLOUR: Record<string, string> = {
-  Pending: '#94a3b8', Returned: '#dc2626', 'In Production': '#4a6aa8', Completed: '#d4a63d',
-  'Partly Delivered': '#0d9488', Delivered: '#059669', Cancelled: '#9cb2d9',
+  Pending: '#94a3b8', Returned: '#dc2626', 'In Production': '#52525b', Completed: '#d4a63d',
+  'Partly Delivered': '#0d9488', Delivered: '#059669', Cancelled: '#f3adab',
 }
-const FALLBACK = ['#22355c', '#4a6aa8', '#9cb2d9', '#d4a63d', '#059669', '#0d9488', '#dc2626', '#94a3b8']
+const FALLBACK = ['#d83533', '#52525b', '#f3adab', '#d4a63d', '#059669', '#0d9488', '#dc2626', '#94a3b8']
 const AXIS = { fontSize: 12, fill: '#64748b' }
 const TIP = { borderRadius: 10, border: '1px solid #e2e8f0', fontSize: 13, boxShadow: '0 8px 24px rgba(15,23,42,.12)' }
 
@@ -89,7 +89,7 @@ export default function SalesDashboard() {
                       <XAxis dataKey="label" tick={AXIS} tickLine={false} axisLine={{ stroke: '#cbd5e1' }} />
                       <YAxis allowDecimals={false} tick={AXIS} tickLine={false} axisLine={false} />
                       <Tooltip cursor={{ fill: '#f1f5f9' }} contentStyle={TIP} formatter={(v) => [num(Number(v)), 'Orders']} />
-                      <Bar dataKey="orders" name="Orders" fill="#22355c" radius={[4, 4, 0, 0]} maxBarSize={44} />
+                      <Bar dataKey="orders" name="Orders" fill="#d83533" radius={[4, 4, 0, 0]} maxBarSize={44} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>

@@ -10,7 +10,8 @@ from .. import workflow as wf
 from ..core import (ROLE_APM, ROLE_PM, ROLE_SALES, ROLE_SAWMILL, ROLE_STORE, ROLE_SUPER, ROLE_WAREHOUSE, audit,
                     clean, current_user, deny, get_settings, hash_password, iso, next_number, parse_date,
                     req_number, req_text, require, utcnow)
-from ..database import UPLOAD_DIR, get_db
+from ..database import get_db
+from .orders import file_exists
 
 router = APIRouter()
 
@@ -342,10 +343,10 @@ def _store_lines(db: DbSession, user: m.User, lines: list) -> list[m.StoreReqLin
             raise HTTPException(422, f"Code {code} was not found. Please select a code from the list.")
         qty = req_number(l.get("quantity"), f"Line {i} Quantity", gt=0)
         out.append(m.StoreReqLine(material_code=mat.code, material_name=mat.name, category=mat.category,
-                                  details=(l.get("details") or "").strip() or None,
-                                  measurement=(l.get("measurement") or "").strip() or mat.unit,
-                                  quantity=qty, colour_code=(l.get("colour_code") or "").strip() or None,
-                                  remarks=(l.get("remarks") or "").strip() or None))
+                                  details=(l.get("details") or "").strip()[:300] or None,
+                                  measurement=(l.get("measurement") or "").strip()[:100] or mat.unit,
+                                  quantity=qty, colour_code=(l.get("colour_code") or "").strip()[:30] or None,
+                                  remarks=(l.get("remarks") or "").strip()[:300] or None))
     return out
 
 
@@ -544,7 +545,7 @@ def qc_result(item_id: int, body: dict = Body(...), user: m.User = Depends(curre
     if result == "Rework" and not note:
         raise HTTPException(422, "Please enter a defect note for the rework.")
     photo = body.get("photo") or None
-    if photo and not (UPLOAD_DIR / photo).is_file():
+    if photo and not file_exists(db, photo):
         photo = None
     item.qc.results.append(m.QCResult(check=check, result=result, checker_name=user.name, checker_id=user.id,
                                       note=note, photo=photo))

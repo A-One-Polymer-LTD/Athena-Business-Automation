@@ -302,7 +302,7 @@ function Form({ orderId, lead, onNew }: { orderId?: string; lead: LeadRef | null
       const res = orderId ? await api.put(`/orders/${orderId}`, body) : await api.post('/orders', body)
       if (place || alwaysPlaced) {
         refreshBadges()
-        setPlaced({ id: res.id, order_no: res.order_no, message: res.message })
+        setPlaced({ id: res.id, order_no: res.order_no, message: alwaysPlaced ? `Order ${res.order_no ?? ''} updated. The Production Manager sees the corrected order.`.replace('  ', ' ') : res.message })
       } else {
         toast.success(res.message)
         refreshBadges()
@@ -314,7 +314,7 @@ function Form({ orderId, lead, onNew }: { orderId?: string; lead: LeadRef | null
         setErr('customer_phone', e.message)
         scrollToError()
       } else if (e instanceof ApiError && e.status === 409 && e.code === 'duplicate') {
-        const ok = await confirm({ title: 'Possible duplicate order', message: e.message, confirmLabel: 'Place order anyway', tone: 'warn' })
+        const ok = await confirm({ title: 'Possible duplicate order', message: alwaysPlaced ? e.message.replace('Place this order anyway?', 'Save the changes anyway?') : e.message, confirmLabel: alwaysPlaced ? 'Save anyway' : 'Place order anyway', tone: 'warn' })
         if (ok) { await send(place, { ...opts, confirmDuplicate: true }); return }
       } else if (e instanceof ApiError && e.fields) {
         const mapped: Errors = {}
@@ -439,7 +439,7 @@ function Form({ orderId, lead, onNew }: { orderId?: string; lead: LeadRef | null
                 <Notice tone="warn">
                   <p>Existing customer: <span className="font-semibold">{existing.name}</span>{[existing.code, existing.phone, existing.address].filter(Boolean).map((v) => ` · ${v}`).join('')}</p>
                   <div className="mt-2 flex flex-wrap gap-2">
-                    <Button size="sm" variant="gold" onClick={() => useExisting(existing)}>Use this customer</Button>
+                    <Button size="sm" onClick={() => useExisting(existing)}>Use this customer</Button>
                     <Button size="sm" variant="secondary" onClick={() => { setUseNew(true); setExisting(null); setErr('customer_phone', '') }}>Keep as a new customer</Button>
                   </div>
                 </Notice>

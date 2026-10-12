@@ -79,8 +79,12 @@ function LineForm({ itemId, line, materials, delivered, onSaved, onCancel }: {
     ev.preventDefault()
     setFormError('')
     const local: Errs = {}
-    if (form.rate.trim() !== '' && !(Number(form.rate) > 0)) local.rate = 'Rate must be greater than 0.'
-    if (form.amount.trim() !== '' && !(Number(form.amount) > 0)) local.amount = 'Amount must be greater than 0.'
+    if (!form.name.trim()) local.name = 'Please enter Name of the Item.'
+    if (form.rate.trim() === '') local.rate = 'Please enter Rate.'
+    else if (!(Number(form.rate) > 0)) local.rate = 'Rate must be greater than 0.'
+    if (!form.per) local.per = 'Please select Per (Pcs or Set).'
+    if (form.amount.trim() === '') local.amount = 'Please enter Amount.'
+    else if (!(Number(form.amount) > 0)) local.amount = 'Amount must be greater than 0.'
     if (delivered && !form.reason.trim()) local.reason = DELIVERED_MSG
     setErrs(local)
     if (Object.keys(local).length) return
@@ -242,7 +246,7 @@ export default function CostSheet() {
                 ))}
               </tbody>
               <tfoot>
-                <tr className="border-t-2 border-gold-300 bg-gold-50">
+                <tr className="border-t-2 border-slate-300 bg-slate-50">
                   <td colSpan={3} className="px-4 py-3.5 text-right text-[13px] font-bold uppercase tracking-wide text-brand-900">Total Recorded Production Cost</td>
                   <td className="px-4 py-3.5 text-right font-display text-lg font-bold tabular text-brand-950">{money(total, 2)}</td>
                   <td colSpan={data.can_edit ? 3 : 2} className="px-4 py-3.5 text-xs text-slate-500">Voided lines are excluded</td>

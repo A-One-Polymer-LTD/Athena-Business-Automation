@@ -37,10 +37,10 @@ interface Dashboard {
 }
 
 const STATUS_COLOURS: Record<string, string> = {
-  Pending: '#94a3b8', Returned: '#ea580c', 'In Production': '#4a6aa8', Completed: '#d4a63d', 'Partly Delivered': '#0d9488', Delivered: '#22355c',
+  Pending: '#94a3b8', Returned: '#ea580c', 'In Production': '#52525b', Completed: '#d4a63d', 'Partly Delivered': '#0d9488', Delivered: '#d83533',
 }
 const STATUS_ORDER = ['Pending', 'Returned', 'In Production', 'Completed', 'Partly Delivered', 'Delivered']
-const FALLBACK = ['#22355c', '#4a6aa8', '#9cb2d9', '#d4a63d', '#059669', '#0d9488', '#dc2626', '#ea580c', '#94a3b8']
+const FALLBACK = ['#d83533', '#52525b', '#f3adab', '#d4a63d', '#059669', '#0d9488', '#dc2626', '#ea580c', '#94a3b8']
 const WAREHOUSE_STAGES = ['In Warehouse', 'Packed', 'Ready for Delivery']
 const AXIS = { fontSize: 12, fill: '#64748b' }
 
@@ -114,7 +114,7 @@ export default function ManagementDashboard() {
                       <YAxis yAxisId="amount" orientation="right" tick={AXIS} axisLine={false} tickLine={false} width={64} tickFormatter={(v) => compact(Number(v))} />
                       <Tooltip cursor={{ fill: '#f1f5f9' }} formatter={(v, name) => [name === 'Order amount' ? money(Number(v)) : num(Number(v)), name]} />
                       <Legend wrapperStyle={{ fontSize: 12 }} />
-                      <Bar yAxisId="orders" dataKey="orders" name="Orders" fill="#22355c" radius={[4, 4, 0, 0]} maxBarSize={42} />
+                      <Bar yAxisId="orders" dataKey="orders" name="Orders" fill="#d83533" radius={[4, 4, 0, 0]} maxBarSize={42} />
                       <Line yAxisId="amount" type="monotone" dataKey="amount" name="Order amount" stroke="#d4a63d" strokeWidth={2.5} dot={{ r: 3, fill: '#d4a63d' }} />
                     </ComposedChart>
                   </ResponsiveContainer>
@@ -166,7 +166,7 @@ export default function ManagementDashboard() {
                       <YAxis type="category" dataKey="stage" width={140} tick={{ fontSize: 11.5, fill: '#334155' }} axisLine={false} tickLine={false} />
                       <Tooltip cursor={{ fill: '#f1f5f9' }} formatter={(v) => [num(Number(v)), 'Items']} />
                       <Bar dataKey="count" name="Items" radius={[0, 4, 4, 0]} barSize={15} label={{ position: 'right', fontSize: 12, fill: '#334155' }}>
-                        {data.stages.map((s) => <Cell key={s.stage} fill={WAREHOUSE_STAGES.includes(s.stage) ? '#d4a63d' : /QC$/.test(s.stage) ? '#059669' : '#22355c'} />)}
+                        {data.stages.map((s) => <Cell key={s.stage} fill={WAREHOUSE_STAGES.includes(s.stage) ? '#d4a63d' : /QC$/.test(s.stage) ? '#059669' : '#d83533'} />)}
                       </Bar>
                     </BarChart>
                   </ResponsiveContainer>
@@ -183,7 +183,7 @@ export default function ManagementDashboard() {
                       <XAxis dataKey="site" tick={AXIS} axisLine={false} tickLine={false} interval={0} angle={data.sites.length > 6 ? -35 : 0} textAnchor={data.sites.length > 6 ? 'end' : 'middle'} height={data.sites.length > 6 ? 48 : 28} />
                       <YAxis allowDecimals={false} tick={AXIS} axisLine={false} tickLine={false} width={30} />
                       <Tooltip cursor={{ fill: '#f1f5f9' }} formatter={(v) => [num(Number(v)), 'Items']} />
-                      <Bar dataKey="count" name="Items" fill="#4a6aa8" radius={[4, 4, 0, 0]} maxBarSize={38} label={{ position: 'top', fontSize: 12, fill: '#334155' }} />
+                      <Bar dataKey="count" name="Items" fill="#52525b" radius={[4, 4, 0, 0]} maxBarSize={38} label={{ position: 'top', fontSize: 12, fill: '#334155' }} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>

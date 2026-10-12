@@ -9,7 +9,7 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from . import models as m
-from .database import Base, SessionLocal, engine
+from .database import SERVERLESS, Base, SessionLocal, engine
 from .routers import admin, costs, orders, production, sales
 from .seed import seed
 
@@ -23,12 +23,18 @@ for r in (orders, production, costs, sales, admin):
     app.include_router(r.router, prefix="/api")
 
 
-@app.on_event("startup")
-def startup():
+def init_db():
+    """Create the tables and load the sample data when the database is empty."""
     Base.metadata.create_all(engine)
     with SessionLocal() as db:
         if not db.query(m.Organisation).first():
             seed(db)
+
+
+@app.on_event("startup")
+def startup():
+    if not SERVERLESS:  # hosted deployments are initialised once with `python -m app.initdb`
+        init_db()
 
 
 @app.exception_handler(Exception)

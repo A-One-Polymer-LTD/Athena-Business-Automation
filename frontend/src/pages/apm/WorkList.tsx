@@ -117,7 +117,7 @@ export default function WorkList() {
             <div className="relative min-w-0 flex-1 sm:max-w-sm">
               <Search className="pointer-events-none absolute left-3 top-3.5 h-4 w-4 text-slate-400" />
               <input value={q} onChange={(e) => setQ(e.target.value)} aria-label="Search items" placeholder="Search item no., product, customer…"
-                className="h-11 w-full rounded-lg border border-slate-300 bg-white pl-9 pr-3 text-sm placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200" />
+                className="h-11 w-full rounded-lg border border-slate-300 bg-white pl-9 pr-3 text-sm placeholder:text-slate-400 focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-200" />
             </div>
             {sites.length > 1 && (
               <div className="w-40">

@@ -33,7 +33,7 @@ const STAGES = ['In Warehouse', 'Packed', 'Ready for Delivery'] as const
 type Stage = (typeof STAGES)[number]
 const NEXT: Record<Stage, { label: string; action: 'pack' | 'ready' | 'deliver'; variant: 'primary' | 'gold' | 'success' }> = {
   'In Warehouse': { label: 'Mark Packed', action: 'pack', variant: 'primary' },
-  Packed: { label: 'Mark Ready for Delivery', action: 'ready', variant: 'gold' },
+  Packed: { label: 'Mark Ready for Delivery', action: 'ready', variant: 'primary' },
   'Ready for Delivery': { label: 'Mark Delivered', action: 'deliver', variant: 'success' },
 }
 
@@ -138,7 +138,7 @@ export default function WarehouseList() {
             <div className="relative min-w-0 flex-1 sm:max-w-sm">
               <Search className="pointer-events-none absolute left-3.5 top-3.5 h-5 w-5 text-slate-400" />
               <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search item, customer, product…" aria-label="Search"
-                className="h-12 w-full rounded-lg border border-slate-300 bg-white pl-11 pr-3 text-[15px] placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200" />
+                className="h-12 w-full rounded-lg border border-slate-300 bg-white pl-11 pr-3 text-[15px] placeholder:text-slate-400 focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-200" />
             </div>
             {filter && <Button variant="ghost" size="lg" onClick={() => setFilter('')}>Show all</Button>}
             <Button variant="secondary" size="lg" className="ml-auto" icon={<Download className="h-5 w-5" />} onClick={doExport} disabled={!rows.length}>Excel</Button>

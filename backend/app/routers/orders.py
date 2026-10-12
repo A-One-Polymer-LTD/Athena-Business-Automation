@@ -3,7 +3,7 @@ import secrets
 from datetime import date, timedelta
 
 from fastapi import APIRouter, Body, Depends, File, HTTPException, UploadFile
-from fastapi.responses import FileResponse
+from fastapi.responses import Response
 from sqlalchemy.orm import Session as DbSession
 
 from .. import models as m
@@ -12,7 +12,7 @@ from ..core import (LOCK_AFTER_FAILS, LOCK_MINUTES, ROLE_APM, ROLE_PM, ROLE_SALE
                     ROLE_SUPER, ROLE_WAREHOUSE, audit, can_view_cost, clean, create_session, current_user, deny,
                     get_settings, has_cost_permission, iso, next_number, parse_date, require, utcnow,
                     verify_password)
-from ..database import UPLOAD_DIR, get_db
+from ..database import get_db
 
 router = APIRouter()
 
@@ -143,23 +143,28 @@ def _sniff(head: bytes) -> str | None:
 
 
 @router.post("/files")
-async def upload(file: UploadFile = File(...), user: m.User = Depends(current_user)):
+async def upload(file: UploadFile = File(...), user: m.User = Depends(current_user), db: DbSession = Depends(get_db)):
     data = await file.read()
     kind = _sniff(data[:16])
     name = file.filename or "file"
     if kind not in ("jpg", "png") or len(data) > MAX_IMAGE:
         raise HTTPException(422, f"{name} is not accepted. Use JPG or PNG up to 5 MB.")
     stored = f"{secrets.token_hex(12)}.{kind}"
-    (UPLOAD_DIR / stored).write_bytes(data)
+    db.add(m.StoredFile(name=stored, content_type="image/png" if kind == "png" else "image/jpeg", data=data))
+    db.commit()
     return {"file": stored, "name": name}
 
 
 @router.get("/files/{name}")
-def get_file(name: str, user: m.User = Depends(current_user)):
-    path = (UPLOAD_DIR / name).resolve()
-    if path.parent != UPLOAD_DIR.resolve() or not path.is_file():
+def get_file(name: str, user: m.User = Depends(current_user), db: DbSession = Depends(get_db)):
+    f = db.get(m.StoredFile, name)
+    if not f:
         raise HTTPException(404, "File not found.")
-    return FileResponse(path, headers={"Cache-Control": "private, max-age=3600"})
+    return Response(content=f.data, media_type=f.content_type, headers={"Cache-Control": "private, max-age=86400"})
+
+
+def file_exists(db: DbSession, name: str) -> bool:
+    return bool(name) and db.query(m.StoredFile.name).filter_by(name=name).first() is not None
 
 
 # ---------- customers ----------
@@ -202,7 +207,7 @@ def _find_or_create_customer(db: DbSession, user: m.User, body: dict, settings: 
                                       "message": f"A customer with this phone number already exists: "
                                                  f"{existing.name} ({existing.code}). Please use this customer."})
     c = m.Customer(org_id=user.org_id, code=next_number(db, user.org_id, "customer", settings), name=name,
-                   phone=phone or None, address=(new.get("address") or "").strip() or None)
+                   phone=phone or None, address=(new.get("address") or "").strip()[:300] or None)
     db.add(c)
     db.flush()
     audit(db, user, "CREATE", "Customer", c.code, f"Customer {c.name} created")
@@ -345,7 +350,7 @@ def _validate_items(db: DbSession, user: m.User, items: list, place: bool, error
         if len(images) > 10:
             errors[p + "images"] = "Up to 10 images can be added per item."
         for f in images:
-            if not (UPLOAD_DIR / f).is_file() or "/" in f or "\\" in f:
+            if not file_exists(db, f):
                 errors[p + "images"] = "An image could not be found. Please upload it again."
         row["images"] = images
         row["image_names"] = it.get("image_names") or {}

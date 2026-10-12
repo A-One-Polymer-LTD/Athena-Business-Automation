@@ -209,7 +209,7 @@ export default function Leads() {
       <Modal open={!!form} onClose={close} size="lg" title={form?.id ? `Update lead ${form.lead_no}` : 'Add lead'}
         footer={<>
           {canStartOrder && saved && (
-            <Button variant="gold" className="mr-auto" disabled={saving} icon={<ShoppingCart className="h-4 w-4" />} onClick={() => startOrder(saved)}>Start order</Button>
+            <Button variant="secondary" className="mr-auto" disabled={saving} icon={<ShoppingCart className="h-4 w-4" />} onClick={() => startOrder(saved)}>Start order</Button>
           )}
           <Button variant="secondary" disabled={saving} onClick={close}>Cancel</Button>
           <Button loading={saving} onClick={() => save()}>{form?.id ? 'Update lead' : 'Save lead'}</Button>

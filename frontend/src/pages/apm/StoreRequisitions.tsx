@@ -388,7 +388,7 @@ export default function StoreRequisitions() {
         title={view ? <span className="flex flex-wrap items-center gap-2">{view.req_no} <StatusBadge status={view.status} /></span> : ''}
         footer={view && <>
           <Button variant="secondary" onClick={() => setViewId(null)}>Close</Button>
-          {view.status === 'Returned' && <Button variant="gold" icon={<Pencil className="h-4 w-4" />} onClick={() => setEditing(view)}>Edit and resubmit</Button>}
+          {view.status === 'Returned' && <Button icon={<Pencil className="h-4 w-4" />} onClick={() => setEditing(view)}>Edit and resubmit</Button>}
         </>}>
         {view && (
           <div className="space-y-4">
@@ -407,7 +407,7 @@ export default function StoreRequisitions() {
             <StoreLinesTable lines={view.lines} />
             {view.versions && view.versions.length > 0 && (
               <div>
-                <p className="mb-2 border-l-4 border-gold-400 pl-3 text-[13px] font-bold uppercase tracking-wider text-brand-900">Version history</p>
+                <p className="mb-2 border-l-4 border-brand-800 pl-3 text-[13px] font-bold uppercase tracking-wider text-brand-900">Version history</p>
                 <div className="space-y-3">
                   {[...view.versions].reverse().map((v) => (
                     <div key={v.version} className="rounded-lg border border-slate-200 p-3">

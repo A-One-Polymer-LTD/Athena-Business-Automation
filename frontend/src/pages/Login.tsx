@@ -46,18 +46,18 @@ export default function Login() {
   return (
     <div className="grid min-h-screen lg:grid-cols-[1.05fr_1fr]">
       {/* brand panel */}
-      <div className="relative hidden overflow-hidden bg-brand-900 p-12 text-white lg:flex lg:flex-col lg:justify-between">
-        <div className="pointer-events-none absolute -right-32 -top-32 h-[28rem] w-[28rem] rounded-full bg-brand-700/40 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-40 -left-24 h-[26rem] w-[26rem] rounded-full bg-gold-500/15 blur-3xl" />
-        <Logo light />
+      <div className="relative hidden overflow-hidden bg-gradient-to-br from-brand-800 via-brand-800 to-brand-700 p-12 text-white lg:flex lg:flex-col lg:justify-between">
+        <div className="pointer-events-none absolute -right-40 -top-40 h-[30rem] w-[30rem] rounded-full bg-white/10 blur-2xl" />
+        <div className="pointer-events-none absolute -bottom-48 -left-32 h-[28rem] w-[28rem] rounded-full bg-black/10 blur-2xl" />
+        <div className="relative inline-flex self-start rounded-2xl bg-white px-5 py-3 shadow-pop"><Logo size="lg" /></div>
         <div className="relative max-w-lg">
           <h1 className="font-display text-[40px] font-extrabold leading-[1.1] tracking-tight">
-            One system for sales, production, quality and <span className="text-gold-400">fulfilment</span>.
+            One system for sales, production, quality and fulfilment.
           </h1>
-          <p className="mt-5 text-[15px] leading-relaxed text-brand-200">
+          <p className="mt-5 text-[15px] leading-relaxed text-white/85">
             Athena OS gives every customer order a single digital record that each team updates — from the showroom, across every production site, to the customer's door.
           </p>
-          <ul className="mt-9 space-y-4 text-sm text-brand-100">
+          <ul className="mt-9 space-y-4 text-sm text-white">
             {[
               [<Activity key="a" className="h-5 w-5" />, 'Live stage of every item across all production sites'],
               [<ClipboardCheck key="b" className="h-5 w-5" />, 'Unified QC report with rework history and digital sign-off'],
@@ -65,23 +65,23 @@ export default function Login() {
               [<ShieldCheck key="d" className="h-5 w-5" />, 'Role-based access with a complete audit trail'],
             ].map(([icon, text], i) => (
               <li key={i} className="flex items-center gap-3.5">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 text-gold-300">{icon}</span>{text}
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-brand-800 shadow-sm">{icon}</span>{text}
               </li>
             ))}
           </ul>
         </div>
-        <p className="relative text-xs text-brand-400">© {new Date().getFullYear()} Athena Business Automation</p>
+        <p className="relative text-xs text-white/70">© {new Date().getFullYear()} Athena Business Automation</p>
       </div>
 
       {/* sign-in panel */}
-      <div className="flex flex-col items-center justify-center bg-surface px-5 py-10">
+      <div className="flex flex-col items-center justify-center bg-white px-5 py-10">
         <div className="w-full max-w-[440px]">
-          <div className="mb-8 lg:hidden"><Logo /></div>
+          <div className="mb-8 flex justify-center lg:hidden"><Logo size="lg" /></div>
           <h2 className="text-2xl font-bold tracking-tight text-brand-950">Sign in</h2>
           <p className="mt-1 text-sm text-slate-500">Use your user ID and password to open your workspace.</p>
 
           {notice && <Notice tone="warn" className="mt-5">{notice}</Notice>}
-          <form onSubmit={submit} className="mt-6 space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-card" noValidate>
+          <form onSubmit={submit} className="mt-6 space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-pop" noValidate>
             <Field label="User ID" required>
               <div className="relative">
                 <UserIcon className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-slate-400" />
@@ -110,10 +110,10 @@ export default function Login() {
             <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
               {DEMO.map((d) => (
                 <button key={d.id} type="button" disabled={!!busy} onClick={() => signIn(d.id, DEMO_PASSWORD)}
-                  className="rounded-lg border border-slate-200 px-3 py-2 text-left transition hover:border-brand-400 hover:bg-brand-50 disabled:opacity-60">
+                  className="rounded-lg border border-slate-200 px-3 py-2 text-left transition hover:border-brand-300 hover:bg-brand-50 disabled:opacity-60">
                   <span className="flex items-center justify-between gap-2">
                     <span className="truncate text-[13px] font-semibold text-brand-950">{d.name}</span>
-                    <code className="shrink-0 text-[11px] font-semibold text-gold-600">{d.id}</code>
+                    <code className="shrink-0 text-[11px] font-semibold text-brand-800">{d.id}</code>
                   </span>
                   <span className="block truncate text-[11.5px] text-slate-500">{d.role}</span>
                 </button>

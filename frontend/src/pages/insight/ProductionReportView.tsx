@@ -50,7 +50,7 @@ const join = (...parts: unknown[]) => parts.filter((p) => has(p) && p !== NR).jo
 
 const WAREHOUSE = ['Finish Good', 'In Warehouse', 'Packed', 'Ready for Delivery', 'Delivered']
 const TINTS = {
-  making: { label: 'Making', color: '#4a6aa8' },
+  making: { label: 'Making', color: '#52525b' },
   qc: { label: 'QC', color: '#059669' },
   rework: { label: 'Rework', color: '#dc2626' },
   upholstery: { label: 'Upholstery', color: '#ea580c' },
@@ -63,7 +63,7 @@ function Section({ title, children, aside }: { title: string; children: ReactNod
   return (
     <section className="print-break-avoid border-t border-slate-200 px-5 py-5 sm:px-7">
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-        <h2 className="border-l-4 border-gold-400 pl-3 text-[13px] font-bold uppercase tracking-wider text-brand-900">{title}</h2>
+        <h2 className="border-l-4 border-brand-800 pl-3 text-[13px] font-bold uppercase tracking-wider text-brand-900">{title}</h2>
         {aside}
       </div>
       {children}
@@ -160,20 +160,20 @@ export default function ProductionReportView() {
 
       <article className="print-area overflow-hidden rounded-xl border border-slate-200 bg-white shadow-card">
         {/* title band */}
-        <header className="flex flex-wrap items-center justify-between gap-4 bg-brand-900 px-5 py-5 text-white [print-color-adjust:exact] [-webkit-print-color-adjust:exact] sm:px-7">
+        <header className="flex flex-wrap items-center justify-between gap-4 bg-brand-800 px-5 py-5 text-white [print-color-adjust:exact] [-webkit-print-color-adjust:exact] sm:px-7">
           <div className="min-w-0">
-            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-gold-300">Athena OS</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/80">Athena OS</p>
             <h1 className="mt-1 text-xl font-bold tracking-wide sm:text-2xl">PRODUCTION REPORT</h1>
-            <p className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-brand-100">
+            <p className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-white/90">
               <span className="font-display text-base font-bold text-white">{rep.report_no}</span>
               <StatusBadge status={rep.status} className={rep.status === 'Generated' ? '!bg-white !text-brand-900' : undefined} />
               {!isCurrent && <Pill tone="orange">Earlier revision</Pill>}
             </p>
-            <p className="mt-1 text-xs text-brand-200">generated automatically on delivery, {fmtDateTime(rep.generated_at)}</p>
-            {rep.reason && <p className="mt-1 text-xs text-brand-200">Revision reason: {rep.reason}</p>}
+            <p className="mt-1 text-xs text-white/80">generated automatically on delivery, {fmtDateTime(rep.generated_at)}</p>
+            {rep.reason && <p className="mt-1 text-xs text-white/80">Revision reason: {rep.reason}</p>}
           </div>
           <div className="flex flex-wrap gap-2 no-print">
-            <Button variant="gold" size="sm" icon={<Printer className="h-4 w-4" />} onClick={() => window.print()}>Print</Button>
+            <Button variant="secondary" size="sm" icon={<Printer className="h-4 w-4" />} onClick={() => window.print()}>Print</Button>
             <Button variant="secondary" size="sm" icon={<FileDown className="h-4 w-4" />} onClick={() => window.print()}>PDF</Button>
             <Button variant="secondary" size="sm" icon={<Download className="h-4 w-4" />} onClick={exportExcel}>Excel</Button>
           </div>
@@ -337,7 +337,7 @@ export default function ProductionReportView() {
                 </table>
               </div>
             )}
-            <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-gold-300 bg-gold-50 px-4 py-3.5 [print-color-adjust:exact] [-webkit-print-color-adjust:exact]">
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-slate-300 bg-slate-50 px-4 py-3.5 [print-color-adjust:exact] [-webkit-print-color-adjust:exact]">
               <span className="text-[13px] font-bold uppercase tracking-wide text-brand-900">Total Recorded Production Cost</span>
               <span className="font-display text-xl font-bold tabular text-brand-950">{money(cost.total, 2)}</span>
             </div>

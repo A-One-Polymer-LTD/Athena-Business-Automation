@@ -14,10 +14,10 @@ function NavRow({ item, badge, onNavigate }: { item: NavItem; badge?: number; on
   return (
     <NavLink to={item.to} onClick={onNavigate} end={item.to === '/warehouse'}
       className={({ isActive }) => cx('group flex items-center gap-3 rounded-lg px-3 py-2.5 text-[13.5px] font-medium transition',
-        isActive && !exactOnly ? 'bg-white/12 text-white shadow-[inset_3px_0_0_0_var(--color-gold-400)]' : 'text-brand-200 hover:bg-white/6 hover:text-white')}>
+        isActive && !exactOnly ? 'bg-brand-50 font-semibold text-brand-800 shadow-[inset_3px_0_0_0_var(--color-brand-800)]' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900')}>
       <span className="shrink-0 opacity-90">{item.icon}</span>
       <span className="flex-1 truncate">{item.label}</span>
-      {!!badge && <span className="rounded-full bg-gold-400 px-2 py-0.5 text-[11px] font-bold leading-none text-brand-950" title={`${badge} new`}>{badge}</span>}
+      {!!badge && <span className="rounded-full bg-brand-800 px-2 py-0.5 text-[11px] font-bold leading-none text-white" title={`${badge} new`}>{badge}</span>}
     </NavLink>
   )
 }
@@ -36,7 +36,7 @@ function Sidebar({ items, badges, onNavigate }: { items: NavItem[]; badges: Reco
     <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-4" aria-label="Main menu">
       {groups.map((g) => (
         <div key={g.name}>
-          {g.name && <p className="mb-1.5 px-3 text-[10.5px] font-bold uppercase tracking-[0.14em] text-brand-400">{g.name}</p>}
+          {g.name && <p className="mb-1.5 px-3 text-[10.5px] font-bold uppercase tracking-[0.14em] text-slate-400">{g.name}</p>}
           <div className="space-y-0.5">
             {g.items.map((i) => <NavRow key={i.to} item={i} badge={i.badge ? badges[i.badge] : undefined} onNavigate={onNavigate} />)}
           </div>
@@ -59,11 +59,11 @@ export default function Layout() {
   return (
     <div className="min-h-screen lg:pl-64">
       {/* desktop sidebar */}
-      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col bg-brand-900 lg:flex">
-        <div className="flex h-16 items-center border-b border-white/10 px-5"><Logo light /></div>
+      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col border-r border-slate-200 bg-white lg:flex">
+        <div className="flex h-[72px] items-center justify-center border-b border-slate-200 px-4"><Logo /></div>
         <Sidebar items={items} badges={badges} />
-        <div className="border-t border-white/10 px-5 py-3 text-[11px] leading-relaxed text-brand-300">
-          <p className="truncate font-semibold text-brand-100">{settings?.organisation}</p>
+        <div className="border-t border-slate-200 px-5 py-3 text-[11px] leading-relaxed text-slate-500">
+          <p className="truncate font-semibold text-slate-800">{settings?.organisation}</p>
           <p>Athena Business Automation</p>
         </div>
       </aside>
@@ -72,18 +72,18 @@ export default function Layout() {
       {drawer && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div className="absolute inset-0 bg-brand-950/60" onClick={() => setDrawer(false)} />
-          <aside className="animate-in absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col bg-brand-900 shadow-pop">
-            <div className="flex h-16 items-center justify-between border-b border-white/10 px-5">
-              <Logo light />
-              <button type="button" aria-label="Close menu" onClick={() => setDrawer(false)} className="rounded-lg p-1.5 text-brand-200 hover:bg-white/10"><X className="h-5 w-5" /></button>
+          <aside className="animate-in absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col bg-white shadow-pop">
+            <div className="flex h-[72px] items-center justify-between border-b border-slate-200 px-4">
+              <Logo size="sm" />
+              <button type="button" aria-label="Close menu" onClick={() => setDrawer(false)} className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100"><X className="h-5 w-5" /></button>
             </div>
             <Sidebar items={items} badges={badges} onNavigate={() => setDrawer(false)} />
           </aside>
         </div>
       )}
 
-      <header className="app-topbar sticky top-0 z-20 flex h-16 items-center gap-3 border-b border-slate-200 bg-white/90 px-4 backdrop-blur lg:px-8">
-        <button type="button" aria-label="Open menu" onClick={() => setDrawer(true)} className="rounded-lg p-2 text-brand-800 hover:bg-slate-100 lg:hidden"><Menu className="h-5 w-5" /></button>
+      <header className="app-topbar sticky top-0 z-20 flex h-[72px] items-center gap-3 border-b border-slate-200 bg-white/90 px-4 backdrop-blur lg:px-8">
+        <button type="button" aria-label="Open menu" onClick={() => setDrawer(true)} className="rounded-lg p-2 text-slate-700 hover:bg-slate-100 lg:hidden"><Menu className="h-5 w-5" /></button>
         <div className="lg:hidden"><Logo compact /></div>
         <div className="hidden min-w-0 lg:block">
           <p className="truncate text-sm font-semibold text-brand-950">{settings?.organisation}</p>
@@ -92,9 +92,9 @@ export default function Layout() {
         <div className="ml-auto flex items-center gap-3">
           <div className="text-right leading-tight">
             <p className="max-w-[40vw] truncate text-sm font-semibold text-brand-950">{user.name}</p>
-            <p className="text-xs font-medium text-gold-600">{user.role}</p>
+            <p className="text-xs font-semibold text-brand-800">{user.role}</p>
           </div>
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-800 text-sm font-bold text-white ring-2 ring-gold-300" aria-hidden>{initials}</div>
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-800 text-sm font-bold text-white ring-2 ring-brand-200" aria-hidden>{initials}</div>
           <button type="button" onClick={logout} title="Sign out" aria-label="Sign out" className="rounded-lg border border-slate-200 p-2 text-slate-600 hover:border-red-200 hover:bg-red-50 hover:text-red-600"><LogOut className="h-[18px] w-[18px]" /></button>
         </div>
       </header>
@@ -109,7 +109,7 @@ export default function Layout() {
           <NavLink key={i.to} to={i.to} end={i.to === '/warehouse'} className={({ isActive }) => cx('relative flex flex-1 flex-col items-center gap-1 px-1 py-2.5 text-[10.5px] font-semibold', isActive ? 'text-brand-800' : 'text-slate-500')}>
             {i.icon}
             <span className="max-w-full truncate">{i.label.replace('Requisition ', '').replace('Production ', '')}</span>
-            {!!(i.badge && badges[i.badge]) && <span className="absolute right-[22%] top-1.5 h-2 w-2 rounded-full bg-gold-500" />}
+            {!!(i.badge && badges[i.badge]) && <span className="absolute right-[22%] top-1.5 h-2 w-2 rounded-full bg-brand-800" />}
           </NavLink>
         ))}
         {items.length > 4 && (

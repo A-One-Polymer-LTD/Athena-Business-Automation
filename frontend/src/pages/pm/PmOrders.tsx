@@ -101,14 +101,23 @@ export default function PmOrders() {
   const changed = () => { queue.reload(); meta.reload(); refreshBadges() }
 
   const queueColumns: Column<Order>[] = [
-    { key: 'order_no', header: 'Order No.', render: (o) => <span className="font-semibold text-brand-900">{o.order_no}</span> },
-    { key: 'customer', header: 'Customer' },
+    // customer and order date sit under the order number and the waiting time, so the queue fits beside the details panel
+    {
+      key: 'order_no', header: 'Order',
+      render: (o) => <div className="min-w-0"><p className="font-semibold text-brand-900">{o.order_no}</p><p className="max-w-[190px] truncate text-xs text-slate-500">{o.customer}</p></div>,
+    },
+    { key: 'customer', header: 'Customer', hidden: true },
     { key: 'item_count', header: 'Items', align: 'right' },
     { key: 'amount', header: 'Amount', align: 'right', render: (o) => money(o.amount) },
-    { key: 'order_date', header: 'Order date', render: (o) => fmtDate(o.order_date) },
+    { key: 'order_date', header: 'Order date', hidden: true, value: (o) => (o.order_date || '').slice(0, 10) },
     {
       key: 'waiting', header: 'Waiting', value: (o) => Math.round(waitingHours(o.order_date)),
-      render: (o) => <span className="inline-flex items-center gap-1 text-slate-600"><Clock className="h-3.5 w-3.5" />{hoursLabel(waitingHours(o.order_date))}</span>,
+      render: (o) => (
+        <div>
+          <p className="inline-flex items-center gap-1 whitespace-nowrap text-slate-700"><Clock className="h-3.5 w-3.5" />{hoursLabel(waitingHours(o.order_date))}</p>
+          <p className="whitespace-nowrap text-xs text-slate-500">{fmtDate(o.order_date)}</p>
+        </div>
+      ),
     },
   ]
   const allColumns: Column<Order>[] = [
@@ -148,7 +157,7 @@ export default function PmOrders() {
         <div className="grid items-start gap-4 xl:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
           <DataTable rows={rows} columns={queueColumns} rowKey={(o) => o.id} dense exportName={tab === 'pending' ? 'Pending orders' : 'Returned orders'}
             searchPlaceholder="Search Order No. or customer…" onRowClick={(o) => setSel(o.id)}
-            rowClassName={(o) => (o.id === sel ? 'bg-brand-50 shadow-[inset_3px_0_0_0_var(--color-gold-400)]' : undefined)} />
+            rowClassName={(o) => (o.id === sel ? 'bg-brand-50 shadow-[inset_3px_0_0_0_var(--color-brand-800)]' : undefined)} />
           {wide && (
             <Card title="Order details" className="sticky top-4">
               {sel ? <OrderPanel key={sel} id={sel} sites={sites} onChanged={changed} /> : <Empty title="Select an order" hint="Choose an order from the list to see its items and assign them." />}

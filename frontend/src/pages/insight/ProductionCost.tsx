@@ -137,8 +137,8 @@ function Reports({ isSuper }: { isSuper: boolean }) {
                     <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
                     <XAxis dataKey="label" tick={axisTick} tickLine={false} axisLine={{ stroke: '#cbd5e1' }} />
                     <YAxis tick={axisTick} tickLine={false} axisLine={false} width={64} tickFormatter={(v) => compact(Number(v))} />
-                    <Tooltip formatter={(v: any) => [money(Number(v), 2), 'Recorded cost']} cursor={{ fill: '#f2f5fb' }} />
-                    <Bar dataKey="cost" fill="#22355c" radius={[3, 3, 0, 0]} maxBarSize={44} />
+                    <Tooltip formatter={(v: any) => [money(Number(v), 2), 'Recorded cost']} cursor={{ fill: '#faf5f5' }} />
+                    <Bar dataKey="cost" fill="#d83533" radius={[3, 3, 0, 0]} maxBarSize={44} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -150,7 +150,7 @@ function Reports({ isSuper }: { isSuper: boolean }) {
                     <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" horizontal={false} />
                     <XAxis type="number" tick={axisTick} tickLine={false} axisLine={false} tickFormatter={(v) => compact(Number(v))} />
                     <YAxis type="category" dataKey="category" width={120} tick={axisTick} tickLine={false} axisLine={{ stroke: '#cbd5e1' }} />
-                    <Tooltip formatter={(v: any) => [money(Number(v), 2), 'Recorded cost']} cursor={{ fill: '#f2f5fb' }} />
+                    <Tooltip formatter={(v: any) => [money(Number(v), 2), 'Recorded cost']} cursor={{ fill: '#faf5f5' }} />
                     <Bar dataKey="cost" fill="#d4a63d" radius={[0, 3, 3, 0]} maxBarSize={22} />
                   </BarChart>
                 </ResponsiveContainer>
