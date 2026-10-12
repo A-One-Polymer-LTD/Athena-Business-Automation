@@ -30,3 +30,4 @@ backend/test.out
 node_modules/
 frontend/dist/
 *.tsbuildinfo
+frontend/*.log
