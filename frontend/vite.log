@@ -1,0 +1,1325 @@
+
+  [32m[1mVITE[22m v8.3.4[39m  [2mready in [0m[1m318[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5173[22m/[39m
+[2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+[2m2:29:33 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/sales/SalesDashboard" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:11:41
+[33m  11 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$(), _s3 = $RefreshSig$();
+  12 |  // Sales Admin
+  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+     |                                                ^
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 9)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:29:33 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/SalesDashboard" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:11:41
+[33m  11 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$(), _s3 = $RefreshSig$();
+  12 |  // Sales Admin
+  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+     |                                                ^
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));[39m
+[2m2:29:33 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/SalesDashboard" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:11:41
+[33m  11 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$(), _s3 = $RefreshSig$();
+  12 |  // Sales Admin
+  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+     |                                                ^
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));[39m
+[2m2:30:31 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/admin/LiveMonitor.tsx[22m
+[2m2:30:32 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:30:32 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/SalesDashboard" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:11:41
+[33m  11 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$(), _s3 = $RefreshSig$();
+  12 |  // Sales Admin
+  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+     |                                                ^
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));[39m
+[2m2:30:32 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/SalesDashboard" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:11:41
+[33m  11 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$(), _s3 = $RefreshSig$();
+  12 |  // Sales Admin
+  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+     |                                                ^
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));[39m
+[2m2:30:32 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/SalesDashboard" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:11:41
+[33m  11 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$(), _s3 = $RefreshSig$();
+  12 |  // Sales Admin
+  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+     |                                                ^
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));[39m
+[2m2:30:32 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/sales/SalesDashboard" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:11:41
+[33m  11 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$(), _s3 = $RefreshSig$();
+  12 |  // Sales Admin
+  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+     |                                                ^
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 9)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:31:14 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/sales/SalesRecord.tsx[22m
+[2m2:31:14 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:31:14 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:31:14 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:31:14 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:31:42 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/insight/SalesPerformance.tsx.tmp.27592.df6d179a6317[22m
+[2m2:31:42 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderRecords" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:13:39
+[33m  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));
+     |                                               ^
+  18 |  _c6 = OrderRecords;
+  19 |  const OrderDetail = lazy(_c7 = () => import("./pages/sales/OrderDetail"));[39m
+[2m2:31:42 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/insight/SalesTargets.tsx[22m
+[2m2:31:42 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/sales/OrderRecords" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:13:39
+[33m  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));
+     |                                               ^
+  18 |  _c6 = OrderRecords;
+  19 |  const OrderDetail = lazy(_c7 = () => import("./pages/sales/OrderDetail"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:31:42 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderRecords" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:13:39
+[33m  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));
+     |                                               ^
+  18 |  _c6 = OrderRecords;
+  19 |  const OrderDetail = lazy(_c7 = () => import("./pages/sales/OrderDetail"));[39m
+[2m2:31:42 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderRecords" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:13:39
+[33m  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));
+     |                                               ^
+  18 |  _c6 = OrderRecords;
+  19 |  const OrderDetail = lazy(_c7 = () => import("./pages/sales/OrderDetail"));[39m
+[2m2:31:42 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:31:42 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:31:42 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:31:42 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:32:03 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/apm/StoreRequisitions.tsx.tmp.27592.98e38ccb3c10[22m
+[2m2:32:03 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:32:03 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:32:03 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/apm/WoodRequisitions.tsx[22m
+[2m2:32:03 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderDetail" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:14:38
+[33m  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));
+  18 |  _c6 = OrderRecords;
+  19 |  const OrderDetail = lazy(_c7 = () => import("./pages/sales/OrderDetail"));
+     |                                              ^
+  20 |  _c8 = OrderDetail;
+  21 |  const SalesRecord = lazy(_c9 = () => import("./pages/sales/SalesRecord"));[39m
+[2m2:32:03 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/sales/OrderDetail" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:14:38
+[33m  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));
+  18 |  _c6 = OrderRecords;
+  19 |  const OrderDetail = lazy(_c7 = () => import("./pages/sales/OrderDetail"));
+     |                                              ^
+  20 |  _c8 = OrderDetail;
+  21 |  const SalesRecord = lazy(_c9 = () => import("./pages/sales/SalesRecord"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 12)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:32:03 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:32:03 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:32:03 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:32:03 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:32:14 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/sales/OrderRecords.tsx.tmp.27592.c25bbad5789a[22m
+[2m2:32:14 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/Leads" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:16:32
+[33m  21 |  const SalesRecord = lazy(_c9 = () => import("./pages/sales/SalesRecord"));
+  22 |  _c10 = SalesRecord;
+  23 |  const Leads = lazy(_c11 = () => import("./pages/sales/Leads"));
+     |                                         ^
+  24 |  _c12 = Leads;
+  25 |  // Production Manager[39m
+[2m2:32:14 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/Leads" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:16:32
+[33m  21 |  const SalesRecord = lazy(_c9 = () => import("./pages/sales/SalesRecord"));
+  22 |  _c10 = SalesRecord;
+  23 |  const Leads = lazy(_c11 = () => import("./pages/sales/Leads"));
+     |                                         ^
+  24 |  _c12 = Leads;
+  25 |  // Production Manager[39m
+[2m2:32:14 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/Leads" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:16:32
+[33m  21 |  const SalesRecord = lazy(_c9 = () => import("./pages/sales/SalesRecord"));
+  22 |  _c10 = SalesRecord;
+  23 |  const Leads = lazy(_c11 = () => import("./pages/sales/Leads"));
+     |                                         ^
+  24 |  _c12 = Leads;
+  25 |  // Production Manager[39m
+[2m2:32:14 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/Leads" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:16:32
+[33m  21 |  const SalesRecord = lazy(_c9 = () => import("./pages/sales/SalesRecord"));
+  22 |  _c10 = SalesRecord;
+  23 |  const Leads = lazy(_c11 = () => import("./pages/sales/Leads"));
+     |                                         ^
+  24 |  _c12 = Leads;
+  25 |  // Production Manager[39m
+[2m2:32:14 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/Leads" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:16:32
+[33m  21 |  const SalesRecord = lazy(_c9 = () => import("./pages/sales/SalesRecord"));
+  22 |  _c10 = SalesRecord;
+  23 |  const Leads = lazy(_c11 = () => import("./pages/sales/Leads"));
+     |                                         ^
+  24 |  _c12 = Leads;
+  25 |  // Production Manager[39m
+[2m2:32:14 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/sales/Leads" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:16:32
+[33m  21 |  const SalesRecord = lazy(_c9 = () => import("./pages/sales/SalesRecord"));
+  22 |  _c10 = SalesRecord;
+  23 |  const Leads = lazy(_c11 = () => import("./pages/sales/Leads"));
+     |                                         ^
+  24 |  _c12 = Leads;
+  25 |  // Production Manager[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 14)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:32:20 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/admin/ManagementDashboard.tsx.tmp.27592.d69712e03bdd[22m
+[2m2:32:20 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/Leads" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:16:32
+[33m  21 |  const SalesRecord = lazy(_c9 = () => import("./pages/sales/SalesRecord"));
+  22 |  _c10 = SalesRecord;
+  23 |  const Leads = lazy(_c11 = () => import("./pages/sales/Leads"));
+     |                                         ^
+  24 |  _c12 = Leads;
+  25 |  // Production Manager[39m
+[2m2:32:20 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:32:20 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:32:21 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/apm/WorkList" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:23:35
+[33m  33 |  _c20 = ManageApms;
+  34 |  // APM
+  35 |  const WorkList = lazy(_c21 = () => import("./pages/apm/WorkList"));
+     |                                            ^
+  36 |  _c22 = WorkList;
+  37 |  const StoreRequisitions = lazy(_c23 = () => import("./pages/apm/StoreRequisitions"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 19)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+      at async viteTransformMiddleware (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20404:20)
+[2m2:32:21 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:32:21 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:32:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/insight/ProductionCost.tsx.tmp.27592.2d538055327c[22m
+[2m2:32:24 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/Leads" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:16:32
+[33m  21 |  const SalesRecord = lazy(_c9 = () => import("./pages/sales/SalesRecord"));
+  22 |  _c10 = SalesRecord;
+  23 |  const Leads = lazy(_c11 = () => import("./pages/sales/Leads"));
+     |                                         ^
+  24 |  _c12 = Leads;
+  25 |  // Production Manager[39m
+[2m2:32:24 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:32:24 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:32:24 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:32:24 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:32:37 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/pm/PmOrders.tsx.tmp.27592.e201d6736341[22m
+[2m2:32:37 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:32:37 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:32:37 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:32:37 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/apm/ItemDetail" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:26:37
+[33m  39 |  const WoodRequisitions = lazy(_c25 = () => import("./pages/apm/WoodRequisitions"));
+  40 |  _c26 = WoodRequisitions;
+  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+     |                                              ^
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 22)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+      at async viteTransformMiddleware (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20404:20)
+[2m2:32:37 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:32:37 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:32:37 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:33:02 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/sales/Leads.tsx.tmp.27592.cfb0b1a2bdbc[22m
+[2m2:33:02 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:33:02 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:33:02 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:33:02 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:33:02 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/QcSheet.tsx[22m
+[2m2:33:02 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:33:02 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:33:03 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:33:03 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:33:20 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/insight/ProductionCost.tsx.tmp.27592.7c1fbc447d15[22m
+[2m2:33:20 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:33:20 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:33:20 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:33:20 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:33:20 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/insight/CostSheet.tsx.tmp.27592.716f283e0268[22m
+[2m2:33:20 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:33:20 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:33:20 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:33:20 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:33:49 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/admin/MasterData.tsx.tmp.27592.d9941c7c5094[22m
+[2m2:33:49 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:33:49 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:33:50 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:33:50 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:33:56 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/apm/WorkList.tsx.tmp.27592.ff3da1a9466a[22m
+[2m2:33:56 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:33:56 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:33:56 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:33:56 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:34:13 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/insight/CostSheet.tsx.tmp.27592.3a6893cf98ab[22m
+[2m2:34:13 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:34:13 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:34:13 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+      at async viteTransformMiddleware (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20404:20)
+[2m2:34:13 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/insight/ProductionReports.tsx[22m
+[2m2:34:13 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:34:13 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:34:13 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:34:13 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:34:13 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:34:13 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:34:50 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/ops/StoreInbox.tsx[22m
+[2m2:34:50 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:34:50 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:34:50 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/ops/WarehouseList.tsx[22m
+[2m2:34:50 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:34:50 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:34:50 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:34:50 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:34:50 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/ops/DeliveryRecords.tsx[22m
+[2m2:34:51 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:34:51 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:34:51 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:34:51 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:34:51 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+[2m2:34:51 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/sales/OrderForm" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:12:36
+[33m  13 |  const SalesDashboard = lazy(_c = () => import("./pages/sales/SalesDashboard"));
+  14 |  _c2 = SalesDashboard;
+  15 |  const OrderForm = lazy(_c3 = () => import("./pages/sales/OrderForm"));
+     |                                            ^
+  16 |  _c4 = OrderForm;
+  17 |  const OrderRecords = lazy(_c5 = () => import("./pages/sales/OrderRecords"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:34:56 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/sales/OrderForm.tsx.tmp.27592.35b22ceefa78[22m
+[2m2:34:57 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/apm/QcReports" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:27:36
+[33m  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));
+     |                                             ^
+  44 |  _c30 = QcReports;
+  45 |  // Store, saw mill, warehouse[39m
+[2m2:34:57 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/apm/ItemDetail" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:26:37
+[33m  39 |  const WoodRequisitions = lazy(_c25 = () => import("./pages/apm/WoodRequisitions"));
+  40 |  _c26 = WoodRequisitions;
+  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+     |                                              ^
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));[39m
+[2m2:34:57 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/apm/ItemDetail" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:26:37
+[33m  39 |  const WoodRequisitions = lazy(_c25 = () => import("./pages/apm/WoodRequisitions"));
+  40 |  _c26 = WoodRequisitions;
+  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+     |                                              ^
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));[39m
+[2m2:34:57 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/apm/ItemDetail" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:26:37
+[33m  39 |  const WoodRequisitions = lazy(_c25 = () => import("./pages/apm/WoodRequisitions"));
+  40 |  _c26 = WoodRequisitions;
+  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+     |                                              ^
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));[39m
+[2m2:34:57 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/apm/ItemDetail" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:26:37
+[33m  39 |  const WoodRequisitions = lazy(_c25 = () => import("./pages/apm/WoodRequisitions"));
+  40 |  _c26 = WoodRequisitions;
+  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+     |                                              ^
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 22)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:35:01 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/ops/StoreInbox.tsx.tmp.27592.139ef4b42950[22m
+[2m2:35:01 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/apm/ItemDetail" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:26:37
+[33m  39 |  const WoodRequisitions = lazy(_c25 = () => import("./pages/apm/WoodRequisitions"));
+  40 |  _c26 = WoodRequisitions;
+  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+     |                                              ^
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));[39m
+[2m2:35:02 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/apm/ItemDetail" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:26:37
+[33m  39 |  const WoodRequisitions = lazy(_c25 = () => import("./pages/apm/WoodRequisitions"));
+  40 |  _c26 = WoodRequisitions;
+  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+     |                                              ^
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));[39m
+[2m2:35:02 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/apm/ItemDetail" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:26:37
+[33m  39 |  const WoodRequisitions = lazy(_c25 = () => import("./pages/apm/WoodRequisitions"));
+  40 |  _c26 = WoodRequisitions;
+  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+     |                                              ^
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));[39m
+[2m2:35:02 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/apm/ItemDetail" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:26:37
+[33m  39 |  const WoodRequisitions = lazy(_c25 = () => import("./pages/apm/WoodRequisitions"));
+  40 |  _c26 = WoodRequisitions;
+  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+     |                                              ^
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));[39m
+[2m2:35:02 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/apm/ItemDetail" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:26:37
+[33m  39 |  const WoodRequisitions = lazy(_c25 = () => import("./pages/apm/WoodRequisitions"));
+  40 |  _c26 = WoodRequisitions;
+  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+     |                                              ^
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 22)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:35:04 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/admin/Settings.tsx[22m
+[2m2:35:04 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/apm/QcReports" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:27:36
+[33m  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));
+     |                                             ^
+  44 |  _c30 = QcReports;
+  45 |  // Store, saw mill, warehouse[39m
+[2m2:35:04 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/apm/QcReports" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:27:36
+[33m  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));
+     |                                             ^
+  44 |  _c30 = QcReports;
+  45 |  // Store, saw mill, warehouse[39m
+[2m2:35:04 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/apm/ItemDetail" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:26:37
+[33m  39 |  const WoodRequisitions = lazy(_c25 = () => import("./pages/apm/WoodRequisitions"));
+  40 |  _c26 = WoodRequisitions;
+  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+     |                                              ^
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));[39m
+[2m2:35:04 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/apm/ItemDetail" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:26:37
+[33m  39 |  const WoodRequisitions = lazy(_c25 = () => import("./pages/apm/WoodRequisitions"));
+  40 |  _c26 = WoodRequisitions;
+  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+     |                                              ^
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 22)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:35:34 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/insight/ProductionReportView.tsx[22m
+[2m2:35:34 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/apm/ItemDetail" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:26:37
+[33m  39 |  const WoodRequisitions = lazy(_c25 = () => import("./pages/apm/WoodRequisitions"));
+  40 |  _c26 = WoodRequisitions;
+  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+     |                                              ^
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));[39m
+[2m2:35:34 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/apm/ItemDetail" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:26:37
+[33m  39 |  const WoodRequisitions = lazy(_c25 = () => import("./pages/apm/WoodRequisitions"));
+  40 |  _c26 = WoodRequisitions;
+  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+     |                                              ^
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));[39m
+[2m2:35:34 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/apm/ItemDetail" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:26:37
+[33m  39 |  const WoodRequisitions = lazy(_c25 = () => import("./pages/apm/WoodRequisitions"));
+  40 |  _c26 = WoodRequisitions;
+  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+     |                                              ^
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));[39m
+[2m2:35:34 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/apm/ItemDetail" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:26:37
+[33m  39 |  const WoodRequisitions = lazy(_c25 = () => import("./pages/apm/WoodRequisitions"));
+  40 |  _c26 = WoodRequisitions;
+  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+     |                                              ^
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 22)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:35:39 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/apm/ItemDetail.tsx.tmp.27592.d34422158a61[22m
+[2m2:35:39 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/apm/QcReports" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:27:36
+[33m  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));
+     |                                             ^
+  44 |  _c30 = QcReports;
+  45 |  // Store, saw mill, warehouse[39m
+[2m2:35:39 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/apm/QcReports" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:27:36
+[33m  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));
+     |                                             ^
+  44 |  _c30 = QcReports;
+  45 |  // Store, saw mill, warehouse[39m
+[2m2:35:39 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/apm/QcReports" from "src/App.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:27:36
+[33m  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));
+     |                                             ^
+  44 |  _c30 = QcReports;
+  45 |  // Store, saw mill, warehouse[39m
+[2m2:35:39 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/apm/QcReports" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mD:/Documents/Desktop/Athena Business Automation/frontend/src/App.tsx[39m:27:36
+[33m  41 |  const ItemDetail = lazy(_c27 = () => import("./pages/apm/ItemDetail"));
+  42 |  _c28 = ItemDetail;
+  43 |  const QcReports = lazy(_c29 = () => import("./pages/apm/QcReports"));
+     |                                             ^
+  44 |  _c30 = QcReports;
+  45 |  // Store, saw mill, warehouse[39m
+      at TransformPluginContext._formatLog (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26632:18)
+      at async file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26702:30
+      at async Promise.all (index 23)
+      at async TransformPluginContext.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:26668:4)
+      at async EnvironmentPluginContainer.transform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///D:/Documents/Desktop/Athena%20Business%20Automation/frontend/node_modules/vite/dist/node/chunks/node.js:20184:26)
+[2m2:35:39 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/pages/apm/QcReports.tsx.tmp.27592.47cf7ffb0ed8[22m
+[2m2:35:45 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mdependencies optimized: [33mrecharts, xlsx[32m[39m
+[2m2:41:07 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/admin/LiveMonitor.tsx[22m
+[2m2:41:42 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/admin/Settings.tsx[22m

@@ -1,0 +1,32 @@
+# Microsoft Office lock/temp files
+~$*
+*.tmp
+
+# Business documents are kept out of the public repository
+*.docx
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Python
+backend/.venv/
+__pycache__/
+*.pyc
+
+# Local data (the database and uploaded images are created on first start)
+backend/athena.db*
+backend/uploads/
+backend/*.log
+backend/test.out
+
+# Node
+node_modules/
+frontend/dist/
+*.tsbuildinfo
