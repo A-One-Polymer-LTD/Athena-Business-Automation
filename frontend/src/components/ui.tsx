@@ -4,6 +4,7 @@ import {
   createContext, useCallback, useContext, useEffect, useRef, useState,
   type ButtonHTMLAttributes, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes, type TextareaHTMLAttributes,
 } from 'react'
+import { createPortal } from 'react-dom'
 import { ApiError } from '../lib/api'
 import { MONTH_NAMES, type Period, type PeriodMode, currentPeriod, currentSettings } from '../lib/format'
 
@@ -293,17 +294,19 @@ export function Modal({ open, onClose, title, children, footer, size = 'md' }: {
   }, [open, onClose])
   if (!open) return null
   const widths = { sm: 'max-w-md', md: 'max-w-xl', lg: 'max-w-3xl', xl: 'max-w-5xl' }
-  return (
+  // rendered on <body> so the dialog always covers the whole window, whatever contains the page
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-brand-950/50 p-0 backdrop-blur-[2px] sm:items-center sm:p-4 no-print" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose() }}>
-      <div role="dialog" aria-modal="true" className={cx('animate-in flex max-h-[92vh] w-full flex-col rounded-t-2xl bg-white shadow-pop sm:rounded-2xl', widths[size])}>
+      <div role="dialog" aria-modal="true" className={cx('animate-in flex max-h-[92dvh] w-full flex-col rounded-t-2xl bg-white shadow-pop sm:rounded-2xl', widths[size])}>
         <div className="flex items-center justify-between gap-3 border-b border-slate-100 px-5 py-4">
           <h2 className="text-base font-bold text-brand-950">{title}</h2>
           <button type="button" onClick={onClose} aria-label="Close" className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100"><X className="h-5 w-5" /></button>
         </div>
-        <div className="overflow-y-auto px-5 py-4">{children}</div>
+        <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">{children}</div>
         {footer && <div className="flex flex-wrap items-center justify-end gap-2 border-t border-slate-100 bg-slate-50/60 px-5 py-3.5 sm:rounded-b-2xl">{footer}</div>}
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }
 

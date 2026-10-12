@@ -52,8 +52,9 @@
 
 @layer utilities {
   .tabular { font-variant-numeric: tabular-nums; }
-  .animate-in { animation: athena-in 0.18s ease-out both; }
-  .animate-toast { animation: athena-toast 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
+  /* 'backwards' only: a transform kept after the animation would trap fixed and sticky children */
+  .animate-in { animation: athena-in 0.18s ease-out backwards; }
+  .animate-toast { animation: athena-toast 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.2) backwards; }
 }
 
 @keyframes athena-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }

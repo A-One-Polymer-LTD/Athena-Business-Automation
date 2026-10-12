@@ -1,5 +1,6 @@
 import { ImageOff, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { api } from '../lib/api'
 import { cx } from './ui'
 
@@ -30,11 +31,12 @@ export function ImageStrip({ images, size = 'h-20 w-24' }: { images?: { file: st
       <div className="flex flex-wrap gap-2">
         {list.map((i) => <AuthImage key={i.file} file={i.file} alt={i.name} onClick={() => setOpen(i.file)} className={cx(size, 'rounded-lg border border-slate-200')} />)}
       </div>
-      {open && (
+      {open && createPortal(
         <div className="fixed inset-0 z-[80] flex items-center justify-center bg-brand-950/80 p-4 no-print" onClick={() => setOpen(null)}>
           <button type="button" aria-label="Close" className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white hover:bg-white/20"><X className="h-6 w-6" /></button>
           <AuthImage file={open} className="max-h-[88vh] max-w-full rounded-xl !object-contain shadow-pop" />
-        </div>
+        </div>,
+        document.body,
       )}
     </>
   )
