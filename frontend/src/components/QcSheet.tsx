@@ -60,8 +60,9 @@ function ResultText({ result }: { result?: string | null }) {
 export default function QcSheet({ itemId, qc, onChanged }: { itemId: number; qc: QcReport; onChanged: () => void }) {
   const { user } = useAuth()
   const { toast, confirm } = useUi()
-  const isApm = user?.role === 'Assistant Production Manager'
-  const isPm = user?.role === 'Production Manager'
+  const isSuper = user?.role === 'Super Admin'
+  const isApm = user?.role === 'Assistant Production Manager' || isSuper
+  const isPm = user?.role === 'Production Manager' || isSuper
 
   const [side, setSide] = useState(qc.carpenter_side ?? '')
   const [remarks, setRemarks] = useState(qc.remarks ?? '')

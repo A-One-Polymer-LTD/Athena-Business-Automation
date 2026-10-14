@@ -1,10 +1,11 @@
 // X3 Users and Roles: add, edit, activate and deactivate users; grant the cost-entry permission.
-import { ChevronDown, Pencil, Plus, ShieldCheck, UserCheck, UserX } from 'lucide-react'
+import { ChevronDown, LogIn, Pencil, Plus, ShieldCheck, UserCheck, UserX } from 'lucide-react'
 import { useMemo, useState, type FormEvent } from 'react'
 import { DataTable, type Column } from '../../components/DataTable'
 import { Button, Card, ErrorNote, Field, Input, Modal, Notice, PageHeader, Pill, Select, Spinner, StatusBadge, cx, errText, useLoad, useUi } from '../../components/ui'
 import { api } from '../../lib/api'
-import { useAuth, type Role } from '../../lib/auth'
+import { useNavigate } from 'react-router-dom'
+import { homeFor, useAuth, type Role } from '../../lib/auth'
 
 interface UserRow {
   id: number
@@ -68,7 +69,8 @@ function MatrixCell({ v }: { v: string }) {
 
 export default function Users() {
   const { toast, confirm } = useUi()
-  const { user: me } = useAuth()
+  const { user: me, impersonate } = useAuth()
+  const nav = useNavigate()
   const users = useLoad<UserRow[]>(() => api.get('/users'))
   const meta = useLoad<{ branches: Branch[] }>(() => api.get('/meta'))
   const [roleFilter, setRoleFilter] = useState('')
@@ -118,6 +120,18 @@ export default function Users() {
     } catch (ex) { setFormError(errText(ex)) } finally { setSaving(false) }
   }
 
+  const openAccount = async (u: UserRow) => {
+    const ok = await confirm({ title: `Sign in as ${u.name}?`, confirmLabel: 'Open account',
+      message: <>You will see and use Athena OS exactly as <b>{u.name}</b> ({u.role}). Everything you do is recorded under that account and in the audit log. Use <b>Return to Super Admin</b> at the top of the screen to come back.</> })
+    if (!ok) return
+    setBusyId(-u.id)
+    try {
+      const nu = await impersonate(u.id)
+      toast.success(`You are now using Athena OS as ${u.name}.`)
+      nav(homeFor(nu.role))
+    } catch (e) { toast.error(errText(e)) } finally { setBusyId(null) }
+  }
+
   const setActive = async (u: UserRow, active: boolean) => {
     const ok = await confirm(active
       ? { title: `Activate ${u.name}?`, message: `${u.name} (${u.login_id}) will be able to sign in again as ${u.role}.`, confirmLabel: 'Activate', tone: 'success' }
@@ -154,6 +168,7 @@ export default function Users() {
       render: (u) => (
         <div className="flex justify-end gap-1.5">
           <Button variant="secondary" size="sm" icon={<Pencil className="h-3.5 w-3.5" />} onClick={() => openEdit(u)}>Edit</Button>
+          {u.active && u.id !== me?.id && <Button variant="secondary" size="sm" icon={<LogIn className="h-3.5 w-3.5" />} loading={busyId === -u.id} onClick={() => openAccount(u)}>Sign in as</Button>}
           {u.id !== me?.id && (u.active
             ? <Button variant="ghost" size="sm" className="text-red-600 hover:bg-red-50" icon={<UserX className="h-3.5 w-3.5" />} loading={busyId === u.id} onClick={() => setActive(u, false)}>Deactivate</Button>
             : <Button variant="ghost" size="sm" className="text-emerald-700 hover:bg-emerald-50" icon={<UserCheck className="h-3.5 w-3.5" />} loading={busyId === u.id} onClick={() => setActive(u, true)}>Activate</Button>)}

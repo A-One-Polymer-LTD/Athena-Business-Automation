@@ -33,7 +33,14 @@ interface AuthState {
   logout: () => Promise<void>
   refreshBadges: () => void
   reloadSettings: () => Promise<void>
+  /** Super Admin: open a user's account. */
+  impersonate: (userId: number) => Promise<User>
+  /** Name of the Super Admin when viewing another user's account. */
+  impersonatedBy: string | null
+  returnToAdmin: () => Promise<void>
 }
+
+const ORIGIN_KEY = 'athena.origin' 
 
 const Ctx = createContext<AuthState>(null as any)
 export const useAuth = () => useContext(Ctx)
@@ -105,9 +112,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
     logout: async () => {
       try { await api.post('/auth/logout') } catch { /* already signed out */ }
+      sessionStorage.removeItem(ORIGIN_KEY)
       clear()
     },
     reloadSettings: async () => { accept(await api.get('/auth/me')) },
+    impersonatedBy: (() => { try { return JSON.parse(sessionStorage.getItem(ORIGIN_KEY) || 'null')?.name ?? null } catch { return null } })(),
+    impersonate: async (userId) => {
+      const d = await api.post(`/users/${userId}/impersonate`)
+      if (!sessionStorage.getItem(ORIGIN_KEY)) sessionStorage.setItem(ORIGIN_KEY, JSON.stringify({ token: getToken(), name: user?.name }))
+      setToken(d.token)
+      accept(d)
+      return d.user as User
+    },
+    returnToAdmin: async () => {
+      const origin = JSON.parse(sessionStorage.getItem(ORIGIN_KEY) || 'null')
+      try { await api.post('/auth/logout') } catch { /* already ended */ }
+      sessionStorage.removeItem(ORIGIN_KEY)
+      if (!origin?.token) { clear(); return }
+      setToken(origin.token)
+      try { accept(await api.get('/auth/me')) } catch { clear('Please sign in again.') }
+    },
   }), [user, settings, loading, notice, badges, refreshBadges, accept, clear])
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>

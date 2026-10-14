@@ -8,8 +8,8 @@ from sqlalchemy.orm import Session as DbSession
 
 from .. import models as m
 from .. import workflow as wf
-from ..core import (DEFAULT_SETTINGS, ROLE_APM, ROLE_PM, ROLE_SALES, ROLE_SUPER, ROLES, audit, clean, current_user,
-                    get_settings, hash_password, iso, parse_date, req_text, require)
+from ..core import (DEFAULT_SETTINGS, ROLE_APM, ROLE_PM, ROLE_SALES, ROLE_SUPER, ROLES, audit, clean, create_session,
+                    current_user, get_settings, hash_password, iso, parse_date, req_text, require)
 from ..database import get_db
 from .orders import user_json
 from .sales import MONTHS, period_label, period_months
@@ -114,6 +114,23 @@ def set_active(user_id: int, body: dict = Body(...), user: m.User = Depends(requ
           f"User {u.name} {'activated' if active else 'deactivated'}")
     db.commit()
     return {"ok": True, "message": f"{u.name} {'activated' if active else 'deactivated'}."}
+
+
+@router.post("/users/{user_id}/impersonate")
+def impersonate(user_id: int, user: m.User = Depends(require(ROLE_SUPER)), db: DbSession = Depends(get_db)):
+    """The Super Admin opens any user's account to see and act exactly as that user. Logged in the audit log."""
+    if user.role != ROLE_SUPER:
+        raise HTTPException(403, "Only the Super Admin can open another user's account.")
+    u = db.get(m.User, user_id)
+    if not u or u.org_id != user.org_id:
+        raise HTTPException(404, "User not found.")
+    if not u.active:
+        raise HTTPException(409, f"{u.name} is deactivated. Activate the account first.")
+    token = create_session(db, u)
+    audit(db, user, "IMPERSONATE", "User", u.login_id, f"Super Admin {user.name} opened the account of {u.name} ({u.role})")
+    db.commit()
+    return {"token": token, "user": user_json(u), "settings": get_settings(db, user.org_id),
+            "message": f"You are now using Athena OS as {u.name} ({u.role})."}
 
 
 # ---------- branches and sites ----------
@@ -378,10 +395,13 @@ def sales_admin_dashboard(mode: str = "monthly", year: int = 0, period: int = 0,
                           user: m.User = Depends(require(ROLE_SALES)), db: DbSession = Depends(get_db)):
     """S1: own-branch order dashboard (FR-SO-06, FR-SO-07)."""
     settings, mode, year, period, months = _period(db, user, mode, year, period)
-    orders = db.query(m.Order).filter_by(org_id=user.org_id, branch_id=user.branch_id).all()
+    q = db.query(m.Order).filter_by(org_id=user.org_id)
+    if user.role == ROLE_SALES:
+        q = q.filter_by(branch_id=user.branch_id)
+    orders = q.all()
     d = _order_stats(orders, months, mode, year, int(settings.get("fiscal_year_start", 1)))
     d.update({"label": period_label(mode, year, period, months), "mode": mode, "year": year, "period": period,
-              "branch": user.branch.name if user.branch else "",
+              "branch": user.branch.name if user.branch else "All branches",
               "drafts": sum(1 for o in orders if o.state == "draft"),
               "returned": sum(1 for o in orders if o.state == "returned")})
     return d

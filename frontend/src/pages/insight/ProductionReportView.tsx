@@ -169,7 +169,7 @@ export default function ProductionReportView() {
               <StatusBadge status={rep.status} className={rep.status === 'Generated' ? '!bg-white !text-brand-900' : undefined} />
               {!isCurrent && <Pill tone="orange">Earlier revision</Pill>}
             </p>
-            <p className="mt-1 text-xs text-white/80">generated automatically on delivery, {fmtDateTime(rep.generated_at)}</p>
+            <p className="mt-1 text-xs text-white/80">{rep.status === 'Revised' || rep.reason ? 'Revised' : 'Generated automatically on delivery'}, {fmtDateTime(rep.generated_at)}</p>
             {rep.reason && <p className="mt-1 text-xs text-white/80">Revision reason: {rep.reason}</p>}
           </div>
           <div className="flex flex-wrap gap-2 no-print">

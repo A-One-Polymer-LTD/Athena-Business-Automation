@@ -102,9 +102,9 @@ export default function OrderDetail() {
         subtitle={<span className="flex flex-wrap items-center gap-2"><StatusBadge status={o.status} /><span>{o.customer}</span></span>}
         actions={<>
           {back}
-          {isSales && o.editable && <Button icon={<Pencil className="h-4 w-4" />} onClick={() => nav(`/sales/orders/${o.id}/edit`)}>Edit order</Button>}
-          {isPm && o.status === 'Pending' && <Link to="/pm/distribution"><Button icon={<Share2 className="h-4 w-4" />}>Assign in Work Distribution</Button></Link>}
-          {isPm && allUnassigned && <Button variant="secondary" loading={busy} icon={<Undo2 className="h-4 w-4" />} onClick={() => act('return')}>Return to Sales Admin</Button>}
+          {(isSales || isSuper) && o.editable && <Button icon={<Pencil className="h-4 w-4" />} onClick={() => nav(`/sales/orders/${o.id}/edit`)}>Edit order</Button>}
+          {(isPm || isSuper) && o.status === 'Pending' && <Link to="/pm/distribution"><Button icon={<Share2 className="h-4 w-4" />}>Assign in Work Distribution</Button></Link>}
+          {(isPm || isSuper) && allUnassigned && <Button variant="secondary" loading={busy} icon={<Undo2 className="h-4 w-4" />} onClick={() => act('return')}>Return to Sales Admin</Button>}
           {isSuper && !['Delivered', 'Cancelled'].includes(o.status) && !anyDelivered && (
             <Button variant="danger" loading={busy} icon={<Ban className="h-4 w-4" />} onClick={() => act('cancel')}>Cancel order</Button>
           )}

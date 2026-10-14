@@ -78,7 +78,7 @@ def get_item(db: DbSession, user: m.User, item_id: int) -> m.OrderItem:
 def get_item_for_apm(db: DbSession, user: m.User, item_id: int) -> m.OrderItem:
     """Items an APM may act on: only their own sites."""
     item = get_item(db, user, item_id)
-    if user.role != ROLE_APM:
+    if user.role not in (ROLE_APM, ROLE_SUPER):
         deny(user, "production update", item_no(item), "Only the responsible APM can update this item.")
     return item
 
@@ -416,7 +416,7 @@ def item_full(item: m.OrderItem, user: m.User, settings: dict) -> dict:
         q = qc_json(item)
         if q:
             d["qc"] = q
-    if user.role == ROLE_APM:
+    if user.role in (ROLE_APM, ROLE_SUPER):
         d["moves"] = allowed_moves(item, settings)
     if can_view_cost(user):
         d["cost"] = cost_json(item)

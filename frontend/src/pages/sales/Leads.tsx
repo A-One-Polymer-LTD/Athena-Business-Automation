@@ -7,6 +7,7 @@ import {
   Button, ErrorNote, Field, Input, Modal, PageHeader, PeriodPicker, Pill, Select, Spinner, StatusBadge, Tabs, Textarea,
   errText, useLoad, useUi,
 } from '../../components/ui'
+import { ActingSalesAdminPicker, actingBody } from '../../lib/acting'
 import { api, ApiError, qs } from '../../lib/api'
 import { compactMoney, currentPeriod, fmtDate, money, num, periodLabel, periodRange, todayISO, type Period } from '../../lib/format'
 
@@ -113,6 +114,7 @@ export default function Leads() {
     setErrors(errs)
     if (Object.keys(errs).length) return
     const body = {
+      ...actingBody(),
       lead_date: form.lead_date, customer_name: form.customer_name.trim(), customer_phone: form.customer_phone.trim(),
       expected_value: Number(form.expected_value || 0), stage: form.stage, lost_reason: form.stage === 'Lost' ? form.lost_reason.trim() : '',
       next_followup: form.next_followup || null, remarks: form.remarks.trim(), ...(confirmDuplicate ? { confirm_duplicate: true } : {}),
@@ -182,6 +184,7 @@ export default function Leads() {
     <div>
       <PageHeader title="Leads" subtitle={`Your leads dated in ${periodLabel(period)}`}
         actions={<>
+          <ActingSalesAdminPicker />
           <PeriodPicker value={period} onChange={setPeriod} />
           <Button icon={<Plus className="h-4 w-4" />} onClick={() => open()}>Add lead</Button>
         </>} />

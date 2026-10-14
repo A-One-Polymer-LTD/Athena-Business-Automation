@@ -139,8 +139,9 @@ def deny(user: m.User, what: str, ref: str | None = None, message: str | None = 
 
 
 def require(*roles: str):
+    """Allow the given roles. The Super Admin has full access to every function."""
     def dep(user: m.User = Depends(current_user)) -> m.User:
-        if user.role not in roles:
+        if user.role not in roles and user.role != ROLE_SUPER:
             deny(user, "a restricted function", message="Your role does not allow this action.")
         return user
     return dep
@@ -148,11 +149,23 @@ def require(*roles: str):
 
 def has_cost_permission(user: m.User) -> bool:
     """Enter/edit cost lines: Production Manager by default, plus users the Super Admin grants."""
-    return user.role == ROLE_PM or bool(user.cost_permission)
+    return user.role in (ROLE_PM, ROLE_SUPER) or bool(user.cost_permission)
 
 
 def can_view_cost(user: m.User) -> bool:
     return user.role == ROLE_SUPER or has_cost_permission(user)
+
+
+def acting_sales_admin(db: DbSession, user: m.User, body: dict) -> m.User:
+    """The Sales Admin a sales record belongs to: the user, or the one the Super Admin chose."""
+    if user.role == ROLE_SALES:
+        return user
+    if user.role != ROLE_SUPER:
+        deny(user, "sales records", message="Your role does not allow this action.")
+    sa = db.get(m.User, int(body.get("sales_admin_id") or 0))
+    if not sa or sa.org_id != user.org_id or sa.role != ROLE_SALES or not sa.active:
+        raise HTTPException(422, "Please choose the Sales Admin this record is for.")
+    return sa
 
 
 # ---------- audit and numbering ----------

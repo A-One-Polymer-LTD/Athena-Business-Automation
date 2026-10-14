@@ -95,8 +95,6 @@ def assign(item_id: int, body: dict = Body(...), user: m.User = Depends(require(
         raise HTTPException(409, "Only placed orders can be assigned.")
     ref = wf.item_no(item)
     if item.stage == wf.UNASSIGNED:
-        if user.role != ROLE_PM:
-            raise HTTPException(403, "Items are assigned to sites by the Production Manager.")
         item.site_id = site.id
         item.site = site
         item.assigned_at = utcnow()
@@ -379,7 +377,7 @@ def resubmit_store_req(req_id: int, body: dict = Body(...), user: m.User = Depen
     r = db.get(m.StoreRequisition, req_id)
     if not r or r.org_id != user.org_id:
         raise HTTPException(404, "Requisition not found.")
-    if r.apm_id != user.id:
+    if r.apm_id != user.id and user.role != ROLE_SUPER:
         deny(user, "store requisition", r.req_no)
     if r.status != "Returned":
         raise HTTPException(409, "Only a returned requisition can be edited and resubmitted.")
@@ -484,7 +482,7 @@ def resubmit_wood_req(req_id: int, body: dict = Body(...), user: m.User = Depend
     r = db.get(m.WoodRequisition, req_id)
     if not r or r.org_id != user.org_id:
         raise HTTPException(404, "Requisition not found.")
-    if r.apm_id != user.id:
+    if r.apm_id != user.id and user.role != ROLE_SUPER:
         deny(user, "wood requisition", r.req_no)
     if r.status != "Returned":
         raise HTTPException(409, "Only a returned requisition can be edited and resubmitted.")
@@ -581,7 +579,7 @@ def qc_sign(item_id: int, user: m.User = Depends(current_user), db: DbSession = 
     """Digital sign-off by the APM and the Production Manager (FR-QC-06). Recorded, not blocking (DEC-11)."""
     item = wf.get_item(db, user, item_id)
     q = item.qc
-    if user.role not in (ROLE_APM, ROLE_PM):
+    if user.role not in (ROLE_APM, ROLE_PM, ROLE_SUPER):
         deny(user, "QC sign-off", wf.item_no(item), "Only the APM and the Production Manager sign off QC reports.")
     if not q:
         raise HTTPException(409, "This item has no QC report yet.")
@@ -589,7 +587,7 @@ def qc_sign(item_id: int, user: m.User = Depends(current_user), db: DbSession = 
     if not all(wf.qc_passed(item, s) for s in required):
         raise HTTPException(409, "The QC report can be signed off when every required check is Pass.")
     now = utcnow()
-    if user.role == ROLE_APM:
+    if user.role == ROLE_APM or (user.role == ROLE_SUPER and not q.apm_signed_by):
         q.apm_signed_by, q.apm_signed_at = user.name, now
     else:
         q.pm_signed_by, q.pm_signed_at = user.name, now

@@ -125,7 +125,7 @@ export function DataTable<T>({
                 {shownCols.map((c) => (
                   <th key={c.key} scope="col" className={cx(pad, 'whitespace-nowrap border-b border-slate-200', c.align === 'right' && 'text-right', c.align === 'center' && 'text-center')}>
                     {c.sortable === false || c.noExport ? c.header : (
-                      <button type="button" onClick={() => toggleSort(c.key)} className="inline-flex items-center gap-1 uppercase tracking-wider hover:text-brand-800">
+                      <button type="button" onClick={() => toggleSort(c.key)} className="-my-2 inline-flex min-h-8 items-center gap-1 uppercase tracking-wider hover:text-brand-800">
                         {c.header}
                         {sort?.key === c.key && (sort.dir === 'asc' ? <ArrowUp className="h-3 w-3" /> : <ArrowDown className="h-3 w-3" />)}
                       </button>

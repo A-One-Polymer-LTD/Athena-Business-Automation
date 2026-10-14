@@ -1,7 +1,7 @@
 // App shell: top bar with the user's name and role, a left menu (bottom menu on phones) and the work area (BRD 10.1).
 import { LogOut, Menu, MoreHorizontal, X } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../lib/auth'
 import { navFor, type NavItem } from '../lib/nav'
 import { Logo } from './Logo'
@@ -47,7 +47,8 @@ function Sidebar({ items, badges, onNavigate }: { items: NavItem[]; badges: Reco
 }
 
 export default function Layout() {
-  const { user, settings, badges, logout } = useAuth()
+  const { user, settings, badges, logout, impersonatedBy, returnToAdmin } = useAuth()
+  const navigate = useNavigate()
   const [drawer, setDrawer] = useState(false)
   const { pathname } = useLocation()
   useEffect(() => { setDrawer(false); window.scrollTo(0, 0) }, [pathname])
@@ -90,14 +91,22 @@ export default function Layout() {
           <p className="text-xs text-slate-500">{user.branch ? `${user.branch} · ` : ''}{new Date().toLocaleDateString('en-GB', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' })}</p>
         </div>
         <div className="ml-auto flex items-center gap-3">
-          <div className="text-right leading-tight">
-            <p className="max-w-[40vw] truncate text-sm font-semibold text-brand-950">{user.name}</p>
-            <p className="text-xs font-semibold text-brand-800">{user.role}</p>
+          <div className="min-w-0 text-right leading-tight">
+            <p className="max-w-[36vw] truncate text-sm font-semibold text-brand-950 sm:max-w-[40vw]">{user.name}</p>
+            <p className="max-w-[36vw] truncate text-xs font-semibold text-brand-800 sm:max-w-[40vw]" title={user.role}>{user.role}</p>
           </div>
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-800 text-sm font-bold text-white ring-2 ring-brand-200" aria-hidden>{initials}</div>
-          <button type="button" onClick={logout} title="Sign out" aria-label="Sign out" className="rounded-lg border border-slate-200 p-2 text-slate-600 hover:border-red-200 hover:bg-red-50 hover:text-red-600"><LogOut className="h-[18px] w-[18px]" /></button>
+          <div className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-800 sm:flex text-sm font-bold text-white ring-2 ring-brand-200" aria-hidden>{initials}</div>
+          <button type="button" onClick={logout} title="Sign out" aria-label="Sign out" className="shrink-0 rounded-lg border border-slate-200 p-2 text-slate-600 hover:border-red-200 hover:bg-red-50 hover:text-red-600"><LogOut className="h-[18px] w-[18px]" /></button>
         </div>
       </header>
+
+      {impersonatedBy && (
+        <div className="no-print sticky top-[72px] z-20 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 bg-brand-800 px-4 py-2 text-center text-[13px] font-medium text-white">
+          <span>Super Admin {impersonatedBy} is using the account of <b>{user.name}</b> ({user.role}). Every action is recorded under this account.</span>
+          <button type="button" onClick={async () => { await returnToAdmin(); navigate('/admin/users') }}
+            className="rounded-md bg-white px-3 py-1 text-[12px] font-bold text-brand-800 hover:bg-brand-50">Return to Super Admin</button>
+        </div>
+      )}
 
       <main className="app-main mx-auto w-full max-w-[1500px] px-4 pb-28 pt-6 lg:px-8 lg:pb-12">
         <div key={pathname} className="animate-in"><Outlet /></div>
@@ -106,9 +115,12 @@ export default function Layout() {
       {/* phone bottom menu */}
       <nav className="app-bottomnav fixed inset-x-0 bottom-0 z-30 flex border-t border-slate-200 bg-white pb-[env(safe-area-inset-bottom)] lg:hidden" aria-label="Quick menu">
         {bottom.map((i) => (
-          <NavLink key={i.to} to={i.to} end={i.to === '/warehouse'} className={({ isActive }) => cx('relative flex flex-1 flex-col items-center gap-1 px-1 py-2.5 text-[10.5px] font-semibold', isActive ? 'text-brand-800' : 'text-slate-500')}>
+          <NavLink key={i.to} to={i.to} end={i.to === '/warehouse'}
+            className={({ isActive }) => cx('relative flex min-w-0 flex-1 flex-col items-center gap-1 px-1 py-2.5 text-[10.5px] font-semibold',
+              // "/sales/orders" must not light up while "/sales/orders/new" is open
+              isActive && !(i.to === '/sales/orders' && pathname.startsWith('/sales/orders/new')) ? 'text-brand-800' : 'text-slate-500')}>
             {i.icon}
-            <span className="max-w-full truncate">{i.label.replace('Requisition ', '').replace('Production ', '')}</span>
+            <span className="max-w-full truncate">{i.label.replace(' Requisitions', ' Req.').replace('Production ', '').replace('Live ', '')}</span>
             {!!(i.badge && badges[i.badge]) && <span className="absolute right-[22%] top-1.5 h-2 w-2 rounded-full bg-brand-800" />}
           </NavLink>
         ))}

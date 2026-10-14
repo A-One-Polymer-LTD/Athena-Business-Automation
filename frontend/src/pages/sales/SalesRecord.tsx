@@ -6,6 +6,7 @@ import {
   Button, Card, ErrorNote, Field, Input, Notice, PageHeader, PeriodPicker, Pill, ProgressBar, Spinner, StatusBadge,
   Textarea, TONE_TEXT, achievementTone, cx, errText, useLoad, useUi,
 } from '../../components/ui'
+import { ActingSalesAdminPicker, actingBody } from '../../lib/acting'
 import { api, qs } from '../../lib/api'
 import { useAuth } from '../../lib/auth'
 import { currentPeriod, fmtDate, money, num, periodLabel, periodRange, todayISO, type Period } from '../../lib/format'
@@ -125,7 +126,7 @@ export default function SalesRecord() {
     setSaving(true)
     setFormError('')
     try {
-      const res = await api.post('/sales/entries', { ...(form.id ? { id: form.id } : {}), entry_date: form.entry_date, ...nums, remarks: form.remarks.trim() })
+      const res = await api.post('/sales/entries', { ...actingBody(), ...(form.id ? { id: form.id } : {}), entry_date: form.entry_date, ...nums, remarks: form.remarks.trim() })
       if (res.existing) {
         setForm(fromEntry(res.entry))
         setErrors({})
@@ -163,7 +164,7 @@ export default function SalesRecord() {
 
   return (
     <div>
-      <PageHeader title="Sales Record" subtitle="Your daily sales, collection, delivery and client visits." />
+      <PageHeader title="Sales Record" subtitle="Daily sales, collection, delivery and client visits." actions={<ActingSalesAdminPicker />} />
 
       <div className="grid grid-cols-1 gap-5 xl:grid-cols-[380px_minmax(0,1fr)]">
         <Card className="self-start" title={form.id ? `Edit entry ${form.entry_no}` : 'Add daily entry'}

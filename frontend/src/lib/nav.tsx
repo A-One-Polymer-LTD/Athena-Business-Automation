@@ -56,10 +56,10 @@ export function navFor(user: User): NavItem[] {
       ]
       break
     case 'Store Operator':
-      items = [{ to: '/store/inbox', label: 'Store Requisition Inbox', icon: <PackageCheck className={I} />, badge: 'store_inbox' }] // T1
+      items = [{ to: '/store/inbox', label: 'Store Inbox', icon: <PackageCheck className={I} />, badge: 'store_inbox' }] // T1
       break
     case 'Saw-Mill Supervisor':
-      items = [{ to: '/sawmill/inbox', label: 'Wood Requisition Inbox', icon: <Hammer className={I} />, badge: 'wood_inbox' }]        // W1
+      items = [{ to: '/sawmill/inbox', label: 'Wood Inbox', icon: <Hammer className={I} />, badge: 'wood_inbox' }]        // W1
       break
     case 'Warehouse / Delivery':
       items = [
@@ -68,17 +68,32 @@ export function navFor(user: User): NavItem[] {
       ]
       break
     case 'Super Admin':
+      // full access: every module of every role
       items = [
         { to: '/monitor', label: 'Live Production Monitor', icon: <Activity className={I} />, group: 'Operations' },       // X1
         { to: '/dashboard', label: 'Management Dashboard', icon: <Gauge className={I} />, group: 'Operations' },           // X2
-        { to: '/orders', label: 'Order Records', icon: <ClipboardList className={I} />, group: 'Operations' },
-        { to: '/pm/site-board', label: 'Site Board', icon: <Boxes className={I} />, group: 'Operations' },
-        { to: '/qc', label: 'QC Reports', icon: <ClipboardCheck className={I} />, group: 'Operations' },
+        { to: '/orders', label: 'Order Records', icon: <ClipboardList className={I} />, badge: 'returned_orders', group: 'Orders' },
+        { to: '/sales/orders/new', label: 'New Order', icon: <FilePlus2 className={I} />, group: 'Orders' },
+        { to: '/pm/orders', label: 'Pending Orders', icon: <ClipboardList className={I} />, badge: 'pending_orders', group: 'Orders' },
+        { to: '/pm/distribution', label: 'Work Distribution', icon: <LayoutGrid className={I} />, group: 'Orders' },
+        { to: '/apm/work', label: 'Production Work List', icon: <ListChecks className={I} />, group: 'Production' },
+        { to: '/pm/site-board', label: 'Site Board', icon: <Boxes className={I} />, group: 'Production' },
+        { to: '/qc', label: 'QC Reports', icon: <ClipboardCheck className={I} />, badge: 'signoff', group: 'Production' },
+        { to: '/pm/apms', label: 'Manage APMs', icon: <UserCog className={I} />, group: 'Production' },
+        { to: '/apm/store-requisitions', label: 'Store Requisitions', icon: <PackageCheck className={I} />, group: 'Store & Saw Mill' },
+        { to: '/store/inbox', label: 'Store Inbox', icon: <PackageCheck className={I} />, badge: 'store_inbox', group: 'Store & Saw Mill' },
+        { to: '/apm/wood-requisitions', label: 'Wood Requisitions', icon: <TreePine className={I} />, group: 'Store & Saw Mill' },
+        { to: '/sawmill/inbox', label: 'Wood Inbox', icon: <Hammer className={I} />, badge: 'wood_inbox', group: 'Store & Saw Mill' },
+        { to: '/warehouse', label: 'Warehouse List', icon: <Warehouse className={I} />, badge: 'warehouse', group: 'Warehouse' },
+        { to: '/warehouse/deliveries', label: 'Delivery Records', icon: <Truck className={I} />, group: 'Warehouse' },
         { to: '/sales-dashboard', label: 'Sales Dashboard', icon: <BarChart3 className={I} />, group: 'Sales' },           // X6
+        { to: '/sales/dashboard', label: 'Order Dashboard', icon: <LayoutDashboard className={I} />, group: 'Sales' },
+        { to: '/sales/record', label: 'Sales Records', icon: <NotebookPen className={I} />, group: 'Sales' },
+        { to: '/sales/leads', label: 'Leads', icon: <TrendingUp className={I} />, group: 'Sales' },
         { to: '/admin/targets', label: 'Sales Targets', icon: <Target className={I} />, group: 'Sales' },                  // X8
         { to: '/reports', label: 'Production Reports', icon: <FileText className={I} />, group: 'Reports' },               // X7
         { ...cost, group: 'Reports' },
-        { to: '/admin/users', label: 'Users & Roles', icon: <Users className={I} />, group: 'Administration' },            // X3
+        { to: '/admin/users', label: 'Users & Accounts', icon: <Users className={I} />, group: 'Administration' },         // X3
         { to: '/admin/masters', label: 'Master Data', icon: <Database className={I} />, group: 'Administration' },         // X4
         { to: '/admin/audit', label: 'Audit Log', icon: <ScrollText className={I} />, group: 'Administration' },           // X5
         { to: '/admin/settings', label: 'Settings', icon: <Settings className={I} />, group: 'Administration' },

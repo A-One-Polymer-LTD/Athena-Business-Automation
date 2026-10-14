@@ -9,7 +9,8 @@ from sqlalchemy.orm import Session as DbSession
 from .. import models as m
 from .. import workflow as wf
 from ..core import (LOCK_AFTER_FAILS, LOCK_MINUTES, ROLE_APM, ROLE_PM, ROLE_SALES, ROLE_STORE, ROLE_SAWMILL,
-                    ROLE_SUPER, ROLE_WAREHOUSE, audit, can_view_cost, clean, create_session, current_user, deny,
+                    ROLE_SUPER, ROLE_WAREHOUSE, acting_sales_admin, audit, can_view_cost, clean, create_session,
+                    current_user, deny,
                     get_settings, has_cost_permission, iso, next_number, parse_date, require, utcnow,
                     verify_password)
 from ..database import get_db
@@ -84,6 +85,13 @@ def badges(user: m.User = Depends(current_user), db: DbSession = Depends(get_db)
     """New-work counts shown on menu items (FR-GEN-05)."""
     out: dict[str, int] = {}
     org = user.org_id
+    if user.role == ROLE_SUPER:
+        out["store_inbox"] = db.query(m.StoreRequisition).filter_by(org_id=org, status="Submitted").count()
+        out["wood_inbox"] = db.query(m.WoodRequisition).filter(
+            m.WoodRequisition.org_id == org, m.WoodRequisition.status.in_(["Submitted", "In Progress"])).count()
+        out["warehouse"] = (db.query(m.OrderItem).join(m.Order)
+                            .filter(m.Order.org_id == org, m.OrderItem.stage == wf.IN_WAREHOUSE).count())
+        out["returned_orders"] = db.query(m.Order).filter_by(org_id=org, state="returned").count()
     if user.role in (ROLE_PM, ROLE_SUPER):
         orders = db.query(m.Order).filter_by(org_id=org, state="placed").all()
         out["pending_orders"] = sum(1 for o in orders if wf.order_status(o) == "Pending")
@@ -219,7 +227,9 @@ def _scope_orders(db: DbSession, user: m.User):
     q = db.query(m.Order).filter(m.Order.org_id == user.org_id)
     if user.role == ROLE_SALES:
         return q.filter(m.Order.branch_id == user.branch_id)
-    if user.role in (ROLE_SUPER, ROLE_PM):
+    if user.role == ROLE_SUPER:
+        return q
+    if user.role == ROLE_PM:
         return q.filter(m.Order.state != "draft")
     deny(user, "order records", message="Your role does not allow this action.")
 
@@ -230,7 +240,7 @@ def _get_order(db: DbSession, user: m.User, order_id: int) -> m.Order:
         raise HTTPException(404, "Order not found.")
     if user.role == ROLE_SALES and o.branch_id != user.branch_id:
         deny(user, "order", o.order_no)
-    if user.role in (ROLE_SUPER, ROLE_PM) and o.state == "draft":
+    if user.role == ROLE_PM and o.state == "draft":
         raise HTTPException(404, "Order not found.")
     if user.role not in (ROLE_SALES, ROLE_SUPER, ROLE_PM):
         deny(user, "order", o.order_no)
@@ -395,7 +405,8 @@ def _save_order(db: DbSession, user: m.User, body: dict, order: m.Order | None):
 
     was_returned = bool(order and order.state == "returned")
     if not order:
-        order = m.Order(org_id=user.org_id, branch_id=user.branch_id, sales_admin_id=user.id, state="draft",
+        owner = acting_sales_admin(db, user, body)
+        order = m.Order(org_id=user.org_id, branch_id=owner.branch_id, sales_admin_id=owner.id, state="draft",
                         lead_id=body.get("lead_id"))
         db.add(order)
     order.customer_id = customer.id

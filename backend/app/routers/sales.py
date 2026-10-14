@@ -6,7 +6,7 @@ from fastapi import APIRouter, Body, Depends, HTTPException
 from sqlalchemy.orm import Session as DbSession
 
 from .. import models as m
-from ..core import (ROLE_SALES, ROLE_SUPER, audit, clean, current_user, deny, get_settings, iso, next_number,
+from ..core import (ROLE_SALES, ROLE_SUPER, acting_sales_admin, audit, clean, current_user, deny, get_settings, iso, next_number,
                     parse_date, req_number, req_text, utcnow)
 from ..database import get_db
 from ..workflow import LEAD_STAGES
@@ -354,14 +354,13 @@ def _locked_message(d: date) -> str:
 
 @router.post("/sales/entries")
 def save_entry(body: dict = Body(...), user: m.User = Depends(current_user), db: DbSession = Depends(get_db)):
-    if user.role != ROLE_SALES:
-        deny(user, "sales entry", message="Sales entries are added by Sales Admins.")
+    owner = acting_sales_admin(db, user, body)
     d = parse_date(body.get("entry_date"), "Entry Date")
     if not d:
         raise HTTPException(422, "Please enter Entry Date.")
-    if d > date.today() or is_locked(db, user.org_id, d):
+    if d > date.today() or (is_locked(db, user.org_id, d) and user.role != ROLE_SUPER):
         raise HTTPException(409, _locked_message(d))
-    existing = db.query(m.SalesEntry).filter_by(sales_admin_id=user.id, entry_date=d).first()
+    existing = db.query(m.SalesEntry).filter_by(sales_admin_id=owner.id, entry_date=d).first()
     if existing and not body.get("id"):
         # BR-18: one entry per date; open the existing one for editing instead
         return {"existing": True, "entry": entry_json(existing),
@@ -379,9 +378,9 @@ def save_entry(body: dict = Body(...), user: m.User = Depends(current_user), db:
     if body.get("id"):
         # date changed on an existing entry
         e = db.get(m.SalesEntry, int(body["id"]))
-        if not e or e.sales_admin_id != user.id:
+        if not e or e.sales_admin_id != owner.id:
             raise HTTPException(404, "Sales entry not found.")
-        if is_locked(db, user.org_id, e.entry_date):
+        if is_locked(db, user.org_id, e.entry_date) and user.role != ROLE_SUPER:
             raise HTTPException(409, _locked_message(e.entry_date))
         e.entry_date = d
         for k, v in vals.items():
@@ -391,7 +390,7 @@ def save_entry(body: dict = Body(...), user: m.User = Depends(current_user), db:
         db.commit()
         return {"ok": True, "entry": entry_json(e), "message": f"Sales entry {e.entry_no} updated."}
     e = m.SalesEntry(org_id=user.org_id, entry_no=next_number(db, user.org_id, "sales_entry", year=d.year),
-                     sales_admin_id=user.id, branch_id=user.branch_id, entry_date=d, **vals)
+                     sales_admin_id=owner.id, branch_id=owner.branch_id, entry_date=d, **vals)
     db.add(e)
     audit(db, user, "CREATE", "Sales Entry", e.entry_no, f"Entry for {d.isoformat()} added")
     db.commit()
@@ -477,12 +476,11 @@ def _apply_lead(db: DbSession, user: m.User, lead: m.Lead, body: dict):
 
 @router.post("/sales/leads")
 def add_lead(body: dict = Body(...), user: m.User = Depends(current_user), db: DbSession = Depends(get_db)):
-    if user.role != ROLE_SALES:
-        deny(user, "lead entry", message="Leads are added by Sales Admins.")
-    lead = m.Lead(org_id=user.org_id, sales_admin_id=user.id, branch_id=user.branch_id)
+    owner = acting_sales_admin(db, user, body)
+    lead = m.Lead(org_id=user.org_id, sales_admin_id=owner.id, branch_id=owner.branch_id)
     _apply_lead(db, user, lead, body)
     if lead.customer_phone and not body.get("confirm_duplicate"):
-        dup = db.query(m.Lead).filter_by(sales_admin_id=user.id, customer_phone=lead.customer_phone, status="Open").first()
+        dup = db.query(m.Lead).filter_by(sales_admin_id=owner.id, customer_phone=lead.customer_phone, status="Open").first()
         if dup:
             raise HTTPException(409, {"code": "duplicate", "message": f"You already have an open lead for this phone "
                                       f"number ({dup.lead_no}, {dup.customer_name}). Save this lead anyway?"})
@@ -498,7 +496,7 @@ def edit_lead(lead_id: int, body: dict = Body(...), user: m.User = Depends(curre
     lead = db.get(m.Lead, lead_id)
     if not lead or lead.org_id != user.org_id:
         raise HTTPException(404, "Lead not found.")
-    if user.role != ROLE_SALES or lead.sales_admin_id != user.id:
+    if user.role != ROLE_SUPER and (user.role != ROLE_SALES or lead.sales_admin_id != user.id):
         deny(user, "another Sales Admin's lead", lead.lead_no, "You can edit only your own leads.")
     was = lead.stage
     _apply_lead(db, user, lead, body)

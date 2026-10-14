@@ -62,7 +62,8 @@ export function NoAccess({ message = 'You do not have access to this screen.' }:
 function Guard({ roles, cost, message, children }: { roles?: Role[]; cost?: boolean; message?: string; children: ReactNode }) {
   const { user } = useAuth()
   if (!user) return <Navigate to="/login" replace />
-  const ok = (roles?.includes(user.role) ?? false) || (cost === true && user.can_view_cost)
+  // the Super Admin has full access to every screen
+  const ok = user.role === 'Super Admin' || (roles?.includes(user.role) ?? false) || (cost === true && user.can_view_cost)
   return ok ? <>{children}</> : <NoAccess message={message} />
 }
 

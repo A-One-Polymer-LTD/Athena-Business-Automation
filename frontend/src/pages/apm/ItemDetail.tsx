@@ -102,7 +102,8 @@ export default function ItemDetail() {
   )
 
   const role = user?.role
-  const isApm = role === 'Assistant Production Manager'
+  // the Super Admin can also perform every APM action
+  const isApm = role === 'Assistant Production Manager' || role === 'Super Admin'
   const isPm = role === 'Production Manager'
   const isSuper = role === 'Super Admin'
   const canOpenOrder = role === 'Sales Admin' || isPm || isSuper
@@ -186,7 +187,7 @@ export default function ItemDetail() {
 
   const canReassign = (isPm && item.stage === 'Assigned') || (isSuper && inProduction)
   const canReverse = (isPm || isSuper) && inProduction && item.stage !== 'Assigned'
-  const canRemoveUph = isPm && !!item.upholstery_added && !(item.qc?.checks?.upholstery?.history?.length)
+  const canRemoveUph = (isPm || isSuper) && !!item.upholstery_added && !(item.qc?.checks?.upholstery?.history?.length)
   const canUndoWh = isSuper && (item.stage === 'Packed' || item.stage === 'Ready for Delivery')
   const showCostLink = (isPm || isSuper) && !!user?.can_view_cost
   const hasRoleActions = canReassign || canReverse || canRemoveUph || canUndoWh || showCostLink

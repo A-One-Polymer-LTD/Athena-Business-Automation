@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { AuthImage } from '../../components/AuthImage'
 import { Button, Card, ErrorNote, Field, Input, Modal, Notice, PageHeader, Select, Spinner, Tabs, Textarea, cx, errText, useLoad, useUi } from '../../components/ui'
+import { ActingSalesAdminPicker, actingBody } from '../../lib/acting'
 import { api, ApiError } from '../../lib/api'
 import { useAuth } from '../../lib/auth'
 import { currentSettings, money, todayISO } from '../../lib/format'
@@ -279,6 +280,7 @@ function Form({ orderId, lead, onNew }: { orderId?: string; lead: LeadRef | null
   const send = async (place: boolean, opts: { confirmDuplicate?: boolean; forceNew?: boolean; customerOverride?: Customer } = {}) => {
     const cust = opts.customerOverride ?? (custMode === 'existing' ? customer : null)
     const body: Record<string, any> = {
+      ...actingBody(),
       promised_date: promised || null, place,
       items: items.map((it) => ({
         product_code: it.product_code, product_desc: it.product_desc.trim(), design_desc: it.design_desc.trim(),
@@ -374,7 +376,7 @@ function Form({ orderId, lead, onNew }: { orderId?: string; lead: LeadRef | null
     <div ref={rootRef}>
       <PageHeader title={title}
         subtitle={editing ? 'Correct the order, then save it or place it again.' : 'Record the customer, the items and their images, then place the order.'}
-        actions={back} />
+        actions={<>{!editing && <ActingSalesAdminPicker />}{back}</>} />
 
       <div className="space-y-5">
         {o?.return_reason && <Notice tone="warn"><span className="font-semibold">Returned by the Production Manager:</span> {o.return_reason}</Notice>}
@@ -588,8 +590,8 @@ function Form({ orderId, lead, onNew }: { orderId?: string; lead: LeadRef | null
 
         <ErrorNote error={formError} />
 
-        <div className="sticky bottom-0 z-10 -mx-4 flex flex-wrap items-center justify-end gap-2 border-t border-slate-200 bg-white/95 px-4 py-3 backdrop-blur sm:mx-0 sm:rounded-xl sm:border sm:shadow-card">
-          <span className="mr-auto text-xs text-slate-500"><span className="text-red-600">*</span> Required to place the order</span>
+        <div className="sticky bottom-[calc(3.75rem+env(safe-area-inset-bottom))] z-10 -mx-4 flex flex-wrap items-center justify-end gap-2 border-t border-slate-200 bg-white/95 px-4 py-3 backdrop-blur sm:mx-0 sm:rounded-xl sm:border sm:shadow-card lg:bottom-0">
+          <span className="mr-auto hidden text-xs text-slate-500 sm:inline"><span className="text-red-600">*</span> Required to place the order</span>
           {!alwaysPlaced && <Button variant="secondary" loading={saving === 'draft'} disabled={busy} onClick={() => submit(false)}>Save draft</Button>}
           <Button icon={<Send className="h-4 w-4" />} loading={saving === 'place'} disabled={busy} onClick={() => submit(true)}>{alwaysPlaced ? 'Save changes' : 'Place Order'}</Button>
         </div>

@@ -40,7 +40,7 @@ export default function QcReports() {
   const { data, loading, error } = useLoad<QcRow[]>(() => api.get('/qc-reports'))
   const [tab, setTab] = useState<Tab>('all')
   const isApm = user?.role === 'Assistant Production Manager'
-  const isPm = user?.role === 'Production Manager'
+  const isPm = user?.role === 'Production Manager' || user?.role === 'Super Admin'
   const canSign = isApm || isPm
 
   const all = data ?? []

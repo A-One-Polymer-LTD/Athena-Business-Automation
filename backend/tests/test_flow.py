@@ -347,6 +347,7 @@ check("RBAC users list Super Admin only", s == 403)
 s, d = call("GET", "/audit", sup)
 check("FR-GEN-02 audit log populated", s == 200 and len(d) > 30)
 
-failed = [r for r in results if not r[1]]
-print(f"\n{len(results) - len(failed)} passed, {len(failed)} failed")
-sys.exit(1 if failed else 0)
+if __name__ == "__main__":
+    failed = [r for r in results if not r[1]]
+    print(f"\n{len(results) - len(failed)} passed, {len(failed)} failed")
+    sys.exit(1 if failed else 0)
