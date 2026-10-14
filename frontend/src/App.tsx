@@ -1,5 +1,5 @@
 import { ShieldAlert } from 'lucide-react'
-import { lazy, Suspense, useEffect, type ReactNode } from 'react'
+import { lazy, Suspense, useEffect, type ComponentType, type ReactNode } from 'react'
 import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import Layout from './components/Layout'
 import { Button, Empty, Spinner } from './components/ui'
@@ -7,44 +7,67 @@ import { api } from './lib/api'
 import { homeFor, useAuth, type Role } from './lib/auth'
 import Login from './pages/Login'
 
+/** Lazy screen. After a new deployment the old screen files are gone, so a tab that is still open on the
+ *  previous version cannot load them: reload once to pick up the new version instead of showing nothing. */
+function page(load: () => Promise<{ default: ComponentType<any> }>) {
+  return lazy(() => load().then((m) => { store(null); return m }).catch((e) => {
+    if (!store()) {
+      store('1')
+      window.location.reload()
+      return new Promise<never>(() => {})
+    }
+    throw e
+  }))
+}
+/** sessionStorage can be unavailable (private mode); then the reload is simply not attempted twice. */
+function store(v?: string | null): string | null {
+  try {
+    if (v === undefined) return sessionStorage.getItem(RELOADED)
+    if (v === null) sessionStorage.removeItem(RELOADED)
+    else sessionStorage.setItem(RELOADED, v)
+  } catch { return '1' }
+  return null
+}
+const RELOADED = 'athena.reloadedForUpdate'
+
 // Sales Admin
-const SalesDashboard = lazy(() => import('./pages/sales/SalesDashboard'))       // S1
-const OrderForm = lazy(() => import('./pages/sales/OrderForm'))                 // S2
-const OrderRecords = lazy(() => import('./pages/sales/OrderRecords'))           // S3
-const OrderDetail = lazy(() => import('./pages/sales/OrderDetail'))             // S4
-const SalesRecord = lazy(() => import('./pages/sales/SalesRecord'))             // S5
-const Leads = lazy(() => import('./pages/sales/Leads'))                         // S6
+const SalesDashboard = page(() => import('./pages/sales/SalesDashboard'))       // S1
+const OrderForm = page(() => import('./pages/sales/OrderForm'))                 // S2
+const OrderRecords = page(() => import('./pages/sales/OrderRecords'))           // S3
+const OrderDetail = page(() => import('./pages/sales/OrderDetail'))             // S4
+const SalesRecord = page(() => import('./pages/sales/SalesRecord'))             // S5
+const Leads = page(() => import('./pages/sales/Leads'))                         // S6
 // Production Manager
-const PmOrders = lazy(() => import('./pages/pm/PmOrders'))                      // P1
-const WorkDistribution = lazy(() => import('./pages/pm/WorkDistribution'))      // P2
-const SiteBoard = lazy(() => import('./pages/pm/SiteBoard'))                    // P3
-const ManageApms = lazy(() => import('./pages/pm/ManageApms'))                  // P4
+const PmOrders = page(() => import('./pages/pm/PmOrders'))                      // P1
+const WorkDistribution = page(() => import('./pages/pm/WorkDistribution'))      // P2
+const SiteBoard = page(() => import('./pages/pm/SiteBoard'))                    // P3
+const ManageApms = page(() => import('./pages/pm/ManageApms'))                  // P4
 // APM
-const WorkList = lazy(() => import('./pages/apm/WorkList'))                     // A1
-const StoreRequisitions = lazy(() => import('./pages/apm/StoreRequisitions'))   // A2
-const WoodRequisitions = lazy(() => import('./pages/apm/WoodRequisitions'))     // A3
-const ItemDetail = lazy(() => import('./pages/apm/ItemDetail'))                 // A4 + A5
-const QcReports = lazy(() => import('./pages/apm/QcReports'))
-const ProductionInput = lazy(() => import('./pages/apm/ProductionInput')) // A4 queue
-const QcInput = lazy(() => import('./pages/apm/QcInput'))                 // A5 queue
+const WorkList = page(() => import('./pages/apm/WorkList'))                     // A1
+const StoreRequisitions = page(() => import('./pages/apm/StoreRequisitions'))   // A2
+const WoodRequisitions = page(() => import('./pages/apm/WoodRequisitions'))     // A3
+const ItemDetail = page(() => import('./pages/apm/ItemDetail'))                 // A4 + A5
+const QcReports = page(() => import('./pages/apm/QcReports'))
+const ProductionInput = page(() => import('./pages/apm/ProductionInput')) // A4 queue
+const QcInput = page(() => import('./pages/apm/QcInput'))                 // A5 queue
 // Store, saw mill, warehouse
-const StoreInbox = lazy(() => import('./pages/ops/StoreInbox'))                 // T1
-const WoodInbox = lazy(() => import('./pages/ops/WoodInbox'))                   // W1
-const WarehouseList = lazy(() => import('./pages/ops/WarehouseList'))           // G1
-const DeliveryRecords = lazy(() => import('./pages/ops/DeliveryRecords'))       // G2
+const StoreInbox = page(() => import('./pages/ops/StoreInbox'))                 // T1
+const WoodInbox = page(() => import('./pages/ops/WoodInbox'))                   // W1
+const WarehouseList = page(() => import('./pages/ops/WarehouseList'))           // G1
+const DeliveryRecords = page(() => import('./pages/ops/DeliveryRecords'))       // G2
 // Super Admin
-const LiveMonitor = lazy(() => import('./pages/admin/LiveMonitor'))             // X1
-const ManagementDashboard = lazy(() => import('./pages/admin/ManagementDashboard')) // X2
-const Users = lazy(() => import('./pages/admin/Users'))                         // X3
-const MasterData = lazy(() => import('./pages/admin/MasterData'))               // X4
-const AuditLog = lazy(() => import('./pages/admin/AuditLog'))                   // X5
-const Settings = lazy(() => import('./pages/admin/Settings'))
-const SalesPerformance = lazy(() => import('./pages/insight/SalesPerformance')) // X6
-const SalesTargets = lazy(() => import('./pages/insight/SalesTargets'))         // X8
-const ProductionReports = lazy(() => import('./pages/insight/ProductionReports')) // X7 list
-const ProductionReportView = lazy(() => import('./pages/insight/ProductionReportView')) // X7 report
-const ProductionCost = lazy(() => import('./pages/insight/ProductionCost'))     // P5 list
-const CostSheet = lazy(() => import('./pages/insight/CostSheet'))               // P5 sheet
+const LiveMonitor = page(() => import('./pages/admin/LiveMonitor'))             // X1
+const ManagementDashboard = page(() => import('./pages/admin/ManagementDashboard')) // X2
+const Users = page(() => import('./pages/admin/Users'))                         // X3
+const MasterData = page(() => import('./pages/admin/MasterData'))               // X4
+const AuditLog = page(() => import('./pages/admin/AuditLog'))                   // X5
+const Settings = page(() => import('./pages/admin/Settings'))
+const SalesPerformance = page(() => import('./pages/insight/SalesPerformance')) // X6
+const SalesTargets = page(() => import('./pages/insight/SalesTargets'))         // X8
+const ProductionReports = page(() => import('./pages/insight/ProductionReports')) // X7 list
+const ProductionReportView = page(() => import('./pages/insight/ProductionReportView')) // X7 report
+const ProductionCost = page(() => import('./pages/insight/ProductionCost'))     // P5 list
+const CostSheet = page(() => import('./pages/insight/CostSheet'))               // P5 sheet
 
 const SUPER: Role = 'Super Admin', SALES: Role = 'Sales Admin', PM: Role = 'Production Manager', APM: Role = 'Assistant Production Manager'
 const STORE: Role = 'Store Operator', SAW: Role = 'Saw-Mill Supervisor', WH: Role = 'Warehouse / Delivery'
