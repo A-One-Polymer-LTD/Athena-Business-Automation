@@ -1,6 +1,6 @@
 // Menus are built from the user's role (BRD Figure 14). Screen codes are noted for traceability.
 import {
-  Activity, BarChart3, Boxes, ClipboardCheck, ClipboardList, Coins, Database, FilePlus2, FileText, Gauge, Hammer,
+  Activity, BarChart3, Boxes, ClipboardCheck, ClipboardList, ClipboardPen, Coins, Database, Factory, FilePlus2, FileText, Gauge, Hammer,
   LayoutDashboard, LayoutGrid, ListChecks, NotebookPen, PackageCheck, ScrollText, Settings, ShieldCheck, Target,
   TreePine, TrendingUp, Truck, UserCog, Users, Warehouse,
 } from 'lucide-react'
@@ -21,6 +21,9 @@ const I = 'h-[18px] w-[18px]'
 export function navFor(user: User): NavItem[] {
   const cost: NavItem = { to: '/cost', label: 'Production Cost', icon: <Coins className={I} />, group: 'Reports' }
   const reports: NavItem = { to: '/reports', label: 'Production Reports', icon: <FileText className={I} />, group: 'Reports' }
+  // the inputs that build the Production Report and the QC Report (BRD 9.8, Workflows E, F, I)
+  const prodInput: NavItem = { to: '/production-input', label: 'Production Input', icon: <Factory className={I} />, group: 'Production' }
+  const qcInput: NavItem = { to: '/qc-input', label: 'QC Input', icon: <ClipboardPen className={I} />, badge: 'qc_input', group: 'Production' }
   let items: NavItem[] = []
   switch (user.role) {
     case 'Sales Admin':
@@ -39,6 +42,8 @@ export function navFor(user: User): NavItem[] {
         { to: '/pm/distribution', label: 'Work Distribution', icon: <LayoutGrid className={I} />, group: 'Planning' },    // P2
         { to: '/pm/site-board', label: 'Site Board', icon: <Boxes className={I} />, group: 'Planning' },                  // P3
         { to: '/monitor', label: 'Live Production Monitor', icon: <Activity className={I} />, group: 'Production' },
+        prodInput,
+        qcInput,
         { to: '/qc', label: 'QC Reports', icon: <ClipboardCheck className={I} />, badge: 'signoff', group: 'Production' },
         { to: '/pm/apms', label: 'Manage APMs', icon: <UserCog className={I} />, group: 'Production' },                    // P4
         { to: '/dashboard', label: 'Management Dashboard', icon: <Gauge className={I} />, group: 'Reports' },
@@ -49,6 +54,8 @@ export function navFor(user: User): NavItem[] {
     case 'Assistant Production Manager':
       items = [
         { to: '/apm/work', label: 'My Work List', icon: <ListChecks className={I} />, badge: 'new_items', group: 'Production' }, // A1, A4
+        prodInput,                                                                                                         // A4
+        qcInput,                                                                                                           // A5
         { to: '/apm/store-requisitions', label: 'Store Requisitions', icon: <PackageCheck className={I} />, badge: 'returned_store', group: 'Requisitions' }, // A2
         { to: '/apm/wood-requisitions', label: 'Wood Requisitions', icon: <TreePine className={I} />, badge: 'returned_wood', group: 'Requisitions' },       // A3
         { to: '/qc', label: 'QC Reports', icon: <ClipboardCheck className={I} />, group: 'Production' },                   // A5
@@ -77,6 +84,8 @@ export function navFor(user: User): NavItem[] {
         { to: '/pm/orders', label: 'Pending Orders', icon: <ClipboardList className={I} />, badge: 'pending_orders', group: 'Orders' },
         { to: '/pm/distribution', label: 'Work Distribution', icon: <LayoutGrid className={I} />, group: 'Orders' },
         { to: '/apm/work', label: 'Production Work List', icon: <ListChecks className={I} />, badge: 'new_items', group: 'Production' },
+        prodInput,
+        qcInput,
         { to: '/pm/site-board', label: 'Site Board', icon: <Boxes className={I} />, group: 'Production' },
         { to: '/qc', label: 'QC Reports', icon: <ClipboardCheck className={I} />, badge: 'signoff', group: 'Production' },
         { to: '/pm/apms', label: 'Manage APMs', icon: <UserCog className={I} />, group: 'Production' },

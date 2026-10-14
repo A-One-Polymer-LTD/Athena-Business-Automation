@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { ImageStrip } from '../../components/AuthImage'
 import QcSheet from '../../components/QcSheet'
+import ReportData from '../../components/ReportData'
 import {
   Button, Card, ErrorNote, Facts, Field, Input, Modal, Notice, Pill, Select, Spinner, StatusBadge, Textarea, cx, errText, useLoad, useUi,
 } from '../../components/ui'
@@ -142,14 +143,15 @@ export default function ItemDetail() {
       return
     }
     const addsUpholstery = mv.to === 'Upholstery' && !item.upholstery_added
-    const ok = await confirm({
+    // the optional note is stored with the stage record and shown in the Production Report (FR-WF-04)
+    const note = await confirm({
       title: addsUpholstery ? `Add upholstery to ${item.item_no}?` : `${mv.label}?`,
       message: addsUpholstery
         ? 'Adding upholstery makes Upholstery QC required before Finish Good. Only the Production Manager can remove it afterwards.'
         : `${item.item_no} will move from ${item.stage} to ${mv.to}. Only the Production Manager can reverse a stage update.`,
-      confirmLabel: mv.label, tone: addsUpholstery ? 'warn' : 'primary',
+      confirmLabel: mv.label, tone: addsUpholstery ? 'warn' : 'primary', reason: 'Note (optional)', reasonRequired: false,
     })
-    if (ok) await run(`move:${mv.to}`, () => api.post(`/items/${itemId}/move`, { to: mv.to }))
+    if (note !== false) await run(`move:${mv.to}`, () => api.post(`/items/${itemId}/move`, { to: mv.to, note: typeof note === 'string' ? note : undefined }))
   }
 
   const submitFinish = async () => {
@@ -343,6 +345,9 @@ export default function ItemDetail() {
       {item.qc && <QcSheet itemId={itemId} qc={item.qc} onChanged={after} />}
 
       <div className="space-y-5 no-print">
+        {/* what the stages have recorded for the Production Report */}
+        {item.report_data && <ReportData rows={item.report_data} delivered={item.stage === 'Delivered'} />}
+
         {/* stage history */}
         {history.length > 0 && (
           <Card title="Stage history">

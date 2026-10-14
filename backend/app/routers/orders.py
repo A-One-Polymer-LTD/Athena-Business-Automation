@@ -119,6 +119,12 @@ def badges(user: m.User = Depends(current_user), db: DbSession = Depends(get_db)
     if user.role == ROLE_WAREHOUSE:
         out["warehouse"] = (db.query(m.OrderItem).join(m.Order)
                             .filter(m.Order.org_id == org, m.OrderItem.stage == wf.IN_WAREHOUSE).count())
+    if user.role in (ROLE_SUPER, ROLE_PM, ROLE_APM):
+        qi = (db.query(m.OrderItem).join(m.Order).join(m.QCReport)
+              .filter(m.Order.org_id == org, m.Order.state == "placed"))
+        if user.role == ROLE_APM:
+            qi = qi.filter(m.OrderItem.site_id.in_([s.id for s in db.query(m.Site).filter_by(org_id=org, apm_id=user.id)]))
+        out["qc_input"] = sum(1 for it in qi if wf.qc_todo(it, user.role))
     return {k: v for k, v in out.items() if v}
 
 

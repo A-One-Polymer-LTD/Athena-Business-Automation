@@ -157,6 +157,21 @@ def qc_passed(item: m.OrderItem, stage: str) -> bool:
     return all(latest.get(c) == "Pass" for c in checks)
 
 
+def qc_todo(item: m.OrderItem, role: str) -> str | None:
+    """QC input this role still owes: 'result' at a QC stage (APM), or 'signoff' once every check is Pass."""
+    q = item.qc
+    if not q:
+        return None
+    if item.stage in QC_STAGES and role in (ROLE_APM, ROLE_SUPER) and not qc_passed(item, item.stage):
+        return "result"
+    required = [CARPENTER_QC, LACQUER_QC] + ([UPHOLSTERY_QC] if item.upholstery_added else [])
+    if all(qc_passed(item, s) for s in required) and (
+            role == ROLE_APM and not q.apm_signed_by or role == ROLE_PM and not q.pm_signed_by
+            or role == ROLE_SUPER and not (q.apm_signed_by and q.pm_signed_by)):
+        return "signoff"
+    return None
+
+
 def ensure_qc_report(db: DbSession, item: m.OrderItem, settings: dict) -> m.QCReport:
     if not item.qc:
         item.qc = m.QCReport(item_id=item.id, qc_ref=next_number(db, item.order.org_id, "qc", settings))
@@ -418,6 +433,8 @@ def item_full(item: m.OrderItem, user: m.User, settings: dict) -> dict:
             d["qc"] = q
     if user.role in (ROLE_APM, ROLE_SUPER):
         d["moves"] = allowed_moves(item, settings)
+    if user.role != ROLE_SALES and item.stage != UNASSIGNED:
+        d["report_data"] = report_readiness(item)
     if can_view_cost(user):
         d["cost"] = cost_json(item)
         d["can_edit_cost"] = has_cost_permission(user)
@@ -556,6 +573,76 @@ def build_report_data(item: m.OrderItem) -> tuple[dict, list[str]]:
         "missing": missing,
     }
     return data, missing
+
+
+def report_readiness(item: m.OrderItem) -> list[dict]:
+    """BRD 9.8: what each stage has recorded so far for the item's Production Report.
+
+    status: done (recorded), missing (the stage has passed without it), waiting (the stage is still ahead).
+    """
+    stage = item.stage
+    after_fg = stage in FINISHED or bool(item.finish_good_at)
+    rows: list[dict] = []
+
+    def row(key, label, who, status, detail=None):
+        rows.append(clean({"key": key, "label": label, "who": who, "status": status, "detail": detail}))
+
+    row("order", "Product specification, measurements and images", "Sales Admin · order placement",
+        "done" if item.images and item.amount else "missing",
+        f"{len(item.images)} image(s), ordered {item.height:g} x {item.width:g} x {item.length:g}" if item.height else None)
+
+    issued = [r for r in item.store_reqs if r.status in ("Issued", "Partly Issued")]
+    open_store = [r for r in item.store_reqs if r.status in ("Submitted", "Returned")]
+    done_wood = [r for r in item.wood_reqs if r.status == "Completed"]
+    open_wood = [r for r in item.wood_reqs if r.status in ("Submitted", "In Progress", "Returned")]
+    if issued or done_wood:
+        mat = ("done", ", ".join([r.req_no for r in issued + done_wood]))
+    elif item.no_req_remark:
+        mat = ("done", f"No requisition needed: {item.no_req_remark}")
+    elif open_store or open_wood:
+        mat = ("waiting", "Open: " + ", ".join(r.req_no for r in open_store + open_wood))
+    else:
+        mat = ("waiting" if stage in (UNASSIGNED, ASSIGNED) else "missing", None)
+    row("materials", "Raw materials and wood used", "APM requests · Store Operator / Saw-Mill fulfil", *mat)
+
+    n = len(item.history)
+    row("stages", "Stage timeline (start, end, user, note)", "APM · every stage move",
+        "done" if n else "waiting", f"{n} stage record(s)" if n else None)
+
+    if not item.qc:
+        row("qc", "Unified QC results and rework history", "APM · QC Input",
+            "missing" if after_fg else "waiting", "The QC report opens when the item reaches Carpenter QC.")
+    else:
+        required = [CARPENTER_QC, LACQUER_QC] + ([UPHOLSTERY_QC] if item.upholstery_added else [])
+        passed = [s for s in required if qc_passed(item, s)]
+        row("qc", "Unified QC results and rework history", "APM · QC Input",
+            "done" if len(passed) == len(required) else ("missing" if after_fg else "waiting"),
+            f"{item.qc.qc_ref}: {len(passed)} of {len(required)} QC stage(s) passed"
+            + (f", rework x {item.rework_count}" if item.rework_count else ""))
+        row("qc_side", "Carpenter working side", "APM · QC Input",
+            "done" if item.qc.carpenter_side else ("missing" if after_fg else "waiting"), item.qc.carpenter_side)
+        all_pass = len(passed) == len(required)
+        for key, label, who, val in (("apm_sign", "APM sign-off", "APM · QC Input", item.qc.apm_signed_by),
+                                     ("pm_sign", "Production Manager sign-off", "Production Manager · QC Input",
+                                      item.qc.pm_signed_by)):
+            row(key, label, who, "done" if val else ("missing" if after_fg and all_pass else "waiting"), val)
+
+    row("final", "Final confirmed measurements", "APM · Finish Good",
+        "done" if item.final_height else ("missing" if after_fg else "waiting"),
+        f"{item.final_height:g} x {item.final_width:g} x {item.final_length:g}" if item.final_height else None)
+
+    lines = [l for l in item.cost_sheet.lines if not l.voided] if item.cost_sheet else []
+    row("cost", "Production cost lines", "Production Manager / cost-permitted users · Production Cost",
+        "done" if lines else ("missing" if after_fg else "waiting"), f"{len(lines)} line(s)" if lines else None)
+
+    for key, label, val in (("packed", "Packed date", item.packed_at), ("ready", "Ready for Delivery date", item.ready_at)):
+        row(key, label, "Warehouse / Delivery · Warehouse List", "done" if val else "waiting",
+            iso(val)[:10] if val else None)
+    row("delivered", "Delivery date, delivered by and receiver", "Warehouse / Delivery · Warehouse List",
+        "done" if item.delivered_at else "waiting",
+        f"{item.delivered_by} to {item.receiver_name}" if item.delivered_at else
+        "Marking the item Delivered generates the Production Report.")
+    return rows
 
 
 def generate_report(db: DbSession, item: m.OrderItem, user: m.User | None, settings: dict,

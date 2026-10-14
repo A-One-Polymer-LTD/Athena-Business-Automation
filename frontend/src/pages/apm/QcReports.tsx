@@ -70,7 +70,7 @@ export default function QcReports() {
 
   return (
     <div>
-      <PageHeader title="QC Reports" subtitle="One unified QC report per item. Open a row to see the full sheet." />
+      <PageHeader title="QC Reports" subtitle="One unified QC report per item, created when the item reaches Carpenter QC. Results and sign-offs are recorded in QC Input. Open a row to see the full sheet." />
       {loading ? <Spinner /> : error ? <ErrorNote error={error} /> : (
         <>
           <Tabs<Tab> className="mb-3" value={tab} onChange={setTab} options={[

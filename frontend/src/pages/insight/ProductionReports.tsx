@@ -199,7 +199,7 @@ export default function ProductionReports() {
   const [tab, setTab] = useState<'reports' | 'summary'>('reports')
   return (
     <div>
-      <PageHeader title="Production Reports" subtitle="Generated automatically when an item is delivered" />
+      <PageHeader title="Production Reports" subtitle="Generated automatically when an item is delivered, from the data recorded in Production Input, QC Input, requisitions, production cost and the warehouse." />
       <Tabs value={tab} onChange={setTab} className="mb-4 no-print" options={[{ value: 'reports', label: 'Reports' }, { value: 'summary', label: 'Summary' }]} />
       {tab === 'reports' ? <ReportList /> : <SummaryView />}
     </div>

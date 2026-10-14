@@ -120,7 +120,7 @@ export default function Layout() {
               // "/sales/orders" must not light up while "/sales/orders/new" is open
               isActive && !(i.to === '/sales/orders' && pathname.startsWith('/sales/orders/new')) ? 'text-brand-800' : 'text-slate-500')}>
             {i.icon}
-            <span className="max-w-full truncate">{i.label.replace(' Requisitions', ' Req.').replace('Production ', '').replace('Live ', '')}</span>
+            <span className="max-w-full truncate">{i.label.replace('Production Input', 'Prod. Input').replace(' Requisitions', ' Req.').replace('Production ', '').replace('Live ', '')}</span>
             {!!(i.badge && badges[i.badge]) && <span className="absolute right-[22%] top-1.5 h-2 w-2 rounded-full bg-brand-800" />}
           </NavLink>
         ))}

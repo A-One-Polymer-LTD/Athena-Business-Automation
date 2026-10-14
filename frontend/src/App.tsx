@@ -25,6 +25,8 @@ const StoreRequisitions = lazy(() => import('./pages/apm/StoreRequisitions'))   
 const WoodRequisitions = lazy(() => import('./pages/apm/WoodRequisitions'))     // A3
 const ItemDetail = lazy(() => import('./pages/apm/ItemDetail'))                 // A4 + A5
 const QcReports = lazy(() => import('./pages/apm/QcReports'))
+const ProductionInput = lazy(() => import('./pages/apm/ProductionInput')) // A4 queue
+const QcInput = lazy(() => import('./pages/apm/QcInput'))                 // A5 queue
 // Store, saw mill, warehouse
 const StoreInbox = lazy(() => import('./pages/ops/StoreInbox'))                 // T1
 const WoodInbox = lazy(() => import('./pages/ops/WoodInbox'))                   // W1
@@ -97,6 +99,8 @@ export default function App() {
           <Route path="/apm/wood-requisitions" element={g([APM], <WoodRequisitions />)} />
           <Route path="/items/:id" element={g([APM, PM, SUPER, SALES, WH], <ItemDetail />, { cost: true })} />
           <Route path="/qc" element={g([APM, PM, SUPER], <QcReports />)} />
+          <Route path="/production-input" element={g([APM, PM], <ProductionInput />)} />
+          <Route path="/qc-input" element={g([APM, PM], <QcInput />)} />
 
           <Route path="/store/inbox" element={g([STORE], <StoreInbox />)} />
           <Route path="/sawmill/inbox" element={g([SAW], <WoodInbox />)} />

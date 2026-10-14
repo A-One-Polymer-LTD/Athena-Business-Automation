@@ -75,6 +75,57 @@ def list_items(scope: str = "open", site_id: int = 0, apm_id: int = 0, stage: st
     return out
 
 
+# ---------- input queues: Production Input and QC Input (Workflows E, F, I) ----------
+def _input_items(db: DbSession, user: m.User, stages: list[str]):
+    if user.role not in (ROLE_SUPER, ROLE_PM, ROLE_APM):
+        deny(user, "production input", message="Your role does not allow this action.")
+    qry = _org_items(db, user).filter(m.OrderItem.stage.in_(stages))
+    if user.role == ROLE_APM:
+        qry = qry.filter(m.OrderItem.site_id.in_(_my_site_ids(db, user)))
+    return qry.order_by(m.Order.placed_at, m.OrderItem.id)
+
+
+@router.get("/production-input")
+def production_input(user: m.User = Depends(current_user), db: DbSession = Depends(get_db)):
+    """Items whose production data is still being recorded for their Production Report (BRD 9.8)."""
+    settings = get_settings(db, user.org_id)
+    out = []
+    for it in _input_items(db, user, wf.PRODUCTION_STAGES + wf.WAREHOUSE_STAGES):
+        b = wf.item_brief(it, settings)
+        rows = wf.report_readiness(it)
+        b["report_done"] = sum(r["status"] == "done" for r in rows)
+        b["report_total"] = len(rows)
+        b["report_missing"] = [r["label"] for r in rows if r["status"] == "missing"]
+        if user.role in (ROLE_APM, ROLE_SUPER):
+            moves = wf.allowed_moves(it, settings)
+            b["next_step"] = ", ".join(x["label"] for x in moves if x["enabled"]) or None
+            if not b["next_step"]:
+                b["blocked"] = ("Record the QC results in QC Input." if it.stage in wf.QC_STAGES
+                                else next((x.get("reason") for x in moves if x.get("reason")), None))
+        out.append(b)
+    return out
+
+
+@router.get("/qc-input")
+def qc_input(user: m.User = Depends(current_user), db: DbSession = Depends(get_db)):
+    """Items waiting for a QC result (at a QC stage) or for this user's QC sign-off (FR-QC-05, FR-QC-06)."""
+    settings = get_settings(db, user.org_id)
+    out = []
+    for it in _input_items(db, user, wf.PRODUCTION_STAGES + wf.WAREHOUSE_STAGES + [wf.DELIVERED]):
+        todo = wf.qc_todo(it, user.role)
+        if not todo:
+            continue
+        q = it.qc
+        latest = wf.qc_latest(it)
+        b = wf.item_brief(it, settings)
+        b.update(clean({"todo": todo, "qc_stage": it.stage if todo == "result" else None,
+                        "open_checks": [wf.QC_CHECKS[k][0] for k in wf.QC_CHECKS
+                                        if todo == "result" and wf.QC_CHECKS[k][1] == it.stage and latest.get(k) != "Pass"],
+                        "apm_signed_by": q.apm_signed_by, "pm_signed_by": q.pm_signed_by}))
+        out.append(b)
+    return out
+
+
 @router.get("/items/{item_id}")
 def item_detail(item_id: int, user: m.User = Depends(current_user), db: DbSession = Depends(get_db)):
     item = wf.get_item(db, user, item_id)
