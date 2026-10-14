@@ -4,7 +4,8 @@ from datetime import date, timedelta
 
 from fastapi import APIRouter, Body, Depends, File, HTTPException, UploadFile
 from fastapi.responses import Response
-from sqlalchemy.orm import Session as DbSession
+from sqlalchemy import or_
+from sqlalchemy.orm import Session as DbSession, lazyload, selectinload
 
 from .. import models as m
 from .. import workflow as wf
@@ -97,8 +98,10 @@ def badges(user: m.User = Depends(current_user), db: DbSession = Depends(get_db)
         out["returned_store"] = db.query(m.StoreRequisition).filter_by(org_id=org, status="Returned").count()
         out["returned_wood"] = db.query(m.WoodRequisition).filter_by(org_id=org, status="Returned").count()
     if user.role in (ROLE_PM, ROLE_SUPER):
-        orders = db.query(m.Order).filter_by(org_id=org, state="placed").all()
-        out["pending_orders"] = sum(1 for o in orders if wf.order_status(o) == "Pending")
+        # Pending (wf.order_status): placed, with no items or at least one item not yet assigned
+        out["pending_orders"] = db.query(m.Order).filter(
+            m.Order.org_id == org, m.Order.state == "placed",
+            or_(~m.Order.items.any(), m.Order.items.any(m.OrderItem.stage == wf.UNASSIGNED))).count()
         out["signoff"] = (db.query(m.QCReport).join(m.OrderItem).join(m.Order)
                           .filter(m.Order.org_id == org, m.QCReport.pm_signed_by.is_(None),
                                   m.OrderItem.stage.in_(wf.FINISHED)).count())
@@ -120,8 +123,12 @@ def badges(user: m.User = Depends(current_user), db: DbSession = Depends(get_db)
         out["warehouse"] = (db.query(m.OrderItem).join(m.Order)
                             .filter(m.Order.org_id == org, m.OrderItem.stage == wf.IN_WAREHOUSE).count())
     if user.role in (ROLE_SUPER, ROLE_PM, ROLE_APM):
+        # load only what wf.qc_todo reads: the item, its QC report and results
         qi = (db.query(m.OrderItem).join(m.Order).join(m.QCReport)
-              .filter(m.Order.org_id == org, m.Order.state == "placed"))
+              .filter(m.Order.org_id == org, m.Order.state == "placed",
+                      or_(m.OrderItem.stage.in_(wf.QC_STAGES), m.QCReport.apm_signed_by.is_(None),
+                          m.QCReport.pm_signed_by.is_(None)))
+              .options(lazyload("*"), selectinload(m.OrderItem.qc).selectinload(m.QCReport.results)))
         if user.role == ROLE_APM:
             qi = qi.filter(m.OrderItem.site_id.in_([s.id for s in db.query(m.Site).filter_by(org_id=org, apm_id=user.id)]))
         out["qc_input"] = sum(1 for it in qi if wf.qc_todo(it, user.role))

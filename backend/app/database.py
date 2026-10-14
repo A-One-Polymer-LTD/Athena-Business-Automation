@@ -8,7 +8,6 @@ from pathlib import Path
 
 from sqlalchemy import create_engine, event
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
-from sqlalchemy.pool import NullPool
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SERVERLESS = bool(os.getenv("VERCEL"))
@@ -25,7 +24,9 @@ elif DATABASE_URL.startswith(("postgres://", "postgresql://")):
     DATABASE_URL = "postgresql+pg8000://" + DATABASE_URL.split("://", 1)[1].split("?", 1)[0]
     _kwargs["connect_args"] = {"ssl_context": ssl.create_default_context()}
 if SERVERLESS and not _is_sqlite:
-    _kwargs["poolclass"] = NullPool  # the database provider pools connections
+    # keep a few TLS connections open across requests on a warm function instance instead of a new
+    # connection (TLS handshake + sign-in) per request; pre-ping replaces any dropped while idle
+    _kwargs.update(pool_size=2, max_overflow=3, pool_recycle=240, pool_timeout=10)
 
 engine = create_engine(DATABASE_URL, **_kwargs)
 

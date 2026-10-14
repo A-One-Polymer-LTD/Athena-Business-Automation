@@ -44,7 +44,7 @@ class User(Base):
     failed_logins: Mapped[int] = mapped_column(Integer, default=0)
     locked_until: Mapped[datetime | None] = mapped_column(DateTime)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=now)
-    branch: Mapped["Branch"] = relationship()
+    branch: Mapped["Branch"] = relationship(lazy="selectin")
 
 
 class Session(Base):
@@ -64,7 +64,7 @@ class Site(Base):
     type: Mapped[str] = mapped_column(String(20), default="In-house")  # In-house | Contract
     apm_id: Mapped[int | None] = mapped_column(ForeignKey("users.id"))
     active: Mapped[bool] = mapped_column(Boolean, default=True)
-    apm: Mapped["User"] = relationship()
+    apm: Mapped["User"] = relationship(lazy="selectin")
 
 
 class MasterItem(Base):
@@ -117,10 +117,10 @@ class Order(Base):
     lead_id: Mapped[int | None] = mapped_column(Integer)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=now)
     placed_at: Mapped[datetime | None] = mapped_column(DateTime, index=True)
-    customer: Mapped["Customer"] = relationship()
-    branch: Mapped["Branch"] = relationship()
-    sales_admin: Mapped["User"] = relationship()
-    items: Mapped[list["OrderItem"]] = relationship(back_populates="order", order_by="OrderItem.seq",
+    customer: Mapped["Customer"] = relationship(lazy="selectin")
+    branch: Mapped["Branch"] = relationship(lazy="selectin")
+    sales_admin: Mapped["User"] = relationship(lazy="selectin")
+    items: Mapped[list["OrderItem"]] = relationship(lazy="selectin", back_populates="order", order_by="OrderItem.seq",
                                                     cascade="all, delete-orphan")
 
 
@@ -162,16 +162,18 @@ class OrderItem(Base):
     delivery_date: Mapped[date | None] = mapped_column(Date)
     delivered_by: Mapped[str | None] = mapped_column(String(100))
     receiver_name: Mapped[str | None] = mapped_column(String(100))
-    order: Mapped["Order"] = relationship(back_populates="items")
-    site: Mapped["Site"] = relationship()
-    images: Mapped[list["ItemImage"]] = relationship(cascade="all, delete-orphan", order_by="ItemImage.id")
-    history: Mapped[list["StageHistory"]] = relationship(order_by="StageHistory.id", cascade="all, delete-orphan")
-    store_reqs: Mapped[list["StoreRequisition"]] = relationship(order_by="StoreRequisition.id",
+    order: Mapped["Order"] = relationship(lazy="selectin", back_populates="items")
+    site: Mapped["Site"] = relationship(lazy="selectin")
+    images: Mapped[list["ItemImage"]] = relationship(lazy="selectin",
+                                                     cascade="all, delete-orphan", order_by="ItemImage.id")
+    history: Mapped[list["StageHistory"]] = relationship(lazy="selectin",
+                                                         order_by="StageHistory.id", cascade="all, delete-orphan")
+    store_reqs: Mapped[list["StoreRequisition"]] = relationship(lazy="selectin", order_by="StoreRequisition.id",
                                                                 back_populates="item")
-    wood_reqs: Mapped[list["WoodRequisition"]] = relationship(order_by="WoodRequisition.id",
+    wood_reqs: Mapped[list["WoodRequisition"]] = relationship(lazy="selectin", order_by="WoodRequisition.id",
                                                               back_populates="item")
-    qc: Mapped["QCReport"] = relationship(uselist=False, back_populates="item")
-    cost_sheet: Mapped["CostSheet"] = relationship(uselist=False, back_populates="item")
+    qc: Mapped["QCReport"] = relationship(lazy="selectin", uselist=False, back_populates="item")
+    cost_sheet: Mapped["CostSheet"] = relationship(lazy="selectin", uselist=False, back_populates="item")
     reports: Mapped[list["ProductionReport"]] = relationship(order_by="ProductionReport.revision",
                                                              back_populates="item")
 
@@ -211,9 +213,10 @@ class StoreRequisition(Base):
     processed_at: Mapped[datetime | None] = mapped_column(DateTime)
     processed_by: Mapped[str | None] = mapped_column(String(100))
     versions: Mapped[list] = mapped_column(JSON, default=list)  # history of earlier versions
-    apm: Mapped["User"] = relationship()
-    item: Mapped["OrderItem"] = relationship(back_populates="store_reqs")
-    lines: Mapped[list["StoreReqLine"]] = relationship(cascade="all, delete-orphan", order_by="StoreReqLine.id")
+    apm: Mapped["User"] = relationship(lazy="selectin")
+    item: Mapped["OrderItem"] = relationship(lazy="selectin", back_populates="store_reqs")
+    lines: Mapped[list["StoreReqLine"]] = relationship(lazy="selectin",
+                                                       cascade="all, delete-orphan", order_by="StoreReqLine.id")
 
 
 class StoreReqLine(Base):
@@ -249,8 +252,8 @@ class WoodRequisition(Base):
     processed_at: Mapped[datetime | None] = mapped_column(DateTime)
     processed_by: Mapped[str | None] = mapped_column(String(100))
     versions: Mapped[list] = mapped_column(JSON, default=list)
-    apm: Mapped["User"] = relationship()
-    item: Mapped["OrderItem"] = relationship(back_populates="wood_reqs")
+    apm: Mapped["User"] = relationship(lazy="selectin")
+    item: Mapped["OrderItem"] = relationship(lazy="selectin", back_populates="wood_reqs")
 
 
 class QCReport(Base):
@@ -265,8 +268,9 @@ class QCReport(Base):
     apm_signed_at: Mapped[datetime | None] = mapped_column(DateTime)
     pm_signed_by: Mapped[str | None] = mapped_column(String(100))
     pm_signed_at: Mapped[datetime | None] = mapped_column(DateTime)
-    item: Mapped["OrderItem"] = relationship(back_populates="qc")
-    results: Mapped[list["QCResult"]] = relationship(cascade="all, delete-orphan", order_by="QCResult.id")
+    item: Mapped["OrderItem"] = relationship(lazy="selectin", back_populates="qc")
+    results: Mapped[list["QCResult"]] = relationship(lazy="selectin",
+                                                     cascade="all, delete-orphan", order_by="QCResult.id")
 
 
 class QCResult(Base):
@@ -288,8 +292,9 @@ class CostSheet(Base):
     item_id: Mapped[int] = mapped_column(ForeignKey("order_items.id"), unique=True)
     sheet_no: Mapped[str] = mapped_column(String(30), unique=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=now)
-    item: Mapped["OrderItem"] = relationship(back_populates="cost_sheet")
-    lines: Mapped[list["CostLine"]] = relationship(cascade="all, delete-orphan", order_by="CostLine.id")
+    item: Mapped["OrderItem"] = relationship(lazy="selectin", back_populates="cost_sheet")
+    lines: Mapped[list["CostLine"]] = relationship(lazy="selectin",
+                                                   cascade="all, delete-orphan", order_by="CostLine.id")
 
 
 class CostLine(Base):
