@@ -38,6 +38,8 @@ s, d = call("POST", "/store-requisitions", sup, {"item_id": item, "lines": [{"ma
 check("SA submits a store requisition", s == 200, str(d))
 s, inbox = call("GET", "/store-requisitions?status=Submitted", sup)
 rid = next(r["id"] for r in inbox if r["item_id"] == item)
+s, mine = call("GET", "/store-requisitions", login("apm02"))
+check("SA requisition belongs to the site's APM", any(r["id"] == rid for r in mine), str(mine)[:120])
 s, d = call("POST", f"/store-requisitions/{rid}/process", sup, {"action": "issue"})
 check("SA issues a requisition (Store action)", s == 200, str(d))
 s, d = call("POST", f"/cost/items/{item}/lines", sup, {"name": "Timber", "rate": 1000, "per": "Pcs", "amount": 5000})

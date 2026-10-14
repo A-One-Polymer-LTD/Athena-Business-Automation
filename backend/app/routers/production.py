@@ -309,6 +309,13 @@ def deactivate_apm(apm_id: int, user: m.User = Depends(require(ROLE_PM, ROLE_SUP
 
 
 # ---------- store requisitions (Workflow C) ----------
+def _req_owner(user: m.User, item: m.OrderItem) -> int:
+    """A requisition belongs to the item's APM, also when the Super Admin submits it for them."""
+    if user.role == ROLE_SUPER and item.site and item.site.apm_id:
+        return item.site.apm_id
+    return user.id
+
+
 def _req_scope(db: DbSession, user: m.User, model):
     q = db.query(model).filter(model.org_id == user.org_id)
     if user.role == ROLE_APM:
@@ -363,7 +370,7 @@ def create_store_req(body: dict = Body(...), user: m.User = Depends(current_user
                                       f"contains material code {', '.join(dup)}. Submit anyway?"})
     settings = get_settings(db, user.org_id)
     r = m.StoreRequisition(org_id=user.org_id, req_no=next_number(db, user.org_id, "store_req", settings),
-                           item_id=item.id, apm_id=user.id, lines=lines)
+                           item_id=item.id, apm_id=_req_owner(user, item), lines=lines)
     item.store_reqs.append(r)
     item.no_req_remark = None
     audit(db, user, "CREATE", "Store Requisition", r.req_no, f"Submitted for {wf.item_no(item)} with {len(lines)} line(s)")
@@ -468,7 +475,7 @@ def create_wood_req(body: dict = Body(...), user: m.User = Depends(current_user)
         raise HTTPException(409, "Requisitions can be submitted only for items in production.")
     f = _wood_fields(db, user, body)
     r = m.WoodRequisition(org_id=user.org_id, req_no=next_number(db, user.org_id, "wood_req"), item_id=item.id,
-                          apm_id=user.id, **f)
+                          apm_id=_req_owner(user, item), **f)
     item.wood_reqs.append(r)
     item.no_req_remark = None
     audit(db, user, "CREATE", "Wood Requisition", r.req_no, f"Submitted for {wf.item_no(item)}")

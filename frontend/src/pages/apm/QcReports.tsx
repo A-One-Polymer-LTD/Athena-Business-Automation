@@ -39,14 +39,15 @@ export default function QcReports() {
   const { user } = useAuth()
   const { data, loading, error } = useLoad<QcRow[]>(() => api.get('/qc-reports'))
   const [tab, setTab] = useState<Tab>('all')
+  const isSuper = user?.role === 'Super Admin'
   const isApm = user?.role === 'Assistant Production Manager'
-  const isPm = user?.role === 'Production Manager' || user?.role === 'Super Admin'
-  const canSign = isApm || isPm
+  const isPm = user?.role === 'Production Manager'
+  const canSign = isApm || isPm || isSuper
 
   const all = data ?? []
   const allPassed = (r: QcRow) => r.carpenter === 'Pass' && r.lacquer === 'Pass' && (!r.upholstery || r.upholstery === 'Pass')
   // A report can be signed once every required check is Pass (finished items always are).
-  const waiting = useMemo(() => all.filter((r) => allPassed(r) && (isPm ? !r.pm_signed_by : isApm ? !r.apm_signed_by : false)), [all, isPm, isApm])
+  const waiting = useMemo(() => all.filter((r) => allPassed(r) && (isSuper ? !r.apm_signed_by || !r.pm_signed_by : isPm ? !r.pm_signed_by : isApm ? !r.apm_signed_by : false)), [all, isSuper, isPm, isApm])
   const withRework = useMemo(() => all.filter((r) => (r.rework_count ?? 0) > 0), [all])
   const rows = tab === 'mine' ? waiting : tab === 'rework' ? withRework : all
 
