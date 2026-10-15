@@ -71,12 +71,12 @@ export default function ProductionInput() {
       <PageHeader title="Production Input"
         subtitle="Record each production step here. Every step adds its part to the item's Production Report."
         actions={<>
-          <Link to="/qc-input"><Button variant="secondary" icon={<ClipboardCheck className="h-4 w-4" />}>QC Input</Button></Link>
+          <Link to="/qc-requests"><Button variant="secondary" icon={<ClipboardCheck className="h-4 w-4" />}>QC Requests</Button></Link>
           <Link to="/reports"><Button variant="secondary" icon={<FileText className="h-4 w-4" />}>Production Reports</Button></Link>
         </>} />
       <Notice className="mb-4">
         <span className="font-semibold">How the Production Report is built:</span> requisitions record the materials, each stage move records its
-        start, end, user and note, QC Input records the QC results and sign-offs, Finish Good records the final measurements, and the Production
+        start, end, user and note, QC Requests record the QC results and sign-offs, Finish Good records the final measurements, and the Production
         Cost sheet records the cost lines. When the warehouse marks the item <span className="font-semibold">Delivered</span>, the system
         generates the Production Report from these records. Open a row to record its next step.
       </Notice>

@@ -1,9 +1,10 @@
 // A4 Item Stage Tracker + A5 Unified QC Report. Shared by every role that may open an item;
 // the API returns only what each role may see, so sections render only when their data is present.
 import { ArrowLeft, Calculator, Check, FileText, MapPin, PackageCheck, Plus, RotateCcw, Shuffle, Undo2 } from 'lucide-react'
-import { useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { ImageStrip } from '../../components/AuthImage'
+import { QcTracker, SendToQcModal } from '../../components/QcRequest'
 import QcSheet from '../../components/QcSheet'
 import ReportData from '../../components/ReportData'
 import {
@@ -93,6 +94,16 @@ export default function ItemDetail() {
   const [reason, setReason] = useState('')
   const [reassignErr, setReassignErr] = useState('')
   const sites = useLoad<any>(() => (reassign ? api.get('/meta') : Promise.resolve(null)), [reassign])
+  // Send to Carpenter / Lacquer / Upholstery QC opens a dialog to choose the QC reviewer (also from the work list)
+  const [params, setParams] = useSearchParams()
+  const [sendQc, setSendQc] = useState<Move | null>(null)
+  const wanted = params.get('send')
+  useEffect(() => {
+    if (!wanted || !item) return
+    const mv = (item.moves ?? []).find((x: Move) => x.to === wanted && x.enabled)
+    setParams({}, { replace: true })
+    if (mv) setSendQc(mv)
+  }, [wanted, item, setParams])
 
   if (loading) return <Spinner />
   if (error || !item) return (
@@ -142,6 +153,7 @@ export default function ItemDetail() {
       setFinish({ h: item.height ? String(item.height) : '', w: item.width ? String(item.width) : '', l: item.length ? String(item.length) : '' })
       return
     }
+    if (QC_STAGES.includes(mv.to)) { setSendQc(mv); return }
     const addsUpholstery = mv.to === 'Upholstery' && !item.upholstery_added
     // the optional note is stored with the stage record and shown in the Production Report (FR-WF-04)
     const note = await confirm({
@@ -341,8 +353,14 @@ export default function ItemDetail() {
         )}
       </div>
 
+      {/* QC requests per stage: who sent it to whom, status, decision and rework rounds */}
+      {(item.qc_tracker ?? []).some((t: any) => t.requests.length || t.status !== 'Not started') && <div className="no-print"><QcTracker tracker={item.qc_tracker} /></div>}
+
       {/* unified QC report: one per item */}
       {item.qc && <QcSheet itemId={itemId} qc={item.qc} onChanged={after} />}
+
+      <SendToQcModal itemId={itemId} itemNo={item.item_no} stage={sendQc?.to ?? null} label={sendQc?.label} onClose={() => setSendQc(null)}
+        onSent={(message, warnings) => { toast.success(message); warnings?.forEach((w) => toast.warn(w)); setSendQc(null); after() }} />
 
       <div className="space-y-5 no-print">
         {/* what the stages have recorded for the Production Report */}

@@ -76,6 +76,7 @@ export default function WorkList() {
 
   const doMove = async (item: WorkItem, mv: Move) => {
     if (mv.to === 'Finish Good') { navigate(`/items/${item.id}`); return } // final measurements are confirmed on the item screen
+    if (QC_STAGES.includes(mv.to)) { navigate(`/items/${item.id}?send=${encodeURIComponent(mv.to)}`); return } // the QC reviewer is chosen there
     const addsUpholstery = mv.to === 'Upholstery' && !item.upholstery_added
     const ok = await confirm({
       title: addsUpholstery ? `Add upholstery to ${item.item_no}?` : `${mv.label}?`,

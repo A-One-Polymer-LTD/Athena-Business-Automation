@@ -23,7 +23,7 @@ export function navFor(user: User): NavItem[] {
   const reports: NavItem = { to: '/reports', label: 'Production Reports', icon: <FileText className={I} />, group: 'Reports' }
   // the inputs that build the Production Report and the QC Report (BRD 9.8, Workflows E, F, I)
   const prodInput: NavItem = { to: '/production-input', label: 'Production Input', icon: <Factory className={I} />, group: 'Production' }
-  const qcInput: NavItem = { to: '/qc-input', label: 'QC Input', icon: <ClipboardPen className={I} />, badge: 'qc_input', group: 'Production' }
+  const qcInput: NavItem = { to: '/qc-requests', label: 'QC Requests', icon: <ClipboardPen className={I} />, badge: 'qc_input', group: 'Production' }
   let items: NavItem[] = []
   switch (user.role) {
     case 'Sales Admin':

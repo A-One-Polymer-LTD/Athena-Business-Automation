@@ -123,15 +123,17 @@ def badges(user: m.User = Depends(current_user), db: DbSession = Depends(get_db)
         out["warehouse"] = (db.query(m.OrderItem).join(m.Order)
                             .filter(m.Order.org_id == org, m.OrderItem.stage == wf.IN_WAREHOUSE).count())
     if user.role in (ROLE_SUPER, ROLE_PM, ROLE_APM):
+        wf.sync_org_qc_requests(db, org, get_settings(db, org))
         # load only what wf.qc_todo reads: the item, its QC report and results
         qi = (db.query(m.OrderItem).join(m.Order).join(m.QCReport)
               .filter(m.Order.org_id == org, m.Order.state == "placed",
                       or_(m.OrderItem.stage.in_(wf.QC_STAGES), m.QCReport.apm_signed_by.is_(None),
                           m.QCReport.pm_signed_by.is_(None)))
-              .options(lazyload("*"), selectinload(m.OrderItem.qc).selectinload(m.QCReport.results)))
+              .options(lazyload("*"), selectinload(m.OrderItem.qc).selectinload(m.QCReport.results),
+                       selectinload(m.OrderItem.qc_requests)))
         if user.role == ROLE_APM:
             qi = qi.filter(m.OrderItem.site_id.in_([s.id for s in db.query(m.Site).filter_by(org_id=org, apm_id=user.id)]))
-        out["qc_input"] = sum(1 for it in qi if wf.qc_todo(it, user.role))
+        out["qc_input"] = sum(1 for it in qi if wf.qc_todo(it, user))
     return {k: v for k, v in out.items() if v}
 
 

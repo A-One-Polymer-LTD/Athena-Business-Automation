@@ -147,7 +147,7 @@ export default function QcSheet({ itemId, qc, onChanged }: { itemId: number; qc:
     const base = uph ? `${TD_BASE} ${UPH}` : TD
     const c = checks[key]
     if (!c) return <td key={key} className={cx(base, tint)}><span className="text-slate-400">—</span></td>
-    const open = isApm && !!c.can_record
+    const open = !!c.can_record
     return (
       <td key={key} className={cx(base, tint, open && '!p-1')}>
         {open ? (

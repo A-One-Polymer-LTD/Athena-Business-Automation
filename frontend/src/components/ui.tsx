@@ -143,6 +143,11 @@ const BADGE: Record<string, string> = {
   Issued: 'bg-emerald-100 text-emerald-800',
   'Partly Issued': 'bg-amber-100 text-amber-800',
   Pass: 'bg-emerald-100 text-emerald-800',
+  // QC requests
+  Approved: 'bg-emerald-100 text-emerald-800',
+  Rejected: 'bg-red-100 text-red-700',
+  Withdrawn: 'bg-slate-100 text-slate-500',
+  'Not started': 'bg-slate-100 text-slate-500',
   Active: 'bg-emerald-100 text-emerald-800',
   Inactive: 'bg-slate-200 text-slate-600',
   Retired: 'bg-slate-200 text-slate-600',

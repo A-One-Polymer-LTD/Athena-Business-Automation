@@ -49,7 +49,7 @@ const WoodRequisitions = page(() => import('./pages/apm/WoodRequisitions'))     
 const ItemDetail = page(() => import('./pages/apm/ItemDetail'))                 // A4 + A5
 const QcReports = page(() => import('./pages/apm/QcReports'))
 const ProductionInput = page(() => import('./pages/apm/ProductionInput')) // A4 queue
-const QcInput = page(() => import('./pages/apm/QcInput'))                 // A5 queue
+const QcRequests = page(() => import('./pages/apm/QcRequests'))           // A5 QC requests
 // Store, saw mill, warehouse
 const StoreInbox = page(() => import('./pages/ops/StoreInbox'))                 // T1
 const WoodInbox = page(() => import('./pages/ops/WoodInbox'))                   // W1
@@ -123,7 +123,8 @@ export default function App() {
           <Route path="/items/:id" element={g([APM, PM, SUPER, SALES, WH], <ItemDetail />, { cost: true })} />
           <Route path="/qc" element={g([APM, PM, SUPER], <QcReports />)} />
           <Route path="/production-input" element={g([APM, PM], <ProductionInput />)} />
-          <Route path="/qc-input" element={g([APM, PM], <QcInput />)} />
+          <Route path="/qc-requests" element={g([APM, PM], <QcRequests />)} />
+          <Route path="/qc-input" element={<Navigate to="/qc-requests" replace />} />
 
           <Route path="/store/inbox" element={g([STORE], <StoreInbox />)} />
           <Route path="/sawmill/inbox" element={g([SAW], <WoodInbox />)} />

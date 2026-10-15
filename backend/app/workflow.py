@@ -5,6 +5,7 @@ Implements BRD Figure 5 and business rules BR-02 to BR-14.
 from datetime import date, datetime
 
 from fastapi import HTTPException
+from sqlalchemy import or_
 from sqlalchemy.orm import Session as DbSession
 
 from . import models as m
@@ -157,12 +158,14 @@ def qc_passed(item: m.OrderItem, stage: str) -> bool:
     return all(latest.get(c) == "Pass" for c in checks)
 
 
-def qc_todo(item: m.OrderItem, role: str) -> str | None:
-    """QC input this role still owes: 'result' at a QC stage (APM), or 'signoff' once every check is Pass."""
+def qc_todo(item: m.OrderItem, user: m.User) -> str | None:
+    """QC input this user still owes: 'result' for a QC request sent to them, or 'signoff' once every check
+    is Pass."""
     q = item.qc
     if not q:
         return None
-    if item.stage in QC_STAGES and role in (ROLE_APM, ROLE_SUPER) and not qc_passed(item, item.stage):
+    role = user.role
+    if item.stage in QC_STAGES and not qc_passed(item, item.stage) and can_review_qc(user, item):
         return "result"
     required = [CARPENTER_QC, LACQUER_QC] + ([UPHOLSTERY_QC] if item.upholstery_added else [])
     if all(qc_passed(item, s) for s in required) and (
@@ -178,6 +181,186 @@ def ensure_qc_report(db: DbSession, item: m.OrderItem, settings: dict) -> m.QCRe
         db.add(item.qc)
         db.flush()
     return item.qc
+
+
+# ---------- QC requests: send to a reviewer, approve or reject, track (Workflow F) ----------
+def qc_reviewers(db: DbSession, item: m.OrderItem) -> list[m.User]:
+    """Who can review a QC stage: the site's APM first (BRD: the APM records QC), then other APMs and the
+    Production Managers."""
+    users = (db.query(m.User).filter(m.User.org_id == item.order.org_id, m.User.active.is_(True),
+                                      m.User.role.in_([ROLE_APM, ROLE_PM])).order_by(m.User.name).all())
+    site_apm = item.site.apm_id if item.site else None
+    return sorted(users, key=lambda u: (u.id != site_apm, u.role != ROLE_APM, u.name))
+
+
+def pending_qc_request(item: m.OrderItem, stage: str | None = None) -> m.QCRequest | None:
+    stage = stage or item.stage
+    return next((r for r in reversed(item.qc_requests) if r.stage == stage and r.status == "Pending"), None)
+
+
+def submit_qc_request(db: DbSession, item: m.OrderItem, stage: str, user: m.User | None, settings: dict,
+                      reviewer_id: int | None = None, note: str | None = None,
+                      at: datetime | None = None) -> m.QCRequest:
+    """Open a QC request for the stage the item has just reached, addressed to the chosen reviewer."""
+    candidates = qc_reviewers(db, item)
+    if reviewer_id:
+        reviewer = next((u for u in candidates if u.id == int(reviewer_id)), None)
+        if not reviewer:
+            raise HTTPException(422, "Please choose the QC reviewer from the list (an active APM or Production Manager).")
+    else:
+        reviewer = candidates[0] if candidates else None
+    if not reviewer:
+        raise HTTPException(409, "No active APM or Production Manager can review this QC. Please add one first.")
+    rounds = [r.round for r in item.qc_requests if r.stage == stage]
+    req = m.QCRequest(org_id=item.order.org_id, item_id=item.id,
+                      request_no=next_number(db, item.order.org_id, "qc_request", settings), stage=stage,
+                      round=max(rounds) + 1 if rounds else 1, status="Pending",
+                      submitted_by_id=user.id if user else None, submitted_by=user.name if user else "System",
+                      submitted_at=at or utcnow(), note=note, reviewer_id=reviewer.id, reviewer=reviewer.name,
+                      results=[], reassignments=[])
+    item.qc_requests.append(req)
+    db.add(req)
+    audit(db, user, "QC_REQUEST", "QC Request", req.request_no,
+          f"{stage} of {item_no(item)} sent to {reviewer.name} ({reviewer.role}) for review"
+          + (f", round {req.round}" if req.round > 1 else ""), org_id=item.order.org_id)
+    return req
+
+
+def sync_qc_requests(db: DbSession, items: list[m.OrderItem], settings: dict) -> bool:
+    """Keep requests in step with the items: an item waiting at a QC stage always has one pending request
+    (items that reached QC before requests existed get one addressed to the site's APM), and a pending request
+    is withdrawn when the item has left that stage (for example after a stage reversal)."""
+    changed = False
+    for it in items:
+        for r in it.qc_requests:
+            if r.status == "Pending" and r.stage != it.stage:
+                r.status, r.decided_at = "Withdrawn", utcnow()
+                r.feedback = r.feedback or f"Withdrawn: the item moved to {it.stage}."
+                changed = True
+        if it.stage in QC_STAGES and it.qc and not qc_passed(it, it.stage) and not pending_qc_request(it):
+            last = next((h for h in reversed(it.history) if h.stage == it.stage), None)
+            sender = db.get(m.User, last.user_id) if last and last.user_id else None
+            try:
+                submit_qc_request(db, it, it.stage, sender, settings, at=last.started_at if last else None)
+                changed = True
+            except HTTPException:
+                pass
+    if changed:
+        db.commit()
+    return changed
+
+
+def sync_org_qc_requests(db: DbSession, org_id: int, settings: dict) -> None:
+    """sync_qc_requests for the items that can need it: at a QC stage, or with a pending request."""
+    items = (db.query(m.OrderItem).join(m.Order)
+             .filter(m.Order.org_id == org_id,
+                     or_(m.OrderItem.stage.in_(QC_STAGES),
+                         m.OrderItem.qc_requests.any(m.QCRequest.status == "Pending"))).all())
+    sync_qc_requests(db, items, settings)
+
+
+def can_review_qc(user: m.User, item: m.OrderItem) -> bool:
+    """Only the reviewer the request was sent to records its results; the Super Admin can act for anyone."""
+    req = pending_qc_request(item)
+    return bool(req) and (user.role == ROLE_SUPER or req.reviewer_id == user.id)
+
+
+def apply_qc_result(db: DbSession, item: m.OrderItem, check: str, result: str, user: m.User,
+                    note: str | None = None, photo: str | None = None) -> str:
+    """Record one check result on the unified QC report and update the stage's QC request (BR-06, BR-09)."""
+    label, stage, making = QC_CHECKS[check]
+    req = pending_qc_request(item, stage)
+    item.qc.results.append(m.QCResult(check=check, result=result, checker_name=user.name, checker_id=user.id,
+                                      note=note, photo=photo))
+    ref = item_no(item)
+    audit(db, user, "QC", "QC Report", item.qc.qc_ref, f"{label}: {result} for {ref}" + (f" - {note}" if note else ""))
+    if req:
+        req.results = list(req.results or []) + [clean({"check": label, "result": result, "by": user.name,
+                                                        "at": iso(utcnow()), "note": note, "photo": photo})]
+    msg = f"{label}: Pass recorded."
+    if result == "Rework":
+        # BR-09: the item returns to its making stage; the failed result is kept
+        item.rework_count += 1
+        item.qc.apm_signed_by = item.qc.apm_signed_at = None
+        record_stage(db, item, making, user, f"Rework from {label}: {note}", kind="rework")
+        msg = f"{label}: Rework recorded. {ref} returned to {making}."
+        if req:
+            req.status, req.decided_by, req.decided_at, req.feedback = "Rejected", user.name, utcnow(), note
+            audit(db, user, "QC_REJECT", "QC Request", req.request_no, f"Rejected ({label}): {note}")
+            msg = f"{req.request_no} rejected. {ref} returned to {making} for rework."
+    elif req and qc_passed(item, stage):
+        req.status, req.decided_by, req.decided_at = "Approved", user.name, utcnow()
+        req.feedback = req.feedback or note
+        audit(db, user, "QC_APPROVE", "QC Request", req.request_no, f"{stage} approved for {ref}")
+        msg = f"{req.request_no} approved: {stage} passed. The APM can now move {ref} on."
+    return msg
+
+
+_NEXT_AFTER = {CARPENTER_QC: "Move to Lacquer", LACQUER_QC: "Finish Good or + Upholstery", UPHOLSTERY_QC: "Finish Good"}
+_MAKING = {CARPENTER_QC: CARPENTER, LACQUER_QC: LACQUER, UPHOLSTERY_QC: UPHOLSTERY}
+
+
+def qc_request_json(r: m.QCRequest, user: m.User | None = None, with_item: bool = False) -> dict:
+    it = r.item
+    end = r.decided_at or utcnow()
+    d = clean({
+        "id": r.id, "request_no": r.request_no, "stage": r.stage, "round": r.round, "status": r.status,
+        "submitted_by": r.submitted_by, "submitted_by_id": r.submitted_by_id, "submitted_at": iso(r.submitted_at),
+        "note": r.note, "reviewer": r.reviewer, "reviewer_id": r.reviewer_id,
+        "decided_by": r.decided_by, "decided_at": iso(r.decided_at), "feedback": r.feedback,
+        "results": r.results or None, "reassignments": r.reassignments or None,
+        "waiting_hours": round((end - r.submitted_at).total_seconds() / 3600, 1),
+        "checks": [QC_CHECKS[k][0] for k in QC_CHECKS if QC_CHECKS[k][1] == r.stage],
+    })
+    if r.status == "Pending":
+        latest = qc_latest(it)
+        d["open_checks"] = [QC_CHECKS[k][0] for k in QC_CHECKS
+                            if QC_CHECKS[k][1] == r.stage and latest.get(k) != "Pass"]
+        d["next_action"] = f"{r.reviewer} to review: approve or reject"
+    elif r.status == "Approved":
+        d["next_action"] = (f"APM: {_NEXT_AFTER[r.stage]}" if it.stage == r.stage
+                            else f"Done. The item moved on to {it.stage}.")
+    elif r.status == "Rejected":
+        making = _MAKING[r.stage]
+        if any(x.stage == r.stage and x.round > r.round for x in it.qc_requests):
+            d["next_action"] = f"Reworked and sent again (round {r.round + 1})"
+        else:
+            d["next_action"] = f"Rework at {making}, then send to {r.stage} again"
+    if user:
+        d["can_review"] = r.status == "Pending" and (user.role == ROLE_SUPER or r.reviewer_id == user.id)
+        d["can_reassign"] = r.status == "Pending" and (
+            user.role in (ROLE_SUPER, ROLE_PM) or user.id in (r.submitted_by_id, r.reviewer_id)
+            or (user.role == ROLE_APM and bool(it.site) and it.site.apm_id == user.id))
+    if with_item:
+        o = it.order
+        d.update(clean({"item_id": it.id, "item_no": item_no(it), "order_no": o.order_no,
+                        "customer": o.customer.name, "product_name": it.product_name,
+                        "product_code": it.product_code, "site": it.site.code if it.site else None,
+                        "apm": it.site.apm.name if it.site and it.site.apm else None, "item_stage": it.stage,
+                        "image": it.images[0].filename if it.images else None,
+                        "qc_ref": it.qc.qc_ref if it.qc else None}))
+    return d
+
+
+def qc_tracker(item: m.OrderItem, user: m.User | None = None) -> list[dict]:
+    """Each QC stage of the item, in order, with its latest status and every request round."""
+    stages = [CARPENTER_QC, LACQUER_QC] + ([UPHOLSTERY_QC] if item.upholstery_added else [])
+    out = []
+    for st in stages:
+        reqs = [r for r in item.qc_requests if r.stage == st]
+        passed = bool(item.qc) and qc_passed(item, st)
+        latest = reqs[-1] if reqs else None
+        if latest and latest.status != "Withdrawn":
+            status = latest.status
+        elif passed:
+            status = "Approved"
+        elif item.stage == st:
+            status = "Pending"
+        else:
+            status = "Not started"
+        out.append(clean({"stage": st, "status": status, "passed": passed or None,
+                          "making_stage": _MAKING[st], "requests": [qc_request_json(r, user) for r in reqs]}))
+    return out
 
 
 # ---------- requisitions (BR-04) ----------
@@ -261,7 +444,7 @@ def record_stage(db: DbSession, item: m.OrderItem, stage: str, user: m.User | No
 
 
 def move_item(db: DbSession, item: m.OrderItem, to: str, user: m.User, settings: dict, note: str | None = None,
-              final: dict | None = None) -> list[str]:
+              final: dict | None = None, reviewer_id: int | None = None) -> list[str]:
     """Apply a stage move if the rules allow it. Returns warnings about missing report data (FR-PR-04)."""
     if item.order.state != "placed":
         raise HTTPException(409, "This order is not active, so its items cannot be moved.")
@@ -294,6 +477,8 @@ def move_item(db: DbSession, item: m.OrderItem, to: str, user: m.User, settings:
         return warnings
     record_stage(db, item, to, user, note)
     audit(db, user, "STAGE", "Item", ref, f"Moved to {to}" + (f" - {note}" if note else ""))
+    if to in QC_STAGES:
+        submit_qc_request(db, item, to, user, settings, reviewer_id, note)
     return warnings
 
 
@@ -362,7 +547,7 @@ def wood_req_json(r: m.WoodRequisition) -> dict:
     })
 
 
-def qc_json(item: m.OrderItem) -> dict | None:
+def qc_json(item: m.OrderItem, user: m.User | None = None) -> dict | None:
     q = item.qc
     if not q:
         return None
@@ -374,7 +559,8 @@ def qc_json(item: m.OrderItem) -> dict | None:
         rows = [clean({"id": r.id, "result": r.result, "checker": r.checker_name, "at": iso(r.at),
                        "note": r.note, "photo": r.photo}) for r in q.results if r.check == key]
         checks[key] = {"label": label, "stage": stage, "latest": rows[-1]["result"] if rows else None,
-                       "history": rows, "can_record": item.stage == stage}
+                       "history": rows,
+                       "can_record": item.stage == stage and bool(user) and can_review_qc(user, item)}
     return clean({
         "qc_ref": q.qc_ref, "created_at": iso(q.created_at), "order_no": o.order_no, "item_no": item_no(item),
         "customer": o.customer.name, "product_name": item.product_name, "design": item.design_desc,
@@ -428,9 +614,10 @@ def item_full(item: m.OrderItem, user: m.User, settings: dict) -> dict:
     if user.role != ROLE_SALES:
         d["store_requisitions"] = [store_req_json(r) for r in item.store_reqs]
         d["wood_requisitions"] = [wood_req_json(r) for r in item.wood_reqs]
-        q = qc_json(item)
+        q = qc_json(item, user)
         if q:
             d["qc"] = q
+        d["qc_tracker"] = qc_tracker(item, user)
     if user.role in (ROLE_APM, ROLE_SUPER):
         d["moves"] = allowed_moves(item, settings)
     if user.role != ROLE_SALES and item.stage != UNASSIGNED:
@@ -610,20 +797,20 @@ def report_readiness(item: m.OrderItem) -> list[dict]:
         "done" if n else "waiting", f"{n} stage record(s)" if n else None)
 
     if not item.qc:
-        row("qc", "Unified QC results and rework history", "APM · QC Input",
+        row("qc", "Unified QC results and rework history", "QC reviewer · QC Requests",
             "missing" if after_fg else "waiting", "The QC report opens when the item reaches Carpenter QC.")
     else:
         required = [CARPENTER_QC, LACQUER_QC] + ([UPHOLSTERY_QC] if item.upholstery_added else [])
         passed = [s for s in required if qc_passed(item, s)]
-        row("qc", "Unified QC results and rework history", "APM · QC Input",
+        row("qc", "Unified QC results and rework history", "QC reviewer · QC Requests",
             "done" if len(passed) == len(required) else ("missing" if after_fg else "waiting"),
             f"{item.qc.qc_ref}: {len(passed)} of {len(required)} QC stage(s) passed"
             + (f", rework x {item.rework_count}" if item.rework_count else ""))
-        row("qc_side", "Carpenter working side", "APM · QC Input",
+        row("qc_side", "Carpenter working side", "APM · QC report",
             "done" if item.qc.carpenter_side else ("missing" if after_fg else "waiting"), item.qc.carpenter_side)
         all_pass = len(passed) == len(required)
-        for key, label, who, val in (("apm_sign", "APM sign-off", "APM · QC Input", item.qc.apm_signed_by),
-                                     ("pm_sign", "Production Manager sign-off", "Production Manager · QC Input",
+        for key, label, who, val in (("apm_sign", "APM sign-off", "APM · QC Requests, Sign-off", item.qc.apm_signed_by),
+                                     ("pm_sign", "Production Manager sign-off", "Production Manager · QC Requests, Sign-off",
                                       item.qc.pm_signed_by)):
             row(key, label, who, "done" if val else ("missing" if after_fg and all_pass else "waiting"), val)
 

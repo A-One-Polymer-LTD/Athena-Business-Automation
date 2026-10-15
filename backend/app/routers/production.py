@@ -100,7 +100,9 @@ def production_input(user: m.User = Depends(current_user), db: DbSession = Depen
             moves = wf.allowed_moves(it, settings)
             b["next_step"] = ", ".join(x["label"] for x in moves if x["enabled"]) or None
             if not b["next_step"]:
-                b["blocked"] = ("Record the QC results in QC Input." if it.stage in wf.QC_STAGES
+                req = wf.pending_qc_request(it) if it.stage in wf.QC_STAGES else None
+                b["blocked"] = (f"Waiting for QC review by {req.reviewer} ({req.request_no})" if req
+                                else "Waiting for the QC review." if it.stage in wf.QC_STAGES
                                 else next((x.get("reason") for x in moves if x.get("reason")), None))
         out.append(b)
     return out
@@ -110,9 +112,10 @@ def production_input(user: m.User = Depends(current_user), db: DbSession = Depen
 def qc_input(user: m.User = Depends(current_user), db: DbSession = Depends(get_db)):
     """Items waiting for a QC result (at a QC stage) or for this user's QC sign-off (FR-QC-05, FR-QC-06)."""
     settings = get_settings(db, user.org_id)
+    wf.sync_org_qc_requests(db, user.org_id, settings)
     out = []
     for it in _input_items(db, user, wf.PRODUCTION_STAGES + wf.WAREHOUSE_STAGES + [wf.DELIVERED]):
-        todo = wf.qc_todo(it, user.role)
+        todo = wf.qc_todo(it, user)
         if not todo:
             continue
         q = it.qc
@@ -129,7 +132,9 @@ def qc_input(user: m.User = Depends(current_user), db: DbSession = Depends(get_d
 @router.get("/items/{item_id}")
 def item_detail(item_id: int, user: m.User = Depends(current_user), db: DbSession = Depends(get_db)):
     item = wf.get_item(db, user, item_id)
-    return wf.item_full(item, user, get_settings(db, user.org_id))
+    settings = get_settings(db, user.org_id)
+    wf.sync_qc_requests(db, [item], settings)
+    return wf.item_full(item, user, settings)
 
 
 # ---------- assignment (Workflow B) ----------
@@ -188,7 +193,8 @@ def move(item_id: int, body: dict = Body(...), user: m.User = Depends(current_us
     if to == wf.FINISH_GOOD:
         final = {k: req_number(body.get(f"final_{k}"), f"Final {k.title()}", gt=0, required=False)
                  for k in ("height", "width", "length")}
-    warnings = wf.move_item(db, item, to, user, settings, (body.get("note") or "").strip() or None, final)
+    warnings = wf.move_item(db, item, to, user, settings, (body.get("note") or "").strip() or None, final,
+                            body.get("reviewer_id") or None)
     db.commit()
     label = "Finish Good and moved to the Product Warehouse" if to == wf.FINISH_GOOD else to
     return {"ok": True, "message": f"{wf.item_no(item)} is now {label}.", "warnings": warnings,
@@ -589,7 +595,7 @@ def process_wood_req(req_id: int, body: dict = Body(...), user: m.User = Depends
 # ---------- unified QC (Workflow F) ----------
 @router.post("/items/{item_id}/qc/result")
 def qc_result(item_id: int, body: dict = Body(...), user: m.User = Depends(current_user), db: DbSession = Depends(get_db)):
-    item = wf.get_item_for_apm(db, user, item_id)
+    item = wf.get_item(db, user, item_id)
     check = body.get("check")
     result = body.get("result")
     if check not in wf.QC_CHECKS or result not in ("Pass", "Rework"):
@@ -603,19 +609,127 @@ def qc_result(item_id: int, body: dict = Body(...), user: m.User = Depends(curre
     photo = body.get("photo") or None
     if photo and not file_exists(db, photo):
         photo = None
-    item.qc.results.append(m.QCResult(check=check, result=result, checker_name=user.name, checker_id=user.id,
-                                      note=note, photo=photo))
-    ref = wf.item_no(item)
-    audit(db, user, "QC", "QC Report", item.qc.qc_ref, f"{label}: {result} for {ref}" + (f" - {note}" if note else ""))
-    msg = f"{label}: Pass recorded."
-    if result == "Rework":
-        # BR-09: the item returns to its making stage; the failed result is kept
-        item.rework_count += 1
-        item.qc.apm_signed_by = item.qc.apm_signed_at = None
-        wf.record_stage(db, item, making, user, f"Rework from {label}: {note}", kind="rework")
-        msg = f"{label}: Rework recorded. {ref} returned to {making}."
+    settings = get_settings(db, user.org_id)
+    wf.sync_qc_requests(db, [item], settings)
+    _check_reviewer(user, item)
+    msg = wf.apply_qc_result(db, item, check, result, user, note, photo)
     db.commit()
-    return {"ok": True, "message": msg, "item": wf.item_full(item, user, get_settings(db, user.org_id))}
+    return {"ok": True, "message": msg, "item": wf.item_full(item, user, settings)}
+
+
+def _check_reviewer(user: m.User, item: m.OrderItem) -> m.QCRequest:
+    req = wf.pending_qc_request(item)
+    if not req:
+        raise HTTPException(409, "There is no open QC request for this item.")
+    if not wf.can_review_qc(user, item):
+        deny(user, "QC review", req.request_no,
+             f"{req.request_no} was sent to {req.reviewer}. Only {req.reviewer} can approve or reject it.")
+    return req
+
+
+# ---------- QC requests (Workflow F): inbox, approve, reject, reassign ----------
+def _qc_request(db: DbSession, user: m.User, request_id: int) -> m.QCRequest:
+    r = db.get(m.QCRequest, request_id)
+    if not r or r.org_id != user.org_id:
+        raise HTTPException(404, "QC request not found.")
+    item = wf.get_item(db, user, r.item_id)  # the same visibility rules as the item
+    wf.sync_qc_requests(db, [item], get_settings(db, user.org_id))  # e.g. withdrawn after a stage reversal
+    return r
+
+
+@router.get("/qc-requests")
+def qc_requests(scope: str = "assigned", user: m.User = Depends(require(ROLE_APM, ROLE_PM)),
+                db: DbSession = Depends(get_db)):
+    """scope: assigned (pending, sent to me), sent (sent by me), pending, decided, all."""
+    wf.sync_org_qc_requests(db, user.org_id, get_settings(db, user.org_id))
+    q = (db.query(m.QCRequest).join(m.OrderItem).join(m.Order)
+         .filter(m.QCRequest.org_id == user.org_id, m.Order.state == "placed"))
+    if user.role == ROLE_APM:  # an APM sees requests on their sites and requests that involve them
+        q = q.filter(m.OrderItem.site_id.in_(_my_site_ids(db, user)) | (m.QCRequest.reviewer_id == user.id)
+                     | (m.QCRequest.submitted_by_id == user.id))
+    if scope == "assigned":
+        q = q.filter(m.QCRequest.status == "Pending")
+        if user.role != ROLE_SUPER:
+            q = q.filter(m.QCRequest.reviewer_id == user.id)
+    elif scope == "sent":
+        q = q.filter(m.QCRequest.submitted_by_id == user.id)
+    elif scope == "pending":
+        q = q.filter(m.QCRequest.status == "Pending")
+    elif scope == "decided":
+        q = q.filter(m.QCRequest.status.in_(["Approved", "Rejected"]))
+    return [wf.qc_request_json(r, user, with_item=True) for r in q.order_by(m.QCRequest.id.desc()).limit(500)]
+
+
+@router.get("/items/{item_id}/qc-reviewers")
+def qc_reviewer_list(item_id: int, user: m.User = Depends(current_user), db: DbSession = Depends(get_db)):
+    item = wf.get_item(db, user, item_id)
+    site_apm = item.site.apm_id if item.site else None
+    return [clean({"id": u.id, "name": u.name, "role": u.role,
+                   "hint": "APM of this site" if u.id == site_apm else None})
+            for u in wf.qc_reviewers(db, item)]
+
+
+@router.post("/qc-requests/{request_id}/approve")
+def qc_approve(request_id: int, body: dict = Body(default={}), user: m.User = Depends(current_user),
+               db: DbSession = Depends(get_db)):
+    """Approve: every check of the stage that is not yet Pass is recorded as Pass (BR-06)."""
+    r = _qc_request(db, user, request_id)
+    item = r.item
+    if r.status != "Pending":
+        raise HTTPException(409, f"{r.request_no} is already {r.status}.")
+    _check_reviewer(user, item)
+    note = (body.get("note") or "").strip() or None
+    latest = wf.qc_latest(item)
+    msg = ""
+    for k, (label, stage, _making) in wf.QC_CHECKS.items():
+        if stage == r.stage and latest.get(k) != "Pass":
+            msg = wf.apply_qc_result(db, item, k, "Pass", user, note)
+    db.commit()
+    return {"ok": True, "message": msg or f"{r.request_no} approved."}
+
+
+@router.post("/qc-requests/{request_id}/reject")
+def qc_reject(request_id: int, body: dict = Body(...), user: m.User = Depends(current_user),
+              db: DbSession = Depends(get_db)):
+    """Reject: the failed check is recorded as Rework and the item returns to the stage that made it (BR-09)."""
+    r = _qc_request(db, user, request_id)
+    item = r.item
+    if r.status != "Pending":
+        raise HTTPException(409, f"{r.request_no} is already {r.status}.")
+    _check_reviewer(user, item)
+    check = body.get("check")
+    if check not in wf.QC_CHECKS or wf.QC_CHECKS[check][1] != r.stage:
+        raise HTTPException(422, "Please choose the check that failed.")
+    note = (body.get("note") or "").strip()
+    if not note:
+        raise HTTPException(422, "Please enter feedback: what must be reworked.")
+    photo = body.get("photo") or None
+    if photo and not file_exists(db, photo):
+        photo = None
+    msg = wf.apply_qc_result(db, item, check, "Rework", user, note, photo)
+    db.commit()
+    return {"ok": True, "message": msg}
+
+
+@router.post("/qc-requests/{request_id}/reassign")
+def qc_reassign(request_id: int, body: dict = Body(...), user: m.User = Depends(current_user),
+                db: DbSession = Depends(get_db)):
+    r = _qc_request(db, user, request_id)
+    if not wf.qc_request_json(r, user).get("can_reassign"):
+        deny(user, "QC request", r.request_no, "You cannot reassign this QC request.")
+    new = next((u for u in wf.qc_reviewers(db, r.item) if u.id == int(body.get("reviewer_id") or 0)), None)
+    if not new:
+        raise HTTPException(422, "Please choose the new reviewer from the list.")
+    if new.id == r.reviewer_id:
+        raise HTTPException(422, f"{r.request_no} is already with {new.name}.")
+    reason = (body.get("reason") or "").strip() or None
+    r.reassignments = list(r.reassignments or []) + [clean({"from": r.reviewer, "to": new.name, "by": user.name,
+                                                             "at": iso(utcnow()), "reason": reason})]
+    audit(db, user, "QC_REASSIGN", "QC Request", r.request_no, f"Reassigned from {r.reviewer} to {new.name}"
+          + (f": {reason}" if reason else ""))
+    r.reviewer_id, r.reviewer = new.id, new.name
+    db.commit()
+    return {"ok": True, "message": f"{r.request_no} is now with {new.name}."}
 
 
 @router.put("/items/{item_id}/qc")

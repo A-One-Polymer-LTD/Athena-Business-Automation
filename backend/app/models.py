@@ -176,6 +176,8 @@ class OrderItem(Base):
     cost_sheet: Mapped["CostSheet"] = relationship(lazy="selectin", uselist=False, back_populates="item")
     reports: Mapped[list["ProductionReport"]] = relationship(order_by="ProductionReport.revision",
                                                              back_populates="item")
+    qc_requests: Mapped[list["QCRequest"]] = relationship(lazy="selectin", order_by="QCRequest.id",
+                                                           back_populates="item")
 
 
 class ItemImage(Base):
@@ -284,6 +286,34 @@ class QCResult(Base):
     at: Mapped[datetime] = mapped_column(DateTime, default=now)
     note: Mapped[str | None] = mapped_column(Text)
     photo: Mapped[str | None] = mapped_column(String(120))
+
+
+class QCRequest(Base):
+    """One request to review a QC stage (Carpenter, Lacquer or Upholstery QC) of an item, sent to a named reviewer.
+
+    Pending until the reviewer approves (every check of the stage Pass) or rejects (Rework, back to the making
+    stage). A rejected item that is sent to the same QC stage again gets a new request with the next round.
+    """
+    __tablename__ = "qc_requests"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    org_id: Mapped[int] = mapped_column(ForeignKey("organisations.id"), index=True)
+    item_id: Mapped[int] = mapped_column(ForeignKey("order_items.id"), index=True)
+    request_no: Mapped[str] = mapped_column(String(30), unique=True)
+    stage: Mapped[str] = mapped_column(String(30))  # Carpenter QC | Lacquer QC | Upholstery QC
+    round: Mapped[int] = mapped_column(Integer, default=1)
+    status: Mapped[str] = mapped_column(String(20), default="Pending", index=True)  # Pending|Approved|Rejected|Withdrawn
+    submitted_by_id: Mapped[int | None] = mapped_column(ForeignKey("users.id"))
+    submitted_by: Mapped[str] = mapped_column(String(100))
+    submitted_at: Mapped[datetime] = mapped_column(DateTime, default=now)
+    note: Mapped[str | None] = mapped_column(Text)
+    reviewer_id: Mapped[int | None] = mapped_column(ForeignKey("users.id"), index=True)
+    reviewer: Mapped[str] = mapped_column(String(100))
+    decided_by: Mapped[str | None] = mapped_column(String(100))
+    decided_at: Mapped[datetime | None] = mapped_column(DateTime)
+    feedback: Mapped[str | None] = mapped_column(Text)
+    results: Mapped[list] = mapped_column(JSON, default=list)  # check results recorded for this request
+    reassignments: Mapped[list] = mapped_column(JSON, default=list)
+    item: Mapped["OrderItem"] = relationship(back_populates="qc_requests")
 
 
 class CostSheet(Base):

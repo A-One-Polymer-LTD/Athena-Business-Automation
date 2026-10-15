@@ -33,7 +33,7 @@ DEFAULT_SETTINGS = {
     "fiscal_year_start": 1,
     "measurement_unit": "in",
     "prefixes": {"order": "ATH", "customer": "CUS", "store_req": "SR", "wood_req": "WR", "qc": "QC",
-                 "report": "PR", "cost": "PC", "sales_entry": "SE", "lead": "L"},
+                 "report": "PR", "cost": "PC", "sales_entry": "SE", "lead": "L", "qc_request": "QR"},
     "optional_stages": {"machine_room_2": True, "upholstery": True},
     "stage_limit_days": {"default": 5, "Assigned": 3, "Machine Room": 3, "Production Site": 5,
                          "Machine Room (2nd pass)": 3, "Form/Design Ready": 2, "Carpenter": 7,
@@ -44,7 +44,7 @@ DEFAULT_SETTINGS = {
 }
 
 _NUMBER_WIDTH = {"order": 6, "customer": 6, "store_req": 5, "wood_req": 5, "qc": 6, "report": 6, "cost": 6,
-                 "sales_entry": 6, "lead": 5}
+                 "sales_entry": 6, "lead": 5, "qc_request": 6}
 
 
 def utcnow() -> datetime:
