@@ -1,6 +1,7 @@
 """Athena OS API. Serves the REST API under /api and the built web app (if present) at /."""
 import logging
 import secrets
+import time
 from pathlib import Path
 
 from fastapi import FastAPI, Request
@@ -18,6 +19,15 @@ log = logging.getLogger("athena")
 app = FastAPI(title="Athena OS", version="1.0.0", docs_url="/api/docs", openapi_url="/api/openapi.json")
 app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
                    allow_methods=["*"], allow_headers=["*"])
+
+
+@app.middleware("http")
+async def server_timing(request: Request, call_next):
+    """Server-Timing shows how long the API itself took, apart from network time (browser dev tools)."""
+    t0 = time.perf_counter()
+    response = await call_next(request)
+    response.headers["Server-Timing"] = f"app;dur={(time.perf_counter() - t0) * 1000:.0f}"
+    return response
 
 for r in (orders, production, costs, sales, admin):
     app.include_router(r.router, prefix="/api")

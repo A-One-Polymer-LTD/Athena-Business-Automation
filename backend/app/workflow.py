@@ -6,7 +6,7 @@ from datetime import date, datetime
 
 from fastapi import HTTPException
 from sqlalchemy import or_
-from sqlalchemy.orm import Session as DbSession
+from sqlalchemy.orm import Session as DbSession, lazyload, selectinload
 
 from . import models as m
 from .core import (ROLE_APM, ROLE_PM, ROLE_SALES, ROLE_SUPER, ROLE_WAREHOUSE, audit, can_view_cost, clean,
@@ -252,10 +252,14 @@ def sync_qc_requests(db: DbSession, items: list[m.OrderItem], settings: dict) ->
 
 def sync_org_qc_requests(db: DbSession, org_id: int, settings: dict) -> None:
     """sync_qc_requests for the items that can need it: at a QC stage, or with a pending request."""
+    # load only what the check reads (it runs with every menu-count refresh)
     items = (db.query(m.OrderItem).join(m.Order)
              .filter(m.Order.org_id == org_id,
                      or_(m.OrderItem.stage.in_(QC_STAGES),
-                         m.OrderItem.qc_requests.any(m.QCRequest.status == "Pending"))).all())
+                         m.OrderItem.qc_requests.any(m.QCRequest.status == "Pending")))
+             .options(lazyload("*"), selectinload(m.OrderItem.qc_requests),
+                      selectinload(m.OrderItem.qc).selectinload(m.QCReport.results),
+                      selectinload(m.OrderItem.order).lazyload("*")).all())
     sync_qc_requests(db, items, settings)
 
 

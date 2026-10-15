@@ -1,15 +1,17 @@
-// Excel export and import helpers (SheetJS).
-import * as XLSX from 'xlsx'
+// Excel export and import helpers (SheetJS). The library is large, so it is loaded only when a file is
+// exported or imported, not with every screen that has a table.
+const xlsx = () => import('xlsx')
 
 const stamp = () => new Date().toISOString().slice(0, 10)
 
 /** Download rows as an .xlsx file. Keys of the first row become the header. */
 export function exportRows(name: string, rows: Record<string, any>[], sheet = 'Data') {
-  exportSheets(name, [{ name: sheet, rows }])
+  return exportSheets(name, [{ name: sheet, rows }])
 }
 
 /** Download several sheets in one workbook. */
-export function exportSheets(name: string, sheets: { name: string; rows: Record<string, any>[] }[]) {
+export async function exportSheets(name: string, sheets: { name: string; rows: Record<string, any>[] }[]) {
+  const XLSX = await xlsx()
   const wb = XLSX.utils.book_new()
   sheets.forEach((s) => {
     const ws = XLSX.utils.json_to_sheet(s.rows.length ? s.rows : [{}])
@@ -21,7 +23,8 @@ export function exportSheets(name: string, sheets: { name: string; rows: Record<
 }
 
 /** Download an import template that holds only a header row and an example row. */
-export function downloadTemplate(name: string, headers: string[], example?: any[]) {
+export async function downloadTemplate(name: string, headers: string[], example?: any[]) {
+  const XLSX = await xlsx()
   const ws = XLSX.utils.aoa_to_sheet(example ? [headers, example] : [headers])
   ws['!cols'] = headers.map((h) => ({ wch: Math.max(16, h.length + 4) }))
   const wb = XLSX.utils.book_new()
@@ -31,6 +34,7 @@ export function downloadTemplate(name: string, headers: string[], example?: any[
 
 /** Read the first sheet of an Excel or CSV file as objects keyed by lower-cased, trimmed header. */
 export async function readSheet(file: File): Promise<Record<string, any>[]> {
+  const XLSX = await xlsx()
   const wb = XLSX.read(await file.arrayBuffer(), { type: 'array' })
   const ws = wb.Sheets[wb.SheetNames[0]]
   const rows = XLSX.utils.sheet_to_json<Record<string, any>>(ws, { defval: '', raw: false })
