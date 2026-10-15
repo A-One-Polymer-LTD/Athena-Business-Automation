@@ -77,7 +77,7 @@ export default function OrderRecords() {
     <div>
       <PageHeader title="Order Records"
         subtitle={isSales ? `Customer orders of ${user?.branch ?? 'your branch'}` : 'Customer orders of all branches'}
-        actions={(isSales || user?.role === 'Super Admin') && <Link to="/sales/orders/new"><Button icon={<Plus className="h-4 w-4" />}>New Order</Button></Link>} />
+        actions={user?.role === 'Super Admin' && <Link to="/sales/orders/new"><Button icon={<Plus className="h-4 w-4" />}>New Order</Button></Link>} />
 
       {list.error ? <ErrorNote error={list.error} /> : list.loading && !list.data ? <Spinner /> : (
         <DataTable<OrderRow> rows={list.data ?? []} columns={columns} rowKey={(r) => r.id} onRowClick={(r) => nav(`/orders/${r.id}`)}

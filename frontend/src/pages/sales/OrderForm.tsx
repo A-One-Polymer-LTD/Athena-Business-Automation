@@ -539,16 +539,6 @@ function Form({ orderId, lead, onNew }: { orderId?: string; lead: LeadRef | null
                   </Select>
                 </Field>
 
-                <Group label="Upholstery needed" required>
-                  <div className="inline-flex rounded-lg border border-slate-300 bg-white p-1" role="radiogroup" aria-label="Upholstery needed">
-                    {[true, false].map((v) => (
-                      <button key={String(v)} type="button" role="radio" aria-checked={it.upholstery_needed === v} onClick={() => patch(it.uid, { upholstery_needed: v })}
-                        className={cx('h-8 min-w-16 rounded-md px-4 text-[13px] font-semibold transition', it.upholstery_needed === v ? 'bg-brand-800 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-100')}>
-                        {v ? 'Yes' : 'No'}
-                      </button>
-                    ))}
-                  </div>
-                </Group>
                 <Field label="Amount" required error={E('amount')} hint={Number(it.amount) > 0 ? money(Number(it.amount)) : undefined}>
                   <Input type="number" inputMode="decimal" min={0} step="any" value={it.amount} invalid={!!E('amount')}
                     onChange={(e) => change(it.uid, 'amount', e.target.value)} onBlur={() => blurItem(it, 'amount')} />
