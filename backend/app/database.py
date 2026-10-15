@@ -12,7 +12,9 @@ from sqlalchemy.orm import DeclarativeBase, sessionmaker
 BASE_DIR = Path(__file__).resolve().parent.parent
 SERVERLESS = bool(os.getenv("VERCEL"))
 
-DATABASE_URL = (os.getenv("DATABASE_URL") or os.getenv("POSTGRES_URL")
+# ATHENA_DATABASE_URL is the Singapore database (close to the users in Bangladesh); DATABASE_URL is the earlier
+# US database, kept as a fallback and backup
+DATABASE_URL = (os.getenv("ATHENA_DATABASE_URL") or os.getenv("DATABASE_URL") or os.getenv("POSTGRES_URL")
                 or f"sqlite:///{(BASE_DIR / 'athena.db').as_posix()}")
 
 _is_sqlite = DATABASE_URL.startswith("sqlite")

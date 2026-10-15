@@ -4,6 +4,7 @@
   "installCommand": null,
   "buildCommand": "cd frontend && npm install && npm run build",
   "outputDirectory": "frontend/dist",
+  "regions": ["sin1"],
   "functions": {
     "api/index.py": {
       "maxDuration": 60,
